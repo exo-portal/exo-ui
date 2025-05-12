@@ -1,3 +1,5 @@
+import { translate } from "@/lib/translate";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Home() {
@@ -13,6 +15,10 @@ export default function Home() {
           priority
         />
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <div className="">
+            <div className="">test</div>
+            {translate(useTranslations(), "HomePage.title")}
+          </div>
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
