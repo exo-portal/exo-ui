@@ -14,19 +14,18 @@ export default function page({}: Props) {
 
   useEffect(() => {
     axiosInstance
-      .get("/api/auth/user/me")
+      .get("/api/auth/user/get")
       .then((res: any) => {
         console.log("fetch user", res.data);
         setUser(res.data);
       })
       .catch((e) => {
         console.log("fetch user error", e);
-        window.location.href = "/auth/login";
+        // window.location.href = "/auth/login";
       });
   }, []);
 
   useEffect(() => {
-    console.log("user", user);
     if (user && user.resultData) {
       const providerIds = [];
       if (user.resultData.githubProviderId) {
