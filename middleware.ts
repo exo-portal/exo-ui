@@ -1,21 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { axiosInstance } from "./lib";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const cookie = request.headers.get('cookie') || '';
-
-  console.log("Cookie:", cookie);
-
   // Define supported locales
   const supportedLocales = ["en", "fr", "es"]; // Add your supported locales here
   const defaultLocale = "en";
-
-  if (pathname.includes("/api/auth")) {
-    console.log("API request detected");
-    console.log(pathname);
-  }
 
   // Skip if requesting static assets or OAuth2 authorization endpoints
   if (
@@ -38,68 +28,49 @@ export async function middleware(request: NextRequest) {
     ? pathname.replace(/^\/[a-z]{2}/, "")
     : pathname;
 
-  console.log("Current Locale:", currentLocale);
-  console.log("Current Pathname:", currentPathname);
+  // Check the isLoggedIn cookie
+  const isLoggedIn = request.cookies.get("isLoggedIn")?.value;
+  const isLoggedInValue =
+    isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
 
-  if (currentPathname === "/") {
-    return NextResponse.redirect(
-      new URL(`/${currentLocale}/login`, request.url)
-    );
-  }
+    // TODO::: handling redirection for authenticated users
+  // const tokenValue = await request.cookies.get("tkn")?.value;
 
-  let isAuthenticated = false;
+  // const guestRoutes: string[] = ["/login", "/register", "/", ""];
 
-  console.log("testing axios instance");
-  // const session = await fetch(
-  //   "http://localhost:8080/api/auth/authentication/validate-session",
-  //   {
-  //     method: "GET",
-  //     credentials: "include",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   }
-  // )
-  //   .then((response) => {
-  //     if (response.status === 200) {
-  //       isAuthenticated = true;
+  // if (tokenValue != undefined) {
+  //   if (isLoggedInValue === false) {
+  //     // User is not logged in
+  //     console.log("case 1");
+  //     if (!guestRoutes.includes(currentPathname)) {
+  //       return NextResponse.redirect(
+  //         new URL(`/${currentLocale}/login`, request.url)
+  //       );
   //     }
-  //   })
-  //   .catch(() => {
-  //     console.log("User is not authenticated, redirecting to login page.");
-  //     isAuthenticated = false;
-  //   });
+  //   } else if (isLoggedInValue === true) {
+  //     // User is logged in
+  //     console.log("case 2");
+  //     if (guestRoutes.includes(currentPathname)) {
+  //       return NextResponse.redirect(
+  //         new URL(`/${currentLocale}/home`, request.url)
+  //       );
+  //     }
+  //   } else {
+  //     console.log("case 3");
+  //     return NextResponse.redirect(
+  //       new URL(`/${currentLocale}/login`, request.url)
+  //     );
+  //   }
+  // } else {
+  //   console.log("case 4");
+  //   if (currentPathname !== "/login") {
+  //     // User is not logged in and not on the root path
+  //     return NextResponse.redirect(
+  //       new URL(`/${currentLocale}/login`, request.url)
+  //     );
+  //   }
+  // }
 
-  // Define guest routes
-  const guestRoutes: string[] = [
-    "/login",
-    "/register",
-    "/forgot-password",
-    "/",
-  ];
-
-  // Check if the current pathname is a guest route
-  const isGuestRoute = guestRoutes.some((route) =>
-    currentPathname.startsWith(route)
-  );
-
-  console.log("Is Guest Route:", isGuestRoute);
-  console.log("Is Authenticated:", isAuthenticated);
-
-  if (isGuestRoute) {
-    return NextResponse.next();
-  } else {
-    if (isAuthenticated) {
-      console.log("User is authenticated");
-    } else {
-      console.log("User is not authenticated");
-      return NextResponse.redirect(
-        new URL(`/${currentLocale}/login`, request.url)
-      );
-    }
-  }
-
-  // Allow the request to proceed
   return NextResponse.next();
 }
 
