@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type Props = {};
@@ -12,26 +11,6 @@ type Props = {};
 export default function page({}: Props) {
   const [user, setUser] = useState<any>({});
   const [providers, setProviders] = useState<String[]>([]);
-
-  const searchParams = useSearchParams();
-  useEffect(() => {
-    const token = searchParams.get("token"); // Extract token from query params if passed
-    if (token) {
-      console.log("Token received from query params:", token);
-      // Cookies.set("jwt", token, { secure: true, sameSite: "Strict" });
-    } else {
-      // Retrieve token from cookies if not in query params
-      const cookieToken = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("tkn="))
-        ?.split("=")[1];
-      if (cookieToken) {
-        console.log("Token retrieved from cookies:", cookieToken);
-      } else {
-        console.log("No token received");
-      }
-    }
-  }, [searchParams]);
 
   useEffect(() => {
     axiosInstance
@@ -42,7 +21,6 @@ export default function page({}: Props) {
       })
       .catch((e) => {
         console.log("fetch user error", e);
-        // window.location.href = "/auth/login";
       });
   }, []);
 
