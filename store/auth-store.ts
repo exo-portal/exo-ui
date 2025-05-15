@@ -46,9 +46,6 @@ export const useAuthStore = create<AuthState>((set) => ({
         document.cookie = "isLoggedIn=false; path=/;";
         useAuthStore.getState().redirectRoute(PATH.LOGIN.value);
       })
-      .catch((error) => {
-        return null;
-      })
       .finally(() => {
         set({ user: null });
         useAuthStore.getState().setIsLoggedIn(false);

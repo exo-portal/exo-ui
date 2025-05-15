@@ -12,6 +12,7 @@ type Props = {};
 export default function page({}: Props) {
   const [user, setUser] = useState<any>({});
   const [providers, setProviders] = useState<String[]>([]);
+  const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     axiosInstance
@@ -40,13 +41,6 @@ export default function page({}: Props) {
       setProviders(providerIds);
     }
   }, [user]);
-
-  useEffect(() => {
-    console.log("providers", providers);
-    console.log("providers", providers.length);
-  }, [providers]);
-
-  const { logout } = useAuthStore();
 
   const unbindLoginMethod = (data: {
     providerId: String;
