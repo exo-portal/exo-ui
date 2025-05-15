@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { protectedPathValues, PATH } from "./config";
 
+// Middleware to handle locale and authentication
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -28,50 +30,41 @@ export async function middleware(request: NextRequest) {
     ? pathname.replace(/^\/[a-z]{2}/, "")
     : pathname;
 
+  // Redirect if locale is not supported
+  if (localeMatch && !supportedLocales.includes(currentLocale)) {
+    return NextResponse.redirect(
+      new URL(`/${defaultLocale}/${PATH.HOME.value}`, request.url)
+    );
+  }
+
   // Check the isLoggedIn cookie
   const isLoggedIn = request.cookies.get("isLoggedIn")?.value;
+
+  // If the cookie is not set, redirect to the login page
+  const protectedRoutes: string[] = protectedPathValues;
+
+  // Check if the current path is protected
   const isLoggedInValue =
     isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
 
-    // TODO::: handling redirection for authenticated users
-  // const tokenValue = await request.cookies.get("tkn")?.value;
-
-  // const guestRoutes: string[] = ["/login", "/register", "/", ""];
-
-  // if (tokenValue != undefined) {
-  //   if (isLoggedInValue === false) {
-  //     // User is not logged in
-  //     console.log("case 1");
-  //     if (!guestRoutes.includes(currentPathname)) {
-  //       return NextResponse.redirect(
-  //         new URL(`/${currentLocale}/login`, request.url)
-  //       );
-  //     }
-  //   } else if (isLoggedInValue === true) {
-  //     // User is logged in
-  //     console.log("case 2");
-  //     if (guestRoutes.includes(currentPathname)) {
-  //       return NextResponse.redirect(
-  //         new URL(`/${currentLocale}/home`, request.url)
-  //       );
-  //     }
-  //   } else {
-  //     console.log("case 3");
-  //     return NextResponse.redirect(
-  //       new URL(`/${currentLocale}/login`, request.url)
-  //     );
-  //   }
-  // } else {
-  //   console.log("case 4");
-  //   if (currentPathname !== "/login") {
-  //     // User is not logged in and not on the root path
-  //     return NextResponse.redirect(
-  //       new URL(`/${currentLocale}/login`, request.url)
-  //     );
-  //   }
-  // }
-
-  return NextResponse.next();
+  // If the cookie is not set, redirect to the login page
+  if (protectedRoutes.includes(currentPathname)) {
+    if (isLoggedInValue) {
+      return NextResponse.next();
+    } else {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+      );
+    }
+  } else {
+    if (isLoggedInValue) {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
+      );
+    } else {
+      return NextResponse.next();
+    }
+  }
 }
 
 export const config = {
