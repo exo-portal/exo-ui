@@ -31,7 +31,6 @@ export default function AuthForm() {
         password: password,
       })
       .then((res) => {
-        console.log("register res", res);
         if (res.data.isSuccess) {
           window.location.href = "/home";
         }

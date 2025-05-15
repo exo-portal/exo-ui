@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { axiosInstance } from "@/lib";
+import { useAuthStore } from "@/store";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -45,16 +46,7 @@ export default function page({}: Props) {
     console.log("providers", providers.length);
   }, [providers]);
 
-  const logoutHandler = () => {
-    axiosInstance
-      .post("/api/auth/authentication/logout")
-      .then(() => {
-        window.location.href = "/auth/login";
-      })
-      .catch(() => {
-        window.location.href = "/auth/login";
-      });
-  };
+  const { logout } = useAuthStore();
 
   const unbindLoginMethod = (data: {
     providerId: String;
@@ -113,7 +105,7 @@ export default function page({}: Props) {
         <>User not found</>
       )}
 
-      <Button onClick={logoutHandler}>Logout</Button>
+      <Button onClick={logout}>Logout</Button>
 
       <div className="flex gap-2">
         <Button
