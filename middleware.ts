@@ -47,6 +47,18 @@ export async function middleware(request: NextRequest) {
   const isLoggedInValue =
     isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
 
+  if (currentPathname === "/") {
+    if (isLoggedInValue) {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
+      );
+    } else {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+      );
+    }
+  }
+
   // If the cookie is not set, redirect to the login page
   if (protectedRoutes.includes(currentPathname)) {
     if (isLoggedInValue) {
