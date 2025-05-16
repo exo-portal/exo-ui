@@ -15,27 +15,21 @@ export default function page({}: Props) {
   const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
-    axiosInstance
-      .get("/api/auth/user/get")
-      .then((res: any) => {
-        console.log("fetch user", res.data);
-        setUser(res.data);
-      })
-      .catch((e) => {
-        console.log("fetch user error", e);
-      });
+    axiosInstance.get("/api/auth/user/get").then((res: any) => {
+      setUser(res.data);
+    });
   }, []);
 
   useEffect(() => {
     if (user && user.resultData) {
       const providerIds = [];
-      if (user.resultData.githubProviderId) {
+      if (user.resultData.githubId) {
         providerIds.push("github");
       }
-      if (user.resultData.googleProviderId) {
+      if (user.resultData.googleId) {
         providerIds.push("google");
       }
-      if (user.resultData.emailProvider) {
+      if (user.resultData.emailId) {
         providerIds.push("email");
       }
       setProviders(providerIds);
@@ -50,7 +44,6 @@ export default function page({}: Props) {
     axiosInstance
       .post("/api/auth/login-method/unbind", data)
       .then((res) => {
-        console.log("unbind success", res.data);
         setUser(res.data);
       })
       .catch((e) => {
@@ -74,7 +67,6 @@ export default function page({}: Props) {
         id: user.resultData.id,
       })
       .then((res) => {
-        console.log("unbind email success", res.data);
         setUser(res.data);
       });
   };
@@ -103,13 +95,11 @@ export default function page({}: Props) {
 
       <div className="flex gap-2">
         <Button
-          disabled={
-            user?.resultData?.githubProviderId && providers.length === 1
-          }
+          disabled={user?.resultData?.githubId && providers.length === 1}
           onClick={() => {
-            if (user?.resultData?.githubProviderId) {
+            if (user?.resultData?.githubId) {
               unbindLoginMethod({
-                providerId: user.resultData.githubProviderId,
+                providerId: user.resultData.githubId,
                 providerName: "github",
                 userId: user.resultData.id,
               });
@@ -119,23 +109,19 @@ export default function page({}: Props) {
               return;
             }
           }}
-          variant={
-            user?.resultData?.githubProviderId ? "destructive" : "default"
-          }
+          variant={user?.resultData?.githubId ? "destructive" : "default"}
         >
-          {user?.resultData?.githubProviderId
+          {user?.resultData?.githubId
             ? "Disconnect to Github"
             : "Connect to Github"}
         </Button>
 
         <Button
-          disabled={
-            user?.resultData?.googleProviderId && providers.length === 1
-          }
+          disabled={user?.resultData?.googleId && providers.length === 1}
           onClick={() => {
-            if (user?.resultData?.googleProviderId) {
+            if (user?.resultData?.googleId) {
               unbindLoginMethod({
-                providerId: user.resultData.googleProviderId,
+                providerId: user.resultData.googleId,
                 providerName: "google",
                 userId: user.resultData.id,
               });
@@ -145,15 +131,13 @@ export default function page({}: Props) {
               return;
             }
           }}
-          variant={
-            user?.resultData?.googleProviderId ? "destructive" : "default"
-          }
+          variant={user?.resultData?.googleId ? "destructive" : "default"}
         >
-          {user?.resultData?.googleProviderId
+          {user?.resultData?.googleId
             ? "Disconnect to Google"
             : "Connect to Google"}
         </Button>
-        {user?.resultData?.emailProvider && (
+        {user?.resultData?.emailId && (
           <div className="flex flex-col gap-4">
             <Button
               onClick={unlinkEmail}
