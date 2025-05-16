@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 
 type Props = {};
 
-export default function page({}: Props) {
+export default function HomePage({}: Props) {
   const [user, setUser] = useState<any>({});
   const [providers, setProviders] = useState<String[]>([]);
   const logout = useAuthStore((state) => state.logout);
@@ -68,6 +68,9 @@ export default function page({}: Props) {
       })
       .then((res) => {
         setUser(res.data);
+      })
+      .catch((e) => {
+        console.error("Failed to fetch user", e);
       });
   };
 
