@@ -33,7 +33,8 @@ export default function AuthForm() {
       .then((res) => {
         console.log("register res", res);
         if (res.request.status === 200) {
-          window.location.href = "/en/home";
+          const userLocale = navigator.language.slice(0, 2) || "en";
+          window.location.href = `/${userLocale}/home`;
         }
       })
       .catch((e) => {
