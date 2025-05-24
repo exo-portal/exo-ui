@@ -7,8 +7,8 @@ import { Label } from "@radix-ui/react-label";
 import React, { useState } from "react";
 
 export default function AuthForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@gmail.com");
+  const [password, setPassword] = useState("password");
 
   const handleContinueToGithub = () => {
     window.location.href =
@@ -31,8 +31,9 @@ export default function AuthForm() {
         password: password,
       })
       .then((res) => {
-        if (res.data.isSuccess) {
-          window.location.href = "/home";
+        console.log("register res", res);
+        if (res.request.status === 200) {
+          window.location.href = "/en/home";
         }
       })
       .catch((e) => {
