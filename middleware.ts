@@ -47,6 +47,7 @@ export async function middleware(request: NextRequest) {
   const isLoggedInValue =
     isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
 
+  // If the pathname is the root path, redirect to the appropriate page
   if (currentPathname === "/") {
     if (isLoggedInValue) {
       return NextResponse.redirect(
