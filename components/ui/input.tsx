@@ -7,7 +7,6 @@ function Input({
   inputSuffixIcon,
   ...props
 }: React.ComponentProps<"input"> & {
-  showEyeIcon?: boolean;
   inputSuffixIcon?: React.ReactNode;
 }) {
   const [show, setShow] = React.useState(false);
