@@ -50,7 +50,7 @@ export default function EmailForm() {
   });
 
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    console.log("Form submitted:", data);
+    // TODO:: Handle form submission logic here
   };
 
   return (
