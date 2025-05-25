@@ -2,5 +2,26 @@
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page"
+  },
+  "register": {
+    "instruction": {
+      "getStartedwithUs": "Get Started with us",
+      "chooseSignupType": "Choose two (2) types of sign up",
+      "signUpWithOAuth": "Sign up using (Gmail, Github)",
+      "signUpWithExistingAccounts": "Sign up using your existing accounts.",
+      "signUpWithEmailOrPhone": "Sign up using email or phone number:",
+      "signUpWithEmailOrPhoneDescription": "Sign up using your email or phone number.",
+      "signUpWithUsernameAndPassword": "Fill out username and password.",
+      "continueButton": "Click continue"
+    },
+    "form": {
+      "title": "Sign Up Account",
+      "subtitle": "Register with your existing account or create a new one",
+      "button": {
+        "google": "Google",
+        "github": "Github"
+      },
+      "or": "Or"
+    }
   }
 }
