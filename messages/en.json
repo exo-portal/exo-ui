@@ -19,9 +19,23 @@
       "subtitle": "Register with your existing account or create a new one",
       "button": {
         "google": "Google",
-        "github": "Github"
+        "github": "Github",
+        "continue": "Continue"
       },
-      "or": "Or"
+      "or": "Or",
+      "input": {
+        "label": {
+          "email": "Email",
+          "password": "Password",
+          "reEnterPassword": "Re-enter password"
+        },
+        "placeholder": {
+          "email": "Please enter your email",
+          "password": "Please enter your password",
+          "reEnterPassword": "Re-enter your password"
+
+        }
+      }
     }
   }
 }
