@@ -2,6 +2,7 @@
 
 import { GithubIcon, GoogleIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { GITHUB_OAUTH_FULL_URL, GOOGLE_OAUTH_FULL_URL } from "@/config";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -12,14 +13,12 @@ export default function AuthForm() {
 
   // Handlers for OAuth registration github provider
   const registerUsingGithubHandler = () => {
-    window.location.href =
-      "http://localhost:8080/api/auth/oauth2/authorization/github";
+    window.location.href = GITHUB_OAUTH_FULL_URL;
   };
 
   // Handlers for Oauth registration google provider
   const registerUsingGoogleHandler = () => {
-    window.location.href =
-      "http://localhost:8080/api/auth/oauth2/authorization/google";
+    window.location.href = GOOGLE_OAUTH_FULL_URL;
   };
 
   return (

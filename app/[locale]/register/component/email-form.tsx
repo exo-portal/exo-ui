@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
+import FormFieldInput from "@/components/form-field-input";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -8,19 +10,17 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
-import FormFieldInput from "@/components/form-field-input";
-import Image from "next/image";
 import { UserIcon } from "@/components/icons";
 
 export default function EmailForm() {
-    const t = useTranslations();
+  const t = useTranslations();
 
   const FormSchema = z
     .object({
       email: z
         .string()
         .email("Invalid email address")
-        .min(8, "Password must be at least 8 characters"),
+        .min(8, "Email must be at least 8 characters"),
       password: z
         .string()
         .min(8, "Password must be at least 8 characters")
@@ -72,7 +72,7 @@ export default function EmailForm() {
 
         {/* PASSWORD FIELD */}
         <FormFieldInput
-          id={"email"}
+          id={"password"}
           name={"password"}
           type={"password"}
           schema={FormSchema}
