@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import { UserIcon } from "@/components/icons";
+import Link from "next/link";
 
 export default function EmailForm() {
   const t = useTranslations();
@@ -99,8 +100,11 @@ export default function EmailForm() {
       </form>
 
       {/* Sign In Link */}
-      <div className="text-center">
-        Already have an account? <Button variant={"link"}>Sign In</Button>
+      <div className="text-center text-neutral-500 text-label">
+        {translate(t, "register.form.alreadyHaveAccount.text")}
+        <Link className="text-main-700 underline px-1" href={"#"}>
+          {translate(t, "register.form.alreadyHaveAccount.signIn")}
+        </Link>
       </div>
     </Form>
   );

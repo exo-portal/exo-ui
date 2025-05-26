@@ -33,8 +33,12 @@
           "email": "Please enter your email",
           "password": "Please enter your password",
           "reEnterPassword": "Re-enter your password"
-
         }
+      },
+      "alreadyHaveAccount": {
+        "text": "Already have an account?",
+        "signIn": "Sign in",
+        "login": "Login"
       }
     }
   }
