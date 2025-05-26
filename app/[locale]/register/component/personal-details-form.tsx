@@ -89,6 +89,35 @@ export default function PersonalDetailsForm() {
             }
           />
         </div>
+        {/* Date Of Birth */}
+        <FormFieldInput
+          id={"dateOfBirth"}
+          name={"dateOfBirth"}
+          control={undefined}
+          schema={FormSchema}
+          componentType="datePicker"
+          labelKey={"register.form.personalDetails.input.label.dateOfBirth"}
+          placeholderKey={
+            "register.form.personalDetails.input.placeholder.dateOfBirth"
+          }
+        />
+        {/* Date Of Birth */}
+        <FormFieldInput
+          id={"dateOfBirth"}
+          name={"dateOfBirth"}
+          control={undefined}
+          schema={FormSchema}
+          componentType="select"
+          labelKey={"register.form.personalDetails.input.label.gender"}
+          placeholderKey={
+            "register.form.personalDetails.input.placeholder.gender"
+          }
+          options={[
+            { value: "male", label: "male" },
+            { value: "female", label: "female" },
+            { value: "other", label: "other" },
+          ]}
+        />
       </form>
     </Form>
   );
