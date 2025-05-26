@@ -4,6 +4,7 @@ import "./globals.css";
 import GlobalAuth from "@/components/global-auth";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import ReactScan from "@/components/react-scan";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <ReactScan />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-50`}
       >

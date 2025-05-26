@@ -1,38 +1,134 @@
 import { useTranslations } from "next-intl";
 import React from "react";
 import {
-  FormControl,
-  FormField,
   FormItem,
+  FormField,
   FormLabel,
   FormMessage,
+  FormControl,
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
+import {
+  ControllerFieldState,
+  ControllerRenderProps,
+  FieldValues,
+} from "react-hook-form";
+import { DatePicker } from "./ui/datepicker";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+
+interface OptionsInterface {
+  label: string;
+  value: string;
+}
 
 type FormFieldInputProps = {
+  id: string;
+  name: keyof z.infer<FormFieldInputProps["schema"]>;
+  type?: React.HTMLInputTypeAttribute;
   control: any;
   schema: z.ZodTypeAny;
-  name: keyof z.infer<FormFieldInputProps["schema"]>;
-  id: string;
-  placeholderKey: TxKeyPath;
   labelKey: TxKeyPath;
-  type?: React.HTMLInputTypeAttribute;
+  placeholderKey: TxKeyPath;
   inputSuffixIcon?: React.ReactNode;
+  componentType?:
+    | "input"
+    | "select"
+    | "textarea"
+    | "checkbox"
+    | "radio"
+    | "datePicker";
+  options?: OptionsInterface[];
+  autoComplete?: "off" | "on";
 };
 
 export default function FormFieldInput({
-  control,
-  name,
-  placeholderKey,
   id,
-  labelKey,
   type = "text",
-  inputSuffixIcon
+  name,
+  control,
+  options = [],
+  labelKey,
+  autoComplete = "off",
+  componentType = "input",
+  placeholderKey,
+  inputSuffixIcon,
 }: FormFieldInputProps) {
   const t = useTranslations();
+
+  const componentRender = (
+    field: ControllerRenderProps<FieldValues, string>,
+    fieldState: ControllerFieldState
+  ) => {
+    switch (componentType) {
+      case "input":
+        return (
+          <Input
+            id={id}
+            maxLength={50}
+            type={type}
+            autoComplete={autoComplete}
+            aria-invalid={fieldState.invalid}
+            inputSuffixIcon={inputSuffixIcon}
+            {...field}
+            placeholder={translate(t, placeholderKey)}
+          />
+        );
+      // TODO:: enhance design system for select input
+      case "select":
+        return (
+          <Select aria-invalid={fieldState.invalid}>
+            <SelectTrigger>
+              <SelectValue placeholder={translate(t, placeholderKey)} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>{translate(t, labelKey)}</SelectLabel>
+                {options.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className="cursor-pointer"
+                  >
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        );
+      // TODO:: enhance design system for Date picker input
+      case "datePicker":
+        return (
+          <DatePicker
+            placeholder={translate(t, placeholderKey)}
+            aria-label={String(fieldState.invalid)}
+          />
+        );
+      default:
+        return (
+          <Input
+            id={id}
+            maxLength={50}
+            type={type}
+            aria-invalid={fieldState.invalid}
+            inputSuffixIcon={inputSuffixIcon}
+            {...field}
+            placeholder={translate(t, placeholderKey)}
+          />
+        );
+    }
+  };
 
   return (
     <FormField
@@ -43,21 +139,7 @@ export default function FormFieldInput({
           <FormLabel className="text-neutral-600 font-medium" htmlFor={id}>
             {translate(t, labelKey)}
           </FormLabel>
-          <FormControl>
-            <Input
-              id={id}
-              maxLength={50}
-              className={
-                fieldState.invalid
-                  ? "border-destructive text-destructive placeholder:text-destructive focus-visible:ring-destructive"
-                  : "caret-primary"
-              }
-              type={type}
-              inputSuffixIcon={inputSuffixIcon}
-              {...field}
-              placeholder={translate(t, placeholderKey)}
-            />
-          </FormControl>
+          <FormControl>{componentRender(field, fieldState)}</FormControl>
           <FormMessage />
         </FormItem>
       )}

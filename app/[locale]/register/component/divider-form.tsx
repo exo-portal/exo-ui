@@ -9,7 +9,7 @@ export default function DividerForm() {
     <div className="flex mt-2 gap-4 items-center">
       <div className="bg-border h-0.5 w-full" />
       <span className="text-body-normal text-neutral-400">
-        {translate(t, "register.form.or")}
+        {translate(t, "register.form.signUp.or")}
       </span>
       <div className="bg-border h-0.5 w-full" />
     </div>

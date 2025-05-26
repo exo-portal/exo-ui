@@ -67,6 +67,19 @@
   --color-neutral-900: var(--neutral-900);
   --color-neutral-950: var(--neutral-950);
 
+  /* danger color */
+  --color-danger-50: var(--danger-50);
+  --color-danger-100: var(--danger-100);
+  --color-danger-200: var(--danger-200);
+  --color-danger-300: var(--danger-300);
+  --color-danger-400: var(--danger-400);
+  --color-danger-500: var(--danger-500);
+  --color-danger-600: var(--danger-600);
+  --color-danger-700: var(--danger-700);
+  --color-danger-800: var(--danger-800);
+  --color-danger-900: var(--danger-900);
+  --color-danger-950: var(--danger-950);
+
   /* main color */
   --color-main-50: var(--main-50);
   --color-main-100: var(--main-100);
@@ -140,6 +153,19 @@
   --neutral-900: #313236;
   --neutral-950: #242528;
 
+  /* danger color */
+  --danger-50: #fef2f2;
+  --danger-100: #fee2e2;
+  --danger-200: #fecaca;
+  --danger-300: #fca5a5;
+  --danger-400: #f87171;
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+  --danger-700: #b91c1c;
+  --danger-800: #991b1b;
+  --danger-900: #7f1d1d;
+  --danger-950: #450a0a;
+
   /* main color */
   --main-50: #edfaff;
   --main-100: #d6f3ff;
@@ -195,4 +221,16 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Chrome, Safari, Edge */
+.no-calendar-icon::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+.no-calendar-icon {
+  appearance: none;
+  -moz-appearance: textfield;
 }
