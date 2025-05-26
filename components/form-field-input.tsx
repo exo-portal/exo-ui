@@ -49,6 +49,7 @@ type FormFieldInputProps = {
     | "radio"
     | "datePicker";
   options?: OptionsInterface[];
+  autoComplete?: "off" | "on";
 };
 
 export default function FormFieldInput({
@@ -56,11 +57,12 @@ export default function FormFieldInput({
   type = "text",
   name,
   control,
+  options = [],
   labelKey,
+  autoComplete = "off",
+  componentType = "input",
   placeholderKey,
   inputSuffixIcon,
-  componentType = "input",
-  options = [],
 }: FormFieldInputProps) {
   const t = useTranslations();
 
@@ -75,6 +77,7 @@ export default function FormFieldInput({
             id={id}
             maxLength={50}
             type={type}
+            autoComplete={autoComplete}
             aria-invalid={fieldState.invalid}
             inputSuffixIcon={inputSuffixIcon}
             {...field}
@@ -106,7 +109,12 @@ export default function FormFieldInput({
         );
       // TODO:: enhance design system for Date picker input
       case "datePicker":
-        return <DatePicker aria-label={String(fieldState.invalid)} />;
+        return (
+          <DatePicker
+            placeholder={translate(t, placeholderKey)}
+            aria-label={String(fieldState.invalid)}
+          />
+        );
       default:
         return (
           <Input

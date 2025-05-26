@@ -41,6 +41,9 @@ dependencies:
   lucide-react:
     specifier: ^0.508.0
     version: 0.508.0(react@19.1.0)
+  moment:
+    specifier: ^2.30.1
+    version: 2.30.1
   next:
     specifier: 15.3.2
     version: 15.3.2(@babel/core@7.27.1)(react-dom@19.1.0)(react@19.1.0)
@@ -5430,6 +5433,10 @@ packages:
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: true
+
+  /moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+    dev: false
 
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}

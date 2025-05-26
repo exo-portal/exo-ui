@@ -4,6 +4,7 @@ import UserIcon from "./User.svg";
 import LockIcon from "./Lock.svg";
 import PasswordEyeIcon from "./PasswordEye.svg";
 import PasswordEyeOffIcon from "./PasswordEyeSlash.svg";
+import CalendarIcon from "./Calendar.svg";
 
 export {
   GoogleIcon,
@@ -12,4 +13,5 @@ export {
   LockIcon,
   PasswordEyeIcon,
   PasswordEyeOffIcon,
+  CalendarIcon
 };
