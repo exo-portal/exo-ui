@@ -1,25 +1,25 @@
 "use client";
 
+import React, { useCallback } from "react";
 import { GithubIcon, GoogleIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { GITHUB_OAUTH_FULL_URL, GOOGLE_OAUTH_FULL_URL } from "@/config";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import React from "react";
 
 export default function AuthForm() {
   const t = useTranslations();
 
   // Handlers for OAuth registration github provider
-  const registerUsingGithubHandler = () => {
+  const registerUsingGithubHandler = useCallback(() => {
     window.location.href = GITHUB_OAUTH_FULL_URL;
-  };
+  }, []);
 
   // Handlers for Oauth registration google provider
-  const registerUsingGoogleHandler = () => {
+  const registerUsingGoogleHandler = useCallback(() => {
     window.location.href = GOOGLE_OAUTH_FULL_URL;
-  };
+  }, []);
 
   return (
     <div className="flex flex-col gap-11">
@@ -34,7 +34,7 @@ export default function AuthForm() {
       <div className="flex flex-col space-y-4">
         {/* Google OAuth */}
         <Button
-          className="font-semibold text-neutral-500"
+          className="font-semibold text-neutral-500 bg-transparent border-neutral-500 hover:bg-main-50 focus-visible:bg-main-200 focus:border-main-900 focus:text-main-900"
           variant={"outline"}
           onClick={registerUsingGoogleHandler}
         >
@@ -44,7 +44,7 @@ export default function AuthForm() {
 
         {/* GitHub OAuth */}
         <Button
-          className="font-semibold text-neutral-500"
+          className="font-semibold text-neutral-500 bg-transparent border-neutral-500 hover:bg-main-50 focus-visible:bg-main-200 focus:border-main-900 focus:text-main-900"
           variant={"outline"}
           onClick={registerUsingGithubHandler}
         >
