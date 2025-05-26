@@ -47,12 +47,8 @@ export default function FormFieldInput({
             <Input
               id={id}
               maxLength={50}
-              className={
-                fieldState.invalid
-                  ? "border-destructive text-destructive placeholder:text-destructive focus-visible:ring-destructive"
-                  : "caret-primary"
-              }
               type={type}
+              aria-invalid={fieldState.invalid}
               inputSuffixIcon={inputSuffixIcon}
               {...field}
               placeholder={translate(t, placeholderKey)}
