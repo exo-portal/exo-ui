@@ -3,10 +3,10 @@ import { AuthForm, DividerForm, EmailForm } from "./component";
 
 export default function Page() {
   return (
-    <div className="flex flex-col">
+    <section className="flex flex-col">
       <AuthForm />
       <DividerForm />
       <EmailForm />
-    </div>
+    </section>
   );
 }

@@ -23,6 +23,27 @@ export const PATH: PathInterface = {
     getPath: (locale: string) => `/${locale}/home`,
     isProtected: true,
   },
+  REGISTER: {
+    name: "register",
+    path: "/register",
+    value: "register",
+    getPath: (locale: string) => `/${locale}/register`,
+    isProtected: false,
+  },
+  REGISTER_PERSONAL_DETAILS: {
+    name: "register-personal-details",
+    path: "/register/personal-details",
+    value: "register/personal-details",
+    getPath: (locale: string) => `/${locale}/register/personal-details`,
+    isProtected: false,
+  },
+  REGISTER_CONTACT_DETAILS: {
+    name: "register-contact-details",
+    path: "/register/contact-details",
+    value: "register/contact-details",
+    getPath: (locale: string) => `/${locale}/register/contact-details`,
+    isProtected: false,
+  },
 };
 export const protectedPath: PathInterface = Object.fromEntries(
   Object.entries(PATH).filter(([_, value]) => value.isProtected)

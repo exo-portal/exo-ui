@@ -30,7 +30,7 @@ export default function FormFieldInput({
   id,
   labelKey,
   type = "text",
-  inputSuffixIcon
+  inputSuffixIcon,
 }: FormFieldInputProps) {
   const t = useTranslations();
 
