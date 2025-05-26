@@ -15,25 +15,49 @@
       "continueButton": "Click continue"
     },
     "form": {
-      "title": "Sign Up Account",
-      "subtitle": "Register with your existing account or create a new one",
-      "button": {
-        "google": "Google",
-        "github": "Github",
-        "continue": "Continue"
-      },
-      "or": "Or",
-      "input": {
-        "label": {
-          "email": "Email",
-          "password": "Password",
-          "reEnterPassword": "Re-enter password"
+      "signUp": {
+        "title": "Sign Up Account",
+        "subtitle": "Register with your existing account or create a new one",
+        "button": {
+          "google": "Google",
+          "github": "Github",
+          "continue": "Continue"
         },
-        "placeholder": {
-          "email": "Please enter your email",
-          "password": "Please enter your password",
-          "reEnterPassword": "Re-enter your password"
-
+        "or": "Or",
+        "input": {
+          "label": {
+            "email": "Email",
+            "password": "Password",
+            "reEnterPassword": "Re-enter password"
+          },
+          "placeholder": {
+            "email": "Please enter your email",
+            "password": "Please enter your password",
+            "reEnterPassword": "Re-enter your password"
+          }
+        },
+        "alreadyHaveAccount": {
+          "text": "Already have an account?",
+          "signIn": "Sign in",
+          "login": "Login"
+        }
+      },
+      "personalDetails": {
+        "title": "Register Account",
+        "subtitle": "Provide your personal details",
+        "input": {
+          "label": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "dateOfBirth": "Date of Birth",
+            "gender": "Gender"
+          },
+          "placeholder": {
+            "firstName": "Please enter your first name",
+            "lastName": "Please enter your last name",
+            "dateOfBirth": "Please enter your date of birth",
+            "gender": "Please select your gender"
+          }
         }
       }
     }
