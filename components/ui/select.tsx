@@ -50,7 +50,12 @@ function SelectTrigger({
       {children}
       <SelectPrimitive.Icon asChild>
         <SelectPrimitive.Icon asChild>
-          <Image src={ChevronDown} alt="chevron-down" />
+          <Image
+            src={ChevronDown}
+            alt="chevron-down"
+            width={24}
+            height={24}
+          />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Icon>
     </SelectPrimitive.Trigger>
