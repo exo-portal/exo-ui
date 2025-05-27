@@ -107,7 +107,9 @@ export default function EmailForm() {
           control={form.control}
           name={"confirmPassword"}
           labelKey={"register.form.signUp.input.label.reEnterPassword"}
-          placeholderKey={"register.form.signUp.input.placeholder.reEnterPassword"}
+          placeholderKey={
+            "register.form.signUp.input.placeholder.reEnterPassword"
+          }
         />
         <Button type="submit">
           {translate(t, "register.form.signUp.button.continue")}
@@ -115,9 +117,12 @@ export default function EmailForm() {
       </form>
 
       {/* Sign In Link */}
-      <div className="text-center text-neutral-500 text-label">
+      <div className="text-center mt-2 text-neutral-500 text-label">
         {translate(t, "register.form.signUp.alreadyHaveAccount.text")}
-        <Link className="text-main-700 underline px-1" href={"#"}>
+        <Link
+          className="text-main-700 underline px-1"
+          href={PATH.LOGIN.getPath(getCurrentLocale())}
+        >
           {translate(t, "register.form.signUp.alreadyHaveAccount.signIn")}
         </Link>
       </div>
