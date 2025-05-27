@@ -84,7 +84,6 @@ export default function FormFieldInput({
             placeholder={translate(t, placeholderKey)}
           />
         );
-      // TODO:: enhance design system for select input
       case "select":
         return (
           <Select aria-invalid={fieldState.invalid}>
@@ -93,7 +92,6 @@ export default function FormFieldInput({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>{translate(t, labelKey)}</SelectLabel>
                 {options.map((option) => (
                   <SelectItem
                     key={option.value}
@@ -107,7 +105,6 @@ export default function FormFieldInput({
             </SelectContent>
           </Select>
         );
-      // TODO:: enhance design system for Date picker input
       case "datePicker":
         return (
           <DatePicker
