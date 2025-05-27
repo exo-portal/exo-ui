@@ -58,6 +58,10 @@
             "dateOfBirth": "Please enter your date of birth",
             "gender": "Please select your gender"
           }
+        },
+        "button": {
+          "next": "Next",
+          "back": "Back"
         }
       }
     }
