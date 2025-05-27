@@ -48,10 +48,10 @@ export function DatePicker({
         inputSuffixIcon={
           !date ? (
             <PopoverTrigger asChild>
-              <Image src={CalendarIcon} alt="calendar-icon" />
+              <Image className="cursor-pointer" src={CalendarIcon} alt="calendar-icon" />
             </PopoverTrigger>
           ) : (
-            <div className="ml-2" onClick={resetDate}>
+            <div className="ml-2 cursor-pointer" onClick={resetDate}>
               <XIcon />
             </div>
           )
