@@ -7,11 +7,9 @@ import { useAuthStore } from "@/store";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-type Props = {};
-
-export default function HomePage({}: Props) {
+export default function HomePage() {
   const [user, setUser] = useState<any>({});
-  const [providers, setProviders] = useState<String[]>([]);
+  const [providers, setProviders] = useState<string[]>([]);
   const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function HomePage({}: Props) {
   }, [user]);
 
   const unbindLoginMethod = (data: {
-    providerId: String;
+    providerId: string;
     providerName: "google" | "github";
     userId: number;
   }) => {

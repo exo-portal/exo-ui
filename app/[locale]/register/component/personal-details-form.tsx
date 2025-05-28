@@ -21,7 +21,7 @@ export default function PersonalDetailsForm() {
 
   useEffect(() => {
     setIsLoading(false);
-  }, []);
+  }, [setIsLoading]);
 
   const FormSchema = z.object({
     firstName: z.string().min(1, "Firstname is required"),
@@ -106,7 +106,7 @@ export default function PersonalDetailsForm() {
         <FormFieldInput
           id={"dateOfBirth"}
           name={"dateOfBirth"}
-          control={undefined}
+          control={form.control}
           schema={FormSchema}
           componentType="datePicker"
           labelKey={"register.form.personalDetails.input.label.dateOfBirth"}
@@ -118,7 +118,7 @@ export default function PersonalDetailsForm() {
         <FormFieldInput
           id={"gender"}
           name={"gender"}
-          control={undefined}
+          control={form.control}
           schema={FormSchema}
           componentType="select"
           labelKey={"register.form.personalDetails.input.label.gender"}
