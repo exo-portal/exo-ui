@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import FormFieldInput from "@/components/form-field-input";
 import { Button } from "@/components/ui/button";
@@ -10,9 +10,9 @@ import { getCurrentLocale, translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import { UserIcon } from "@/components/icons";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRegistrationStore } from "@/store";
+import { useAppStateStore, useRegistrationStore } from "@/store";
 import { PATH } from "@/config";
 import { useRouter } from "next/navigation";
 
@@ -20,6 +20,11 @@ export default function EmailForm() {
   const t = useTranslations();
   const router = useRouter();
   const { data, setData } = useRegistrationStore();
+  const { setIsLoading } = useAppStateStore();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   const FormSchema = z
     .object({
@@ -60,17 +65,15 @@ export default function EmailForm() {
     reValidateMode: "onChange",
   });
 
-  const onSubmit = ({
-    email,
-    password,
-    confirmPassword,
-  }: z.infer<typeof FormSchema>) => {
-    const trimmedData = {
+  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+    setIsLoading(true);
+    const { email, password, confirmPassword } = values;
+    setData({
       email: email.trim(),
       password: password.trim(),
       confirmPassword: confirmPassword.trim(),
-    };
-    setData(trimmedData);
+    });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     router.push(PATH.REGISTER_PERSONAL_DETAILS.getPath(getCurrentLocale()));
   };
 
@@ -107,7 +110,9 @@ export default function EmailForm() {
           control={form.control}
           name={"confirmPassword"}
           labelKey={"register.form.signUp.input.label.reEnterPassword"}
-          placeholderKey={"register.form.signUp.input.placeholder.reEnterPassword"}
+          placeholderKey={
+            "register.form.signUp.input.placeholder.reEnterPassword"
+          }
         />
         <Button type="submit">
           {translate(t, "register.form.signUp.button.continue")}
@@ -115,9 +120,12 @@ export default function EmailForm() {
       </form>
 
       {/* Sign In Link */}
-      <div className="text-center text-neutral-500 text-label">
+      <div className="text-center mt-2 text-neutral-500 text-label">
         {translate(t, "register.form.signUp.alreadyHaveAccount.text")}
-        <Link className="text-main-700 underline px-1" href={"#"}>
+        <Link
+          className="text-main-700 underline px-1"
+          href={PATH.LOGIN.getPath(getCurrentLocale())}
+        >
           {translate(t, "register.form.signUp.alreadyHaveAccount.signIn")}
         </Link>
       </div>
