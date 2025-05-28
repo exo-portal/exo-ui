@@ -42,9 +42,12 @@
           "login": "Login"
         }
       },
-      "personalDetails": {
+      "layout": {
         "title": "Register Account",
-        "subtitle": "Provide your personal details",
+        "personalDetailsSubtitle": "Provide your personal details",
+        "contactDetailsSubtitle": "Provide your contact details"
+      },
+      "personalDetails": {
         "input": {
           "label": {
             "firstName": "First name",
