@@ -11,7 +11,7 @@ export default function ContactDetailsLayout({
 
   return (
     <section className="flex flex-col">
-      <div className="text-center space-y-2 mb-20">
+      <div className="text-center space-y-2 mb-10">
         <h1 className="text-sub-heading-4 text-neutral-950 font-bold">
           {translate(t, "register.form.layout.title")}
         </h1>
