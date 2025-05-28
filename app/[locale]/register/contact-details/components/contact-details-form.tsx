@@ -43,6 +43,28 @@ export function ContactDetailsForm() {
     },
   });
 
+  const onSubmit = ({
+    country,
+    phoneNumber,
+    address,
+    state,
+    city,
+    barangay,
+    postalCode,
+  }: z.infer<typeof FormSchema>) => {
+    const trimData = {
+      country: country.trim(),
+      phoneNumber: phoneNumber.trim(),
+      address: address.trim(),
+      state: state.trim(),
+      city: city.trim(),
+      barangay: barangay.trim(),
+      postalCode: postalCode.trim(),
+    };
+    // TODO: Handle form submission, e.g., send to API or store in state
+    console.log("Submitted Data:", trimData);
+  };
+
   const COUNTRY_OPTIONS = [{ label: "Philippines", value: "ph" }];
   const CITY_OPTIONS = [{ label: "Cebu City", value: "cc" }];
   const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
@@ -50,7 +72,10 @@ export function ContactDetailsForm() {
 
   return (
     <Form {...form}>
-      <form className="flex flex-col gap-4 w-[500px]">
+      <form
+        className="flex flex-col gap-4 w-[500px]"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         {/* Country */}
         <FormFieldInput
           id="country"
@@ -111,7 +136,7 @@ export function ContactDetailsForm() {
           />
         </div>
 
-        {/* Baranngay & Postal code */}
+        {/* Barangay & Postal code */}
         <div className="flex gap-4">
           <FormFieldInput
             id="barangay"
@@ -132,7 +157,7 @@ export function ContactDetailsForm() {
             placeholderKey="register.form.contactDetails.input.placeholder.postalCode"
           />
         </div>
-        
+
         {/* Submit Button */}
         <Button className="mt-10" type="submit" variant={"default"}>
           {translate(t, "register.form.contactDetails.button.submit")}
