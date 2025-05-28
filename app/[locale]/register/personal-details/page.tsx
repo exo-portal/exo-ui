@@ -1,5 +1,5 @@
 import React from "react";
-import PersonalDetailsForm from "../component/personal-details-form";
+import PersonalDetailsForm from "./components/personal-details-form";
 
 export default function PersonalDetailsPage() {
   return <PersonalDetailsForm />;
