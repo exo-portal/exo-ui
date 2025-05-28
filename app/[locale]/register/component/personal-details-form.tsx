@@ -60,7 +60,6 @@ export default function PersonalDetailsForm() {
     gender,
     dateOfBirth,
   }: z.infer<typeof FormSchema>) => {
-    console.log("Form submitted with data:");
     const trimData = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
