@@ -31,8 +31,8 @@
             "reEnterPassword": "Re-enter password"
           },
           "placeholder": {
-            "email": "Please enter your email",
-            "password": "Please enter your password",
+            "email": "Enter your email",
+            "password": "Enter your password",
             "reEnterPassword": "Re-enter your password"
           }
         },
@@ -56,15 +56,42 @@
             "gender": "Gender"
           },
           "placeholder": {
-            "firstName": "Please enter your first name",
-            "lastName": "Please enter your last name",
-            "dateOfBirth": "Please enter your date of birth",
-            "gender": "Please select your gender"
+            "firstName": "Enter your first name",
+            "lastName": "Enter your last name",
+            "dateOfBirth": "Enter your date of birth",
+            "gender": "Select your gender"
           }
         },
         "button": {
           "next": "Next",
           "back": "Back"
+        }
+      },
+      "contactDetails": {
+        "input": {
+          "label": {
+            "phoneNumber": "Phone number",
+            "address": "Address",
+            "region": "Region",
+            "city": "City",
+            "state": "State",
+            "country": "Country",
+            "postalCode": "Postal code",
+            "barangay": "Barangay"
+          },
+          "placeholder": {
+            "phoneNumber": "Enter your phone number",
+            "address": "Enter your address",
+            "city": "Select city",
+            "state": "Select state",
+            "country": "Select country",
+            "postalCode": "Select postal code",
+            "barangay": "Select barangay"
+          }
+        },
+        "button": {
+          "submit": "Submit",
+          "cancel": "Cancel"
         }
       }
     }
