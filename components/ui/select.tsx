@@ -7,7 +7,6 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { ChevronDown } from "../icons";
-import { on } from "events";
 
 function Select({
   ...props
