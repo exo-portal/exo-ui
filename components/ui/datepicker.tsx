@@ -95,15 +95,7 @@ export function DatePicker({
               : undefined
           }
           onSelect={(selectedDate: Date | undefined) => {
-            if (props.onChange) {
-              const value = selectedDate
-                ? moment(selectedDate).format("YYYY-MM-DD")
-                : "";
-              const event = {
-                target: { value } as EventTarget & HTMLInputElement,
-              } as React.ChangeEvent<HTMLInputElement>;
-              props.onChange(event);
-            }
+            handleDateChange(selectedDate ? moment(selectedDate) : undefined);
           }}
           initialFocus
         />
