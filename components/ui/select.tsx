@@ -38,13 +38,15 @@ function SelectTrigger({
   size = "default",
   children,
   onClear,
+  isInputGroup = false,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default";
   onClear?: () => void;
+  isInputGroup?: boolean;
 }) {
-  return (
-    <div className="relative w-full">
+  if (isInputGroup) {
+    return (
       <SelectPrimitive.Trigger
         data-slot="select-trigger"
         data-size={size}
@@ -54,33 +56,57 @@ function SelectTrigger({
           "bg-neutral-50 border-neutral-200 w-full rounded-lg px-3.5 py-[22px] text-neutral-800 text-body-normal",
           "focus-visible:bg-main-50 focus-visible:border-main-400 focus-visible:ring-4 focus-visible:ring-main-100",
           "aria-invalid:border-danger-300 aria-invalid:bg-transparent aria-invalid:ring-4 aria-invalid:ring-danger-100",
+          "border-0 rounded-r-none bg-transparent pr-0 rounded-none focus-visible:ring-0 focus-visible:border-0 focus-visible:bg-transparent outline-none shadow-none data-[placeholder]:text-neutral-900",
           className
         )}
         {...props}
       >
         {children}
         <SelectPrimitive.Icon asChild>
-          {!props.value && (
-            <Image
-              src={ChevronDown}
-              alt="chevron-down"
-              width={24}
-              height={24}
-            />
-          )}
+          <Image src={ChevronDown} alt="chevron-down" width={20} height={20} />
         </SelectPrimitive.Icon>
       </SelectPrimitive.Trigger>
-      {props.value && (
-        <button
-          tabIndex={-1}
-          onClick={onClear}
-          className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 z-10 focus:outline-0 focus:border-0 focus:ring-0"
+    );
+  } else {
+    return (
+      <div className="relative w-full">
+        <SelectPrimitive.Trigger
+          data-slot="select-trigger"
+          data-size={size}
+          aria-invalid={props["aria-invalid"]}
+          className={cn(
+            "relative border-input data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 rounded-md border bg-transparent px-3 py-2 text-sm whitespace-nowrap shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+            "bg-neutral-50 border-neutral-200 w-full rounded-lg px-3.5 py-[22px] text-neutral-800 text-body-normal",
+            "focus-visible:bg-main-50 focus-visible:border-main-400 focus-visible:ring-4 focus-visible:ring-main-100",
+            "aria-invalid:border-danger-300 aria-invalid:bg-transparent aria-invalid:ring-4 aria-invalid:ring-danger-100",
+            className
+          )}
+          {...props}
         >
-          <XIcon className="text-neutral-500" />
-        </button>
-      )}
-    </div>
-  );
+          {children}
+          <SelectPrimitive.Icon asChild>
+            {!props.value && (
+              <Image
+                src={ChevronDown}
+                alt="chevron-down"
+                width={24}
+                height={24}
+              />
+            )}
+          </SelectPrimitive.Icon>
+        </SelectPrimitive.Trigger>
+        {props.value && (
+          <button
+            tabIndex={-1}
+            onClick={onClear}
+            className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 z-10 focus:outline-0 focus:border-0 focus:ring-0"
+          >
+            <XIcon className="text-neutral-500" />
+          </button>
+        )}
+      </div>
+    );
+  }
 }
 
 function SelectContent({

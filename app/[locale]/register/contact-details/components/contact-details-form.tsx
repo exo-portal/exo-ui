@@ -1,6 +1,9 @@
 "use client";
 
-import FormFieldInput from "@/components/form-field-input";
+import FormFieldInput, {
+  OptionsInterface,
+} from "@/components/form-field-input";
+import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { translate } from "@/lib";
@@ -34,7 +37,7 @@ export function ContactDetailsForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       country: "",
-      phoneNumber: "",
+      phoneNumber: "+63",
       address: "",
       state: "",
       city: "",
@@ -69,6 +72,10 @@ export function ContactDetailsForm() {
   const CITY_OPTIONS = [{ label: "Cebu City", value: "cc" }];
   const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
   const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "qp" }];
+  const PHONE_OPTIONS: OptionsInterface[] = [
+    { label: "PH", value: "+63", icon: PHFlag },
+    { label: "US", value: "+1", icon: USFlag },
+  ];
 
   return (
     <Form {...form}>
@@ -95,6 +102,8 @@ export function ContactDetailsForm() {
           name={"phoneNumber"}
           schema={FormSchema}
           control={form.control}
+          componentType="inputGroup"
+          options={PHONE_OPTIONS}
           labelKey="register.form.contactDetails.input.label.phoneNumber"
           placeholderKey="register.form.contactDetails.input.placeholder.phoneNumber"
         />
