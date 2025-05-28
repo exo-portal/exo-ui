@@ -113,7 +113,6 @@ export function ContactDetailsForm() {
         <div className="flex gap-4">
           <FormFieldInput
             id="state"
-            type="input"
             name={"state"}
             schema={FormSchema}
             control={form.control}
