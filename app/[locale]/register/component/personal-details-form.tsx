@@ -14,14 +14,20 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
 export default function PersonalDetailsForm() {
-  const { data, setData } = useRegistrationStore();
-  const router = useRouter();
   const t = useTranslations();
+  const router = useRouter();
   const { setIsLoading } = useAppStateStore();
+  const { data, setData } = useRegistrationStore();
 
   useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
+
+  const GENDER_OPTIONS = [
+    { value: "male", label: "male" },
+    { value: "female", label: "female" },
+    { value: "other", label: "other" },
+  ];
 
   const FormSchema = z.object({
     firstName: z.string().min(1, "Firstname is required"),
@@ -32,14 +38,20 @@ export default function PersonalDetailsForm() {
       .refine((val) => !isNaN(Date.parse(val)), {
         message: "Date of birth must be a valid date",
       }),
-    gender: z.enum(["male", "female", "other"], {
-      errorMap: (issue) => {
-        if (issue.code === "invalid_enum_value") {
-          return { message: "Gender is required" };
-        }
-        return { message: "Gender must be one of: male, female, other" };
-      },
-    }),
+    gender: z.enum(
+      [...GENDER_OPTIONS.map((option) => option.value)] as [
+        string,
+        ...string[]
+      ],
+      {
+        errorMap: (issue) => {
+          if (issue.code === "invalid_enum_value") {
+            return { message: "Gender is required" };
+          }
+          return { message: "Gender must be one of: male, female, other" };
+        },
+      }
+    ),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -125,11 +137,7 @@ export default function PersonalDetailsForm() {
           placeholderKey={
             "register.form.personalDetails.input.placeholder.gender"
           }
-          options={[
-            { value: "male", label: "male" },
-            { value: "female", label: "female" },
-            { value: "other", label: "other" },
-          ]}
+          options={GENDER_OPTIONS}
         />
         <Button type="submit" variant={"default"} className="mt-4">
           {translate(t, "register.form.personalDetails.button.next")}
