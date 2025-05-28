@@ -97,13 +97,11 @@ export function ContactDetailsForm() {
           control={form.control}
           labelKey="register.form.contactDetails.input.label.phoneNumber"
           placeholderKey="register.form.contactDetails.input.placeholder.phoneNumber"
-          options={CITY_OPTIONS}
         />
 
         {/* Address */}
         <FormFieldInput
           id="address"
-          type="input"
           name={"address"}
           schema={FormSchema}
           control={form.control}
