@@ -6,7 +6,7 @@ import FormFieldInput, {
 import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { translate } from "@/lib";
+import { formatPhoneNumber, translate } from "@/lib";
 import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -37,7 +37,7 @@ export function ContactDetailsForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       country: "",
-      phoneNumber: "+63",
+      phoneNumber: "",
       address: "",
       state: "",
       city: "",
@@ -73,8 +73,8 @@ export function ContactDetailsForm() {
   const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
   const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "qp" }];
   const PHONE_OPTIONS: OptionsInterface[] = [
-    { label: "PH", value: "+63", icon: PHFlag },
-    { label: "US", value: "+1", icon: USFlag },
+    { label: "PH", value: "PH", icon: PHFlag, countryCode: "+63" },
+    { label: "US", value: "US", icon: USFlag, countryCode: "+1" },
   ];
 
   return (
@@ -102,7 +102,7 @@ export function ContactDetailsForm() {
           name={"phoneNumber"}
           schema={FormSchema}
           control={form.control}
-          componentType="inputGroup"
+          componentType="tel"
           options={PHONE_OPTIONS}
           labelKey="register.form.contactDetails.input.label.phoneNumber"
           placeholderKey="register.form.contactDetails.input.placeholder.phoneNumber"
