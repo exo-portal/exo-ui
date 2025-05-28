@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import React from "react";
+import React, { useState } from "react";
 import {
   FormItem,
   FormField,
@@ -8,7 +8,7 @@ import {
   FormControl,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { cn, translate } from "@/lib";
+import { cn, formatPhoneNumber, liveFormat, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
 import {
@@ -27,12 +27,12 @@ import {
   SelectValue,
 } from "./ui/select";
 import Image, { StaticImageData } from "next/image";
-import { PHFlag } from "./national-flag";
 
 export interface OptionsInterface {
   label: string;
   value: string;
   icon?: StaticImageData;
+  countryCode?: string;
 }
 
 type FormFieldInputProps = {
@@ -51,7 +51,7 @@ type FormFieldInputProps = {
     | "checkbox"
     | "radio"
     | "datePicker"
-    | "inputGroup";
+    | "tel";
   options?: OptionsInterface[];
   autoComplete?: "off" | "on";
 };
@@ -75,10 +75,11 @@ export default function FormFieldInput({
     fieldState: ControllerFieldState
   ) => {
     const { value, onChange } = field;
+    const [country, setCountry] = useState<string>("PH");
+    const COUNTRY_CODE =
+      options.find((opt) => opt.value === country)?.countryCode || "+64";
     switch (componentType) {
-      case "inputGroup":
-        console.log(name, "name");
-        console.log("options", options);
+      case "tel":
         return (
           <div
             className={cn(
@@ -87,14 +88,25 @@ export default function FormFieldInput({
             )}
           >
             <Select
-              value={value}
-              onValueChange={onChange}
+              value={country}
+              onValueChange={(value) => {
+                setCountry(value);
+                onChange(
+                  liveFormat({
+                    input: value,
+                    country: value,
+                    countryCode:
+                      options.find((opt) => opt.value === value)?.countryCode ||
+                      "+64",
+                  })
+                );
+              }}
               aria-label={String(fieldState.invalid)}
             >
               <SelectTrigger
                 isInputGroup
                 className="w-[120px]"
-                value={value}
+                value={country}
                 aria-invalid={fieldState.invalid}
               >
                 <SelectValue placeholder={"+63"} />
@@ -117,7 +129,30 @@ export default function FormFieldInput({
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Input isInputGroup />
+            <Input
+              {...field}
+              // TODO:: Enhance the placeholder based on country
+              placeholder={formatPhoneNumber({
+                value: country === "PH" ? "917 123 4567" : "202 555 0125",
+                country: country,
+              })}
+              type="tel"
+              autoComplete={autoComplete}
+              aria-invalid={fieldState.invalid}
+              inputSuffixIcon={inputSuffixIcon}
+              id={id}
+              isInputGroup
+              value={value}
+              onChange={(e) => {
+                const inputValue = e.currentTarget.value;
+                const stringValue = liveFormat({
+                  input: inputValue,
+                  country: country,
+                  countryCode: COUNTRY_CODE,
+                });
+                onChange(stringValue);
+              }}
+            />
           </div>
         );
       case "input":
