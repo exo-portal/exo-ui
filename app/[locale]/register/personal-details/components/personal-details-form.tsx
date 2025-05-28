@@ -13,7 +13,7 @@ import { GENDER_TYPE, useAppStateStore, useRegistrationStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
-export default function PersonalDetailsForm() {
+export function PersonalDetailsForm() {
   const t = useTranslations();
   const router = useRouter();
   const { setIsLoading } = useAppStateStore();
