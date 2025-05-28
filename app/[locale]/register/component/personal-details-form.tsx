@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { PATH } from "@/config";
 import { getCurrentLocale, translate } from "@/lib";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormFieldInput from "@/components/form-field-input";
-import { GENDER_TYPE, useRegistrationStore } from "@/store";
+import { GENDER_TYPE, useAppStateStore, useRegistrationStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 
@@ -17,6 +17,12 @@ export default function PersonalDetailsForm() {
   const { data, setData } = useRegistrationStore();
   const router = useRouter();
   const t = useTranslations();
+  const { setIsLoading } = useAppStateStore();
+
+    useEffect(() => {
+      setIsLoading(false);
+    }, []);
+  
 
   const FormSchema = z.object({
     firstName: z.string().min(1, "Firstname is required"),
