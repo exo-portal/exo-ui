@@ -19,10 +19,9 @@ export default function PersonalDetailsForm() {
   const t = useTranslations();
   const { setIsLoading } = useAppStateStore();
 
-    useEffect(() => {
-      setIsLoading(false);
-    }, []);
-  
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   const FormSchema = z.object({
     firstName: z.string().min(1, "Firstname is required"),
@@ -34,8 +33,12 @@ export default function PersonalDetailsForm() {
         message: "Date of birth must be a valid date",
       }),
     gender: z.enum(["male", "female", "other"], {
-      required_error: "Gender is required",
-      invalid_type_error: "Gender must be one of: male, female, other",
+      errorMap: (issue) => {
+        if (issue.code === "invalid_enum_value") {
+          return { message: "Gender is required" };
+        }
+        return { message: "Gender must be one of: male, female, other" };
+      },
     }),
   });
 
@@ -45,7 +48,7 @@ export default function PersonalDetailsForm() {
       firstName: data.firstName || "",
       lastName: data.lastName || "",
       dateOfBirth: data.dateOfBirth || "",
-      gender: data.dateOfBirth || "male",
+      gender: data.gender || "male",
     },
     mode: "onTouched",
     reValidateMode: "onChange",
@@ -57,6 +60,7 @@ export default function PersonalDetailsForm() {
     gender,
     dateOfBirth,
   }: z.infer<typeof FormSchema>) => {
+    console.log("Form submitted with data:");
     const trimData = {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
@@ -64,6 +68,7 @@ export default function PersonalDetailsForm() {
       gender: gender as GENDER_TYPE,
     };
     setData(trimData);
+    setIsLoading(true);
 
     router.push(PATH.REGISTER_CONTACT_DETAILS.getPath(getCurrentLocale()));
   };
@@ -112,8 +117,8 @@ export default function PersonalDetailsForm() {
         />
         {/* Date Of Birth */}
         <FormFieldInput
-          id={"dateOfBirth"}
-          name={"dateOfBirth"}
+          id={"gender"}
+          name={"gender"}
           control={undefined}
           schema={FormSchema}
           componentType="select"
@@ -127,7 +132,7 @@ export default function PersonalDetailsForm() {
             { value: "other", label: "other" },
           ]}
         />
-        <Button variant={"default"} className="mt-4">
+        <Button type="submit" variant={"default"} className="mt-4">
           {translate(t, "register.form.personalDetails.button.next")}
         </Button>
       </form>
