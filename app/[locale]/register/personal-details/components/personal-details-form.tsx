@@ -8,10 +8,10 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormFieldInput from "@/components/form-field-input";
 import { GENDER_TYPE, useAppStateStore, useRegistrationStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import FormFieldInput from "@/components/form-field-input";
 
 export function PersonalDetailsForm() {
   const t = useTranslations();
@@ -19,6 +19,7 @@ export function PersonalDetailsForm() {
   const { setIsLoading } = useAppStateStore();
   const { data, setData } = useRegistrationStore();
 
+  // Simulate loading state
   useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
@@ -40,7 +41,7 @@ export function PersonalDetailsForm() {
       }),
     gender: z.enum(
       [...GENDER_OPTIONS.map((option) => option.value)] as [
-        string,
+        string, 
         ...string[]
       ],
       {
