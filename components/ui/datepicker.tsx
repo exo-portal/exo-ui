@@ -13,28 +13,27 @@ import { XIcon } from "lucide-react";
 import { Input } from "./input";
 import moment, { Moment } from "moment";
 
-export function DatePicker({
-  className,
-  ...props
-}: React.ComponentProps<"input"> & {}) {
-  const resetDate = React.useCallback(() => {
-    handleDateChange(undefined);
-  }, []);
+export function DatePicker({ ...props }: React.ComponentProps<"input"> & {}) {
+  const { onChange } = props;
 
   const handleDateChange = React.useCallback(
     (selectedDate: Moment | undefined) => {
-      if (props.onChange) {
+      if (onChange) {
         const value = selectedDate
           ? moment(selectedDate).format("YYYY-MM-DD")
           : "";
         const event = {
           target: { value } as EventTarget & HTMLInputElement,
         } as React.ChangeEvent<HTMLInputElement>;
-        props.onChange(event);
+        onChange(event);
       }
     },
-    [props.onChange]
+    [onChange]
   );
+
+  const resetDate = React.useCallback(() => {
+    handleDateChange(undefined);
+  }, [handleDateChange]);
 
   return (
     <Popover>

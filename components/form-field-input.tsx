@@ -12,6 +12,7 @@ import { translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
 import {
+  Control,
   ControllerFieldState,
   ControllerRenderProps,
   FieldValues,
@@ -35,7 +36,7 @@ type FormFieldInputProps = {
   id: string;
   name: keyof z.infer<FormFieldInputProps["schema"]>;
   type?: React.HTMLInputTypeAttribute;
-  control: any;
+  control: Control<z.infer<FormFieldInputProps["schema"]>>;
   schema: z.ZodTypeAny;
   labelKey: TxKeyPath;
   placeholderKey: TxKeyPath;

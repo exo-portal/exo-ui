@@ -10,7 +10,7 @@ import { getCurrentLocale, translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import { UserIcon } from "@/components/icons";
 import Link from "next/link";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppStateStore, useRegistrationStore } from "@/store";
 import { PATH } from "@/config";
@@ -24,7 +24,7 @@ export default function EmailForm() {
 
   useEffect(() => {
     setIsLoading(false);
-  }, []);
+  }, [setIsLoading]);
 
   const FormSchema = z
     .object({
