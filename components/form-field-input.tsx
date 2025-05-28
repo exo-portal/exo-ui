@@ -22,7 +22,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
@@ -70,6 +69,7 @@ export default function FormFieldInput({
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
   ) => {
+    const { value, onChange } = field;
     switch (componentType) {
       case "input":
         return (
@@ -85,9 +85,20 @@ export default function FormFieldInput({
           />
         );
       case "select":
+        const handleOnclear = () => {
+          onChange(""); // Clear the selections
+        };
         return (
-          <Select aria-invalid={fieldState.invalid}>
-            <SelectTrigger>
+          <Select
+            value={value}
+            onValueChange={onChange}
+            aria-label={String(fieldState.invalid)}
+          >
+            <SelectTrigger
+              onClear={handleOnclear}
+              value={value}
+              aria-invalid={fieldState.invalid}
+            >
               <SelectValue placeholder={translate(t, placeholderKey)} />
             </SelectTrigger>
             <SelectContent>
@@ -110,6 +121,10 @@ export default function FormFieldInput({
           <DatePicker
             placeholder={translate(t, placeholderKey)}
             aria-label={String(fieldState.invalid)}
+            onChange={(date) => {
+              field.onChange(date);
+            }}
+            value={field.value}
           />
         );
       default:

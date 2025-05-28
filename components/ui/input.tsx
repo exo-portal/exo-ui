@@ -24,7 +24,7 @@ function Input({
       return (
         <div
           tabIndex={-1}
-          className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-muted-foreground"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 py-2 px-1"
         >
           {inputSuffixIcon}
         </div>
@@ -51,7 +51,7 @@ function Input({
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
         type={inputType}
         data-slot="input"

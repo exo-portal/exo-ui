@@ -17,62 +17,93 @@ export function DatePicker({
   className,
   ...props
 }: React.ComponentProps<"input"> & {}) {
-  const [date, setDate] = React.useState<Moment>();
-
   const resetDate = React.useCallback(() => {
-    setDate(undefined);
+    handleDateChange(undefined);
   }, []);
+
+  const handleDateChange = React.useCallback(
+    (selectedDate: Moment | undefined) => {
+      if (props.onChange) {
+        const value = selectedDate
+          ? moment(selectedDate).format("YYYY-MM-DD")
+          : "";
+        const event = {
+          target: { value } as EventTarget & HTMLInputElement,
+        } as React.ChangeEvent<HTMLInputElement>;
+        props.onChange(event);
+      }
+    },
+    [props.onChange]
+  );
 
   return (
     <Popover>
       <Input
         className="no-calendar-icon"
         type="date"
-        value={date ? date.format("YYYY-MM-DD") : ""}
+        value={props.value || ""}
         onChange={(e) => {
           const value = e.target.value;
           if (!value) {
-            setDate(undefined);
+            handleDateChange(undefined);
             return;
           }
           // Use moment to parse the date string
           const parsedDate: Moment = moment(value, "YYYY-MM-DD", true);
           console.log("Parsed Date:", parsedDate);
           if (parsedDate.isValid()) {
-            setDate(parsedDate);
+            handleDateChange(parsedDate);
           } else {
-            setDate(undefined);
+            handleDateChange(undefined);
           }
         }}
         aria-invalid={props["aria-invalid"] || false}
         inputSuffixIcon={
-          !date ? (
+          !props.value ? (
             <PopoverTrigger asChild>
-              <Image className="cursor-pointer" src={CalendarIcon} alt="calendar-icon" />
+              <Image
+                className="cursor-pointer"
+                src={CalendarIcon}
+                alt="calendar-icon"
+              />
             </PopoverTrigger>
           ) : (
-            <div className="ml-2 cursor-pointer" onClick={resetDate}>
-              <XIcon />
-            </div>
+            <button className="cursor-pointer mt-1" onClick={resetDate}>
+              <XIcon className="text-neutral-500" />
+            </button>
           )
         }
         {...props}
       />
       <PopoverContent
-        hidden={date ? true : false}
+        hidden={props.value ? true : false}
         className="w-auto p-0"
         side="bottom"
         align="end"
       >
         <Calendar
           mode="single"
-          selected={date ? date.toDate() : undefined}
-          onSelect={(selectedDate: Date | undefined) => {
-            setDate(
-              selectedDate
-                ? moment(selectedDate, "YYYY-MM-DD", true)
+          selected={
+            props.value
+              ? moment.isMoment(props.value)
+                ? moment(props.value).toDate()
+                : typeof props.value === "string"
+                ? moment(props.value, "YYYY-MM-DD", true).isValid()
+                  ? moment(props.value, "YYYY-MM-DD", true).toDate()
+                  : undefined
                 : undefined
-            );
+              : undefined
+          }
+          onSelect={(selectedDate: Date | undefined) => {
+            if (props.onChange) {
+              const value = selectedDate
+                ? moment(selectedDate).format("YYYY-MM-DD")
+                : "";
+              const event = {
+                target: { value } as EventTarget & HTMLInputElement,
+              } as React.ChangeEvent<HTMLInputElement>;
+              props.onChange(event);
+            }
           }}
           initialFocus
         />
