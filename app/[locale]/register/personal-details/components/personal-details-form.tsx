@@ -32,7 +32,7 @@ export function PersonalDetailsForm() {
 
   const FormSchema = z.object({
     firstName: z.string().min(1, "Firstname is required"),
-    lastName: z.string().min(1, "Password is required"),
+    lastName: z.string().min(1, "Lastname is required"),
     dateOfBirth: z
       .string()
       .min(1, "Date of birth is required")
