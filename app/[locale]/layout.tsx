@@ -5,7 +5,6 @@ import GlobalAuth from "@/components/global-auth";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import ReactScan from "@/components/react-scan";
-import { useAppStateStore } from "@/store/app-state-store";
 import LoadingMask from "@/components/loading-mask";
 
 const geistSans = Geist({
