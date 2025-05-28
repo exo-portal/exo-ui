@@ -8,7 +8,7 @@ import {
   FormControl,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { translate } from "@/lib";
+import { cn, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
 import {
@@ -26,10 +26,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import Image, { StaticImageData } from "next/image";
+import { PHFlag } from "./national-flag";
 
-interface OptionsInterface {
+export interface OptionsInterface {
   label: string;
   value: string;
+  icon?: StaticImageData;
 }
 
 type FormFieldInputProps = {
@@ -47,7 +50,8 @@ type FormFieldInputProps = {
     | "textarea"
     | "checkbox"
     | "radio"
-    | "datePicker";
+    | "datePicker"
+    | "inputGroup";
   options?: OptionsInterface[];
   autoComplete?: "off" | "on";
 };
@@ -72,6 +76,50 @@ export default function FormFieldInput({
   ) => {
     const { value, onChange } = field;
     switch (componentType) {
+      case "inputGroup":
+        console.log(name, "name");
+        console.log("options", options);
+        return (
+          <div
+            className={cn(
+              "flex group has-[input:focus-within]:bg-main-50 has-[input:focus-visible]:border-main-400 has-[input:focus-visible]:ring-4 has-[input:focus-visible]:ring-main-100",
+              "bg-neutral-50 border border-neutral-200 rounded-lg w-full"
+            )}
+          >
+            <Select
+              value={value}
+              onValueChange={onChange}
+              aria-label={String(fieldState.invalid)}
+            >
+              <SelectTrigger
+                isInputGroup
+                className="w-[120px]"
+                value={value}
+                aria-invalid={fieldState.invalid}
+              >
+                <SelectValue placeholder={"+63"} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {options.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className="cursor-pointer"
+                    >
+                      {option.icon && (
+                        <Image src={option.icon} alt={option.label} />
+                      )}
+
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Input isInputGroup />
+          </div>
+        );
       case "input":
         return (
           <Input
