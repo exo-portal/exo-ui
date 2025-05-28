@@ -72,7 +72,6 @@
           "label": {
             "phoneNumber": "Phone number",
             "address": "Address",
-            "region": "Region",
             "city": "City",
             "state": "State",
             "country": "Country",
