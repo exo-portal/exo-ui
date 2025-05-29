@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import InstructionSection from "./instruction-section";
+import { InstructionSection } from "@/app/[locale]/register/section";
 
 // Mock dependencies
 jest.mock("next-intl", () => ({
