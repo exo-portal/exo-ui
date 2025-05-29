@@ -90,7 +90,6 @@ export function ContactDetailsForm() {
           name={"country"}
           schema={FormSchema}
           control={form.control}
-          enableClear={false}
           labelKey="register.form.contactDetails.input.label.country"
           componentType="select"
           placeholderKey="register.form.contactDetails.input.placeholder.country"

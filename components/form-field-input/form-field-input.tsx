@@ -32,6 +32,7 @@ import {
   generatePhoneFieldPlaceholder,
   TypeTelInput,
 } from "./form-field-input-function";
+import { PHFlag } from "../national-flag";
 
 export interface OptionsInterface {
   label: string;
@@ -119,7 +120,11 @@ export default function FormFieldInput({
                 aria-invalid={fieldState.invalid}
                 enableClear={false}
               >
-                <SelectValue placeholder={"+63"} />
+                <SelectValue
+                  placeholder={
+                    <>{<Image src={PHFlag} alt={"PH Flag"} />}PH</>
+                  }
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -189,7 +194,7 @@ export default function FormFieldInput({
               onClear={handleOnclear}
               value={value}
               aria-invalid={fieldState.invalid}
-              enableClear={enableClear} 
+              enableClear={enableClear}
             >
               <SelectValue placeholder={translate(t, placeholderKey)} />
             </SelectTrigger>
