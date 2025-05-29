@@ -146,6 +146,9 @@ export default function FormFieldInput({
                 TypeTelInput.onBlurTel(e, onChange, country)
               }
               onKeyDown={TypeTelInput.onKeyDownTel}
+              onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
+                TypeTelInput.onFocusTel(e, onChange, country, COUNTRY_CODE)
+              }
             />
           </div>
         );
