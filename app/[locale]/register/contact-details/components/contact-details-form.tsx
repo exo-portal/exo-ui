@@ -10,7 +10,7 @@ import { translate } from "@/lib";
 import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -36,7 +36,7 @@ export function ContactDetailsForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      country: "",
+      country: "PH",
       phoneNumber: "",
       address: "",
       state: "",
@@ -67,8 +67,10 @@ export function ContactDetailsForm() {
     // TODO: Handle form submission, e.g., send to API or store in state
     console.log("Submitted Data:", trimData);
   };
-
-  const COUNTRY_OPTIONS = [{ label: "Philippines", value: "ph" }];
+  const COUNTRY_OPTIONS = [
+    { label: "Philippines", value: "PH" },
+    { label: "United States", value: "US" },
+  ];
   const CITY_OPTIONS = [{ label: "Cebu City", value: "cc" }];
   const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
   const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "qp" }];
@@ -83,12 +85,12 @@ export function ContactDetailsForm() {
         className="flex flex-col gap-4 w-[500px]"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        {/* Country */}
         <FormFieldInput
           id="country"
           name={"country"}
           schema={FormSchema}
           control={form.control}
+          enableClear={false}
           labelKey="register.form.contactDetails.input.label.country"
           componentType="select"
           placeholderKey="register.form.contactDetails.input.placeholder.country"
@@ -106,6 +108,7 @@ export function ContactDetailsForm() {
           options={PHONE_OPTIONS}
           labelKey="register.form.contactDetails.input.label.phoneNumber"
           placeholderKey="register.form.contactDetails.input.placeholder.phoneNumber"
+          countrySelected={form.watch("country") || "ph"}
         />
 
         {/* Address */}

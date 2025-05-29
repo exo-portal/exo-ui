@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
@@ -59,6 +59,8 @@ type FormFieldInputProps = {
     | "tel";
   options?: OptionsInterface[];
   autoComplete?: "off" | "on";
+  countrySelected?: string;
+  enableClear?: boolean;
 };
 
 export default function FormFieldInput({
@@ -72,18 +74,26 @@ export default function FormFieldInput({
   componentType = "input",
   placeholderKey,
   inputSuffixIcon,
+  countrySelected = "PH",
+  enableClear = true,
 }: FormFieldInputProps) {
   const t = useTranslations();
-
-  const [country, setCountry] = useState<string>("PH");
 
   const componentRender = (
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
   ) => {
     const { value, onChange } = field;
+    const [country, setCountry] = useState<string>("PH");
+
     const COUNTRY_CODE =
       options.find((opt) => opt.value === country)?.countryCode || "+64";
+
+    useEffect(() => {
+      if (!countrySelected) return;
+      setCountry(countrySelected);
+      onChange("");
+    }, [countrySelected]);
 
     switch (componentType) {
       case "tel":
@@ -107,6 +117,7 @@ export default function FormFieldInput({
                 className="w-[120px]"
                 value={country}
                 aria-invalid={fieldState.invalid}
+                enableClear={false}
               >
                 <SelectValue placeholder={"+63"} />
               </SelectTrigger>
@@ -178,6 +189,7 @@ export default function FormFieldInput({
               onClear={handleOnclear}
               value={value}
               aria-invalid={fieldState.invalid}
+              enableClear={enableClear} 
             >
               <SelectValue placeholder={translate(t, placeholderKey)} />
             </SelectTrigger>
