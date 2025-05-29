@@ -4,7 +4,7 @@ import { InstructionBadge } from "../component";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 
-export default function InstructionSection() {
+export function InstructionSection() {
   const t = useTranslations();
 
   return (
