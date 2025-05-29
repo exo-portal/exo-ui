@@ -103,8 +103,8 @@ const onFocusTel = (
  * @returns A formatted phone number string suitable for use as a placeholder.
  *
  * @example
- * generatePlaceHolder("PH"); // returns a formatted Philippine phone number placeholder
- * generatePlaceHolder("US"); // returns a formatted US phone number placeholder
+ * generatePhoneFieldPlaceholder("PH"); // returns a formatted Philippine phone number placeholder
+ * generatePhoneFieldPlaceholder("US"); // returns a formatted US phone number placeholder
  */
 export const generatePhoneFieldPlaceholder = (country: string): string => {
   switch (country) {
@@ -113,7 +113,7 @@ export const generatePhoneFieldPlaceholder = (country: string): string => {
     case "US":
       return formatPhoneNumber({ value: "202 555 0125", country: country }); // Example format for United States
     default:
-      return formatPhoneNumber({ value: "917 123 4567", country: country }); // Default format
+      return ""; // Neutral default placeholder
   }
 };
 
