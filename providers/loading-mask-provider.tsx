@@ -2,7 +2,7 @@
 
 import { useAppStateStore } from "@/store";
 
-export default function LoadingMask() {
+export default function LoadingMaskProvider() {
   const { isLoading } = useAppStateStore();
   return (
     <div

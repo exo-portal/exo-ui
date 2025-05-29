@@ -4,7 +4,7 @@ import { DEV_MODE } from "@/config";
 import { JSX, useEffect } from "react";
 import { scan } from "react-scan";
 
-export default function ReactScan(): JSX.Element {
+export default function ReactScanProvider(): JSX.Element {
   useEffect(() => {
     scan({
       enabled: DEV_MODE == "development",

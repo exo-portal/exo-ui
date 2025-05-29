@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import GlobalAuth from "../global-auth";
+import GlobalAuthProvider from "../global-auth-provider";
 const useAuthStore = require("@/store").useAuthStore;
 
 // Mock the useAuthStore hook
@@ -14,7 +14,7 @@ describe("GlobalAuth", () => {
       selector({ validateToken })
     );
 
-    render(<GlobalAuth />);
+    render(<GlobalAuthProvider />);
 
     expect(validateToken).toHaveBeenCalledTimes(1);
   });
