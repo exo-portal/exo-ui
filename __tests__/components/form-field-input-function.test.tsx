@@ -146,3 +146,36 @@ describe("TypeTelInput.onChangeTel", () => {
     expect(mockOnChange).toHaveBeenCalled();
   });
 });
+
+// TypeTelInput.onKeyDownTel Tests Case Start Here
+describe("TypeTelInput.onKeyDownTel", () => {
+  it("calls preventDefault and blur when Enter key is pressed", () => {
+    const preventDefault = jest.fn();
+    const blur = jest.fn();
+    const event = {
+      key: "Enter",
+      preventDefault,
+      currentTarget: { blur },
+    } as unknown as React.KeyboardEvent<HTMLInputElement>;
+
+    TypeTelInput.onKeyDownTel(event);
+
+    expect(preventDefault).toHaveBeenCalled();
+    expect(blur).toHaveBeenCalled();
+  });
+
+  it("does nothing when a non-Enter key is pressed", () => {
+    const preventDefault = jest.fn();
+    const blur = jest.fn();
+    const event = {
+      key: "a",
+      preventDefault,
+      currentTarget: { blur },
+    } as unknown as React.KeyboardEvent<HTMLInputElement>;
+
+    TypeTelInput.onKeyDownTel(event);
+
+    expect(preventDefault).not.toHaveBeenCalled();
+    expect(blur).not.toHaveBeenCalled();
+  });
+});
