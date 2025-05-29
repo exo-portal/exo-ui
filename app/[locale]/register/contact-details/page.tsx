@@ -1,10 +1,10 @@
-import ClientOnly from "@/components/client-only";
+import ClientOnlyProvider from "@/providers/client-only-provider";
 import { ContactDetailsForm } from "./components";
 
 export default function ContactDetailsPage() {
   return (
-    <ClientOnly fallback={<div>Loading...</div>}>
+    <ClientOnlyProvider fallback={<div>Loading...</div>}>
       <ContactDetailsForm />
-    </ClientOnly>
+    </ClientOnlyProvider>
   );
 }
