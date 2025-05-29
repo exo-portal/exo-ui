@@ -6,6 +6,7 @@ import PasswordEyeIcon from "./PasswordEye.svg";
 import PasswordEyeOffIcon from "./PasswordEyeSlash.svg";
 import CalendarIcon from "./Calendar.svg";
 import ChevronDown from "./ChevronDown.svg";
+import ChevronLeft from "./ChevronLeft.svg";
 
 export {
   GoogleIcon,
@@ -15,5 +16,6 @@ export {
   PasswordEyeIcon,
   PasswordEyeOffIcon,
   CalendarIcon,
-  ChevronDown
+  ChevronDown,
+  ChevronLeft
 };
