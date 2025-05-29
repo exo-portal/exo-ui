@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ClientOnlyProvider from "../client-only-provider";
+import { ClientOnlyProvider } from "../client-only-provider";
 
 jest.useFakeTimers();
 
