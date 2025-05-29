@@ -19,6 +19,7 @@ export default function BackButton() {
 
   return (
     <button
+      type="button"
       className="flex gap-2 px-3.5 py-2.5 cursor-pointer items-center"
       onClick={onClickHandler}
     >
