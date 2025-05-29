@@ -1,3 +1,1 @@
-import InstructionSection from "./instruction-section";
-
-export { InstructionSection };
+export * from "./instruction-section";
