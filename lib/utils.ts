@@ -8,6 +8,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getCurrentLocale = (): Locale => {
+  if (typeof window === "undefined" || !window) {
+    return "en"; // Default locale for SSR or fallback
+  }
   const path = window.location.pathname;
   const localeMatch = path.match(/^\/([a-z]{2})(\/|$)/);
 
@@ -45,7 +48,9 @@ export const liveFormat = ({
   countryCode: string;
 }): string => {
   if (country === "PH" || country === "US") {
-    const cleaned = input.startsWith(countryCode) ? input : `${countryCode}${input}`;
+    const cleaned = input.startsWith(countryCode)
+      ? input
+      : `${countryCode}${input}`;
     return new AsYouType(country).input(cleaned);
   }
 

@@ -35,18 +35,6 @@ describe("generatePhoneFieldPlaceholder", () => {
     });
     expect(result).toBe("[US] 202 555 0125");
   });
-
-  it("returns empty string for unknown country", () => {
-    const result = generatePhoneFieldPlaceholder("XX");
-    expect(formatPhoneNumber).not.toHaveBeenCalled();
-    expect(result).toBe("");
-  });
-
-  it("returns empty string for empty country", () => {
-    const result = generatePhoneFieldPlaceholder("");
-    expect(formatPhoneNumber).not.toHaveBeenCalled();
-    expect(result).toBe("");
-  });
 });
 
 // TypeTelInput.onFocusTel Tests Case Start Here

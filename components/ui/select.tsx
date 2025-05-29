@@ -102,7 +102,7 @@ function SelectTrigger({
             onClick={onClear}
             className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 z-10 focus:outline-0 focus:border-0 focus:ring-0"
           >
-            <XIcon className="text-neutral-500" />
+            <XIcon tabIndex={-1} className="text-neutral-500" />
           </button>
         )}
       </div>
