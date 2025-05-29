@@ -97,3 +97,52 @@ describe("TypeTelInput.onFocusTel", () => {
     expect(mockOnChange).toHaveBeenCalled();
   });
 });
+
+// TypeTelInput.onChangeTel Tests Case Start Here
+describe("TypeTelInput.onChangeTel", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("formats and calls onChange with formatted value", () => {
+    const mockOnChange = jest.fn();
+    const mockEvent = {
+      currentTarget: { value: "98765" },
+    } as React.ChangeEvent<HTMLInputElement>;
+    (liveFormat as jest.Mock).mockReturnValue("liveFormattedValue");
+    (formatPhoneNumber as jest.Mock).mockReturnValue("finalFormattedValue");
+
+    TypeTelInput.onChangeTel(mockEvent, "PH", "+63", mockOnChange);
+
+    expect(liveFormat).toHaveBeenCalledWith({
+      input: "98765",
+      country: "PH",
+      countryCode: "+63",
+    });
+    expect(formatPhoneNumber).toHaveBeenCalledWith({
+      value: "liveFormattedValue",
+      country: "PH",
+    });
+    expect(mockOnChange).toHaveBeenCalledWith("finalFormattedValue");
+  });
+
+  it("passes correct arguments from event", () => {
+    const mockOnChange = jest.fn();
+    const mockEvent = {
+      currentTarget: { value: "555-6789" },
+    } as React.ChangeEvent<HTMLInputElement>;
+
+    TypeTelInput.onChangeTel(mockEvent, "US", "+1", mockOnChange);
+
+    expect(liveFormat).toHaveBeenCalledWith({
+      input: "555-6789",
+      country: "US",
+      countryCode: "+1",
+    });
+    expect(formatPhoneNumber).toHaveBeenCalledWith({
+      value: expect.any(String),
+      country: "US",
+    });
+    expect(mockOnChange).toHaveBeenCalled();
+  });
+});
