@@ -179,3 +179,41 @@ describe("TypeTelInput.onKeyDownTel", () => {
     expect(blur).not.toHaveBeenCalled();
   });
 });
+
+// TypeTelInput.onBlurTel Tests Case Start Here
+describe("TypeTelInput.onBlurTel", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("formats and calls onChange with formatted value", () => {
+    const mockOnChange = jest.fn();
+    const mockEvent = {
+      currentTarget: { value: "1234567890" },
+    } as React.FocusEvent<HTMLInputElement>;
+    (formatPhoneNumber as jest.Mock).mockReturnValue("formattedOnBlur");
+
+    TypeTelInput.onBlurTel(mockEvent, mockOnChange, "PH");
+
+    expect(formatPhoneNumber).toHaveBeenCalledWith({
+      value: "1234567890",
+      country: "PH",
+    });
+    expect(mockOnChange).toHaveBeenCalledWith("formattedOnBlur");
+  });
+
+  it("passes correct arguments from event", () => {
+    const mockOnChange = jest.fn();
+    const mockEvent = {
+      currentTarget: { value: "555-0000" },
+    } as React.FocusEvent<HTMLInputElement>;
+
+    TypeTelInput.onBlurTel(mockEvent, mockOnChange, "US");
+
+    expect(formatPhoneNumber).toHaveBeenCalledWith({
+      value: "555-0000",
+      country: "US",
+    });
+    expect(mockOnChange).toHaveBeenCalled();
+  });
+});
