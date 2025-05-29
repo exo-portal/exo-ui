@@ -1,5 +1,3 @@
-import React from "react";
-
 interface InstructionBadgeProps {
   number: number;
   title: string;
@@ -14,7 +12,12 @@ export default function InstructionBadge({
       <div className="flex items-center justify-center bg-neutral-50 w-6 h-6 rounded-full text-neutral-950 text-body-normal">
         {number}
       </div>
-      <span className="text-neutral-50 text-body-normal">{title}</span>
+      <span
+        data-testid={`instruction-badge-${number}`}
+        className="text-neutral-50 text-body-normal"
+      >
+        {title}
+      </span>
     </div>
   );
 }

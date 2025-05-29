@@ -9,10 +9,10 @@ export default function InstructionSection() {
 
   return (
     <aside className="basis-4/12 bg-main-700 flex flex-col px-11 py-12">
-      <div data-test="instruction-header" className="flex flex-col">
+      <div data-testid="instruction-header" className="flex flex-col">
         <div className="space-y-8">
           <div
-            data-test="company-logo"
+            data-testid="company-logo"
             className="h-[50px] w-[120px] bg-neutral-50 rounded-lg"
           />
 
@@ -47,21 +47,21 @@ export default function InstructionSection() {
               {translate(t, "register.instruction.signUpWithEmailOrPhone")}
             </label>
             <InstructionBadge
-              number={1}
+              number={2}
               title={translate(
                 t,
                 "register.instruction.signUpWithEmailOrPhoneDescription"
               )}
             />
             <InstructionBadge
-              number={2}
+              number={3}
               title={translate(
                 t,
                 "register.instruction.signUpWithUsernameAndPassword"
               )}
             />
             <InstructionBadge
-              number={3}
+              number={4}
               title={translate(t, "register.instruction.continueButton")}
             />
           </div>
