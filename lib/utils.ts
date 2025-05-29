@@ -46,7 +46,7 @@ export const liveFormat = ({
 }): string => {
   if (country === "PH" || country === "US") {
     const cleaned = input.startsWith(countryCode) ? input : `${countryCode}${input}`;
-    return new AsYouType().input(cleaned);
+    return new AsYouType(country).input(cleaned);
   }
 
   return input; // Return the original input if country is not supported
