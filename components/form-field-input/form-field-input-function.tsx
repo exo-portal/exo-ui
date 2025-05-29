@@ -92,8 +92,29 @@ const onFocusTel = (
     value: stringValue,
     country: country,
   });
-  
+
   onChange(formattedValue);
+};
+
+/**
+ * Generates a formatted phone number placeholder based on the provided country code.
+ *
+ * @param country - The ISO country code (e.g., "PH" for Philippines, "US" for United States).
+ * @returns A formatted phone number string suitable for use as a placeholder.
+ *
+ * @example
+ * generatePlaceHolder("PH"); // returns a formatted Philippine phone number placeholder
+ * generatePlaceHolder("US"); // returns a formatted US phone number placeholder
+ */
+export const generatePhoneFieldPlaceholder = (country: string): string => {
+  switch (country) {
+    case "PH":
+      return formatPhoneNumber({ value: "917 123 4567", country: country }); // Example format for Philippines
+    case "US":
+      return formatPhoneNumber({ value: "202 555 0125", country: country }); // Example format for United States
+    default:
+      return formatPhoneNumber({ value: "917 123 4567", country: country }); // Default format
+  }
 };
 
 export const TypeTelInput = {
