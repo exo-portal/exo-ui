@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import LoadingMask from "../loading-mask";
+import LoadingMaskProvider from "../loading-mask-provider";
 const mockedUseAppStateStore = require("@/store").useAppStateStore as jest.Mock;
 
 // Mock the useAppStateStore hook
@@ -14,7 +14,7 @@ describe("LoadingMask", () => {
 
   it("renders the loading mask when isLoading is true", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -35,7 +35,7 @@ describe("LoadingMask", () => {
 
   it("renders the loading mask when isLoading is true", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -45,7 +45,7 @@ describe("LoadingMask", () => {
 
   it("hides the loading mask when isLoading is false", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: false });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -55,7 +55,7 @@ describe("LoadingMask", () => {
 
   it("renders only one loading mask div", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const divs = document.querySelectorAll(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -64,7 +64,7 @@ describe("LoadingMask", () => {
 
   it("does not render any children inside the loading mask", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -73,7 +73,7 @@ describe("LoadingMask", () => {
 
   it("renders the loading mask with correct class names", () => {
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    render(<LoadingMask />);
+    render(<LoadingMaskProvider />);
     const div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
@@ -87,16 +87,16 @@ describe("LoadingMask", () => {
   });
 
   it("updates visibility when isLoading changes", () => {
-    const { rerender } = render(<LoadingMask />);
+    const { rerender } = render(<LoadingMaskProvider />);
     mockedUseAppStateStore.mockReturnValue({ isLoading: true });
-    rerender(<LoadingMask />);
+    rerender(<LoadingMaskProvider />);
     let div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
     expect(div).not.toHaveAttribute("hidden");
 
     mockedUseAppStateStore.mockReturnValue({ isLoading: false });
-    rerender(<LoadingMask />);
+    rerender(<LoadingMaskProvider />);
     div = document.querySelector(
       ".fixed.h-screen.w-screen.cursor-progress.z-50"
     );
