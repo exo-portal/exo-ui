@@ -1,9 +1,8 @@
 "use client";
-
 import { useAuthStore } from "@/store";
 import { useEffect } from "react";
 
-export default function GlobalAuthProvider() {
+export function GlobalAuthProvider() {
   const validateToken = useAuthStore((state) => state.validateToken);
 
   useEffect(() => {

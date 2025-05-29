@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import LoadingMaskProvider from "../loading-mask-provider";
+import { LoadingMaskProvider } from "../loading-mask-provider";
 const mockedUseAppStateStore = require("@/store").useAppStateStore as jest.Mock;
 
 // Mock the useAppStateStore hook
