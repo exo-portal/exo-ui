@@ -23,7 +23,7 @@ const onBlurTel = (
 
 /**
  * Handles the `onKeyDown` event for telephone input fields.
- * 
+ *
  * Prevents the default action and removes focus from the input when the Enter key is pressed.
  *
  * @param e - The keyboard event triggered on the input element.
@@ -64,8 +64,41 @@ const onChangeTel = (
   });
   onChange(formattedValue);
 };
+
+/**
+ * Handles the focus event for a telephone input field by formatting the input value
+ * according to the specified country and country code, then triggers the onChange callback
+ * with the formatted phone number.
+ *
+ * @param e - The focus event from the input element.
+ * @param onChange - Callback function to update the input value.
+ * @param country - The country identifier used for formatting.
+ * @param countryCode - The country code used for formatting.
+ */
+const onFocusTel = (
+  e: React.FocusEvent<HTMLInputElement>,
+  onChange: any,
+  country: string,
+  countryCode: string
+) => {
+  const inputValue = e.currentTarget.value;
+  const stringValue = liveFormat({
+    input: inputValue,
+    country: country,
+    countryCode: countryCode,
+  });
+
+  const formattedValue = formatPhoneNumber({
+    value: stringValue,
+    country: country,
+  });
+  
+  onChange(formattedValue);
+};
+
 export const TypeTelInput = {
   onBlurTel,
   onKeyDownTel,
   onChangeTel,
+  onFocusTel,
 };
