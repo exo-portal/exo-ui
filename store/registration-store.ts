@@ -12,6 +12,11 @@ export interface RegistrationData {
   gender: GENDER_TYPE;
   phoneNumber: string;
   address: string;
+  country: string;
+  state: string;
+  city: string;
+  barangay: string;
+  postalCode: string;
 }
 
 interface RegistrationState {
@@ -29,6 +34,11 @@ export const DEFAULT_REGISTRATION_DATA: RegistrationData = {
   phoneNumber: "",
   address: "",
   gender: "male",
+  country: "PH",
+  state: "",
+  city: "",
+  barangay: "",
+  postalCode: "",
 };
 
 const LOCAL_STORAGE_REGISTRATION_STEP_KEY = "registrationStep";

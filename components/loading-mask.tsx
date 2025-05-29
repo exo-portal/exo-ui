@@ -1,10 +1,8 @@
 "use client";
 
 import { useAppStateStore } from "@/store";
-import React from "react";
 
 export default function LoadingMask() {
-    
   const { isLoading } = useAppStateStore();
   return (
     <div

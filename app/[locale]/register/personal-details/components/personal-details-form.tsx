@@ -79,7 +79,10 @@ export function PersonalDetailsForm() {
       dateOfBirth: dateOfBirth.trim(),
       gender: gender as GENDER_TYPE,
     };
-    setData(trimData);
+    setData({
+      ...data,
+      ...trimData,
+    });
     setIsLoading(true);
 
     router.push(PATH.REGISTER_CONTACT_DETAILS.getPath(getCurrentLocale()));

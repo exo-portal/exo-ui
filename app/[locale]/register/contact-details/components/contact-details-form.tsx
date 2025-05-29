@@ -7,21 +7,18 @@ import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { translate } from "@/lib";
-import { useAppStateStore } from "@/store";
+import { useAppStateStore, useRegistrationStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export function ContactDetailsForm() {
   const { setIsLoading } = useAppStateStore();
-  const t = useTranslations();
 
-  // Simulate loading state
-  useEffect(() => {
-    setIsLoading(false);
-  }, [setIsLoading]);
+  const { data, setData } = useRegistrationStore();
+  const t = useTranslations();
 
   const FormSchema = z.object({
     phoneNumber: z.string().min(1, "Phone number is required"),
@@ -36,15 +33,19 @@ export function ContactDetailsForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      country: "",
-      phoneNumber: "",
-      address: "",
-      state: "",
-      city: "",
-      barangay: "",
-      postalCode: "",
+      country: data.country || "PH",
+      phoneNumber: data.phoneNumber || "",
+      address: data.address || "",
+      state: data.state || "",
+      city: data.city || "",
+      barangay: data.barangay || "",
+      postalCode: data.postalCode || "",
     },
   });
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [setIsLoading, data]);
 
   const onSubmit = ({
     country,
@@ -64,11 +65,18 @@ export function ContactDetailsForm() {
       barangay: barangay.trim(),
       postalCode: postalCode.trim(),
     };
-    // TODO: Handle form submission, e.g., send to API or store in state
-    console.log("Submitted Data:", trimData);
+    setData({
+      ...data,
+      ...trimData,
+    });
+    // Fetch from backend using the updated store data
+    const updatedData = { ...data, ...trimData };
+    console.log("Updated Registration Data:", updatedData);
   };
-
-  const COUNTRY_OPTIONS = [{ label: "Philippines", value: "ph" }];
+  const COUNTRY_OPTIONS = [
+    { label: "Philippines", value: "PH" },
+    { label: "United States", value: "US" },
+  ];
   const CITY_OPTIONS = [{ label: "Cebu City", value: "cc" }];
   const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
   const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "qp" }];
@@ -102,10 +110,13 @@ export function ContactDetailsForm() {
           name={"phoneNumber"}
           schema={FormSchema}
           control={form.control}
+          autoComplete="on"
           componentType="tel"
           options={PHONE_OPTIONS}
           labelKey="register.form.contactDetails.input.label.phoneNumber"
           placeholderKey="register.form.contactDetails.input.placeholder.phoneNumber"
+          countrySelected={form.watch("country") || "PH"}
+          isFormDirty={form.formState.isDirty}
         />
 
         {/* Address */}
@@ -113,13 +124,14 @@ export function ContactDetailsForm() {
           id="address"
           name={"address"}
           schema={FormSchema}
+          autoComplete="on"
           control={form.control}
           labelKey="register.form.contactDetails.input.label.address"
           placeholderKey="register.form.contactDetails.input.placeholder.address"
         />
 
         {/* State & City */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-start">
           <FormFieldInput
             id="state"
             name={"state"}
@@ -143,7 +155,7 @@ export function ContactDetailsForm() {
         </div>
 
         {/* Barangay & Postal code */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-start">
           <FormFieldInput
             id="barangay"
             name={"barangay"}
@@ -159,6 +171,7 @@ export function ContactDetailsForm() {
             name={"postalCode"}
             schema={FormSchema}
             control={form.control}
+            autoComplete="on"
             labelKey="register.form.contactDetails.input.label.postalCode"
             placeholderKey="register.form.contactDetails.input.placeholder.postalCode"
           />

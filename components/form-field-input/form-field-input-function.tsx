@@ -113,7 +113,7 @@ export const generatePhoneFieldPlaceholder = (country: string): string => {
     case "US":
       return formatPhoneNumber({ value: "202 555 0125", country: country }); // Example format for United States
     default:
-      return ""; // Neutral default placeholder
+      return formatPhoneNumber({ value: "917 123 4567", country: country }); // Example format for Philippines
   }
 };
 

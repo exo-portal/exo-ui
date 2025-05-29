@@ -3,7 +3,6 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { ChevronDown } from "../icons";
@@ -39,11 +38,13 @@ function SelectTrigger({
   children,
   onClear,
   isInputGroup = false,
+  enableClear = true,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default";
   onClear?: () => void;
   isInputGroup?: boolean;
+  enableClear?: boolean;
 }) {
   if (isInputGroup) {
     return (
@@ -85,7 +86,7 @@ function SelectTrigger({
         >
           {children}
           <SelectPrimitive.Icon asChild>
-            {!props.value && (
+            {((!props.value && enableClear) || !enableClear) && (
               <Image
                 src={ChevronDown}
                 alt="chevron-down"
@@ -95,13 +96,13 @@ function SelectTrigger({
             )}
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
-        {props.value && (
+        {props.value && enableClear && (
           <button
             tabIndex={-1}
             onClick={onClear}
             className="absolute right-3 top-1/2 cursor-pointer -translate-y-1/2 z-10 focus:outline-0 focus:border-0 focus:ring-0"
           >
-            <XIcon className="text-neutral-500" />
+            <XIcon tabIndex={-1} className="text-neutral-500" />
           </button>
         )}
       </div>

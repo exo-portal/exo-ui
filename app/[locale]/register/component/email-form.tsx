@@ -73,7 +73,6 @@ export default function EmailForm() {
       password: password.trim(),
       confirmPassword: confirmPassword.trim(),
     });
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     router.push(PATH.REGISTER_PERSONAL_DETAILS.getPath(getCurrentLocale()));
   };
 

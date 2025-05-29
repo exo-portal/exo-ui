@@ -1,5 +1,6 @@
+"use client";
 import { useTranslations } from "next-intl";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
@@ -32,6 +33,7 @@ import {
   generatePhoneFieldPlaceholder,
   TypeTelInput,
 } from "./form-field-input-function";
+import { PHFlag } from "../national-flag";
 
 export interface OptionsInterface {
   label: string;
@@ -59,6 +61,9 @@ type FormFieldInputProps = {
     | "tel";
   options?: OptionsInterface[];
   autoComplete?: "off" | "on";
+  countrySelected?: string;
+  enableClear?: boolean;
+  isFormDirty?: boolean;
 };
 
 export default function FormFieldInput({
@@ -72,21 +77,32 @@ export default function FormFieldInput({
   componentType = "input",
   placeholderKey,
   inputSuffixIcon,
+  countrySelected = "PH",
+  enableClear = true,
+  isFormDirty = false,
 }: FormFieldInputProps) {
   const t = useTranslations();
-
-  const [country, setCountry] = useState<string>("PH");
 
   const componentRender = (
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
   ) => {
     const { value, onChange } = field;
-    const COUNTRY_CODE =
-      options.find((opt) => opt.value === country)?.countryCode || "+64";
-
     switch (componentType) {
       case "tel":
+        const [country, setCountry] = useState<string>("PH");
+
+        const COUNTRY_CODE =
+          options.find((opt) => opt.value === country)?.countryCode || "+64";
+
+        useEffect(() => {
+          if (!countrySelected) return;
+          if (!isFormDirty) return;
+
+          setCountry(countrySelected);
+          onChange("");
+        }, [countrySelected, isFormDirty]);
+        
         return (
           <div
             className={cn(
@@ -107,8 +123,11 @@ export default function FormFieldInput({
                 className="w-[120px]"
                 value={country}
                 aria-invalid={fieldState.invalid}
+                enableClear={false}
               >
-                <SelectValue placeholder={"+63"} />
+                <SelectValue
+                  placeholder={<>{<Image src={PHFlag} alt={"PH Flag"} />}PH</>}
+                />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -129,7 +148,8 @@ export default function FormFieldInput({
               </SelectContent>
             </Select>
             <Input
-              {...(field as ControllerRenderProps<FieldValues, string>)}
+              {...field}
+              value={value}
               placeholder={generatePhoneFieldPlaceholder(country)}
               type="tel"
               autoComplete={autoComplete}
@@ -137,7 +157,6 @@ export default function FormFieldInput({
               inputSuffixIcon={inputSuffixIcon}
               id={id}
               isInputGroup
-              value={value as string}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 TypeTelInput.onChangeTel(e, country, COUNTRY_CODE, onChange)
               }
@@ -178,6 +197,7 @@ export default function FormFieldInput({
               onClear={handleOnclear}
               value={value}
               aria-invalid={fieldState.invalid}
+              enableClear={enableClear}
             >
               <SelectValue placeholder={translate(t, placeholderKey)} />
             </SelectTrigger>
@@ -211,7 +231,7 @@ export default function FormFieldInput({
         return (
           <Input
             id={id}
-            maxLength={50}
+            maxLength={255}
             type={type}
             aria-invalid={fieldState.invalid}
             inputSuffixIcon={inputSuffixIcon}
