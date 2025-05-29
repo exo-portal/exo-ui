@@ -1,13 +1,5 @@
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import {
-  FormItem,
-  FormField,
-  FormLabel,
-  FormMessage,
-  FormControl,
-} from "./ui/form";
-import { Input } from "./ui/input";
 import { cn, formatPhoneNumber, liveFormat, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
@@ -17,7 +9,8 @@ import {
   ControllerRenderProps,
   FieldValues,
 } from "react-hook-form";
-import { DatePicker } from "./ui/datepicker";
+
+import Image, { StaticImageData } from "next/image";
 import {
   Select,
   SelectContent,
@@ -25,8 +18,18 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import Image, { StaticImageData } from "next/image";
+} from "../ui/select";
+import { Input } from "../ui/input";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { DatePicker } from "../ui/datepicker";
+import { TypeTelInput } from "./form-field-input-function";
+import { Type } from "lucide-react";
 
 export interface OptionsInterface {
   label: string;
@@ -78,6 +81,7 @@ export default function FormFieldInput({
     const [country, setCountry] = useState<string>("PH");
     const COUNTRY_CODE =
       options.find((opt) => opt.value === country)?.countryCode || "+64";
+
     switch (componentType) {
       case "tel":
         return (
@@ -89,17 +93,9 @@ export default function FormFieldInput({
           >
             <Select
               value={country}
-              onValueChange={(value) => {
+              onValueChange={(value: string) => {
                 setCountry(value);
-                onChange(
-                  liveFormat({
-                    input: value,
-                    country: value,
-                    countryCode:
-                      options.find((opt) => opt.value === value)?.countryCode ||
-                      "+64",
-                  })
-                );
+                onChange("");
               }}
               aria-label={String(fieldState.invalid)}
             >
@@ -113,7 +109,7 @@ export default function FormFieldInput({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {options.map((option) => (
+                  {options.map((option: OptionsInterface) => (
                     <SelectItem
                       key={option.value}
                       value={option.value}
@@ -130,7 +126,7 @@ export default function FormFieldInput({
               </SelectContent>
             </Select>
             <Input
-              {...field}
+              {...(field as ControllerRenderProps<FieldValues, string>)}
               // TODO:: Enhance the placeholder based on country
               placeholder={formatPhoneNumber({
                 value: country === "PH" ? "917 123 4567" : "202 555 0125",
@@ -142,16 +138,14 @@ export default function FormFieldInput({
               inputSuffixIcon={inputSuffixIcon}
               id={id}
               isInputGroup
-              value={value}
-              onChange={(e) => {
-                const inputValue = e.currentTarget.value;
-                const stringValue = liveFormat({
-                  input: inputValue,
-                  country: country,
-                  countryCode: COUNTRY_CODE,
-                });
-                onChange(stringValue);
-              }}
+              value={value as string}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                TypeTelInput.onChangeTel(e, country, COUNTRY_CODE, onChange)
+              }
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                TypeTelInput.onBlurTel(e, onChange, country)
+              }
+              onKeyDown={TypeTelInput.onKeyDownTel}
             />
           </div>
         );

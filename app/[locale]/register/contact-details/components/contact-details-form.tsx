@@ -2,11 +2,11 @@
 
 import FormFieldInput, {
   OptionsInterface,
-} from "@/components/form-field-input";
+} from "@/components/form-field-input/form-field-input";
 import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { formatPhoneNumber, translate } from "@/lib";
+import { translate } from "@/lib";
 import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
