@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
-import { cn, formatPhoneNumber, liveFormat, translate } from "@/lib";
+import { cn, translate } from "@/lib";
 import { TxKeyPath } from "@/i18n";
 import { z } from "zod";
 import {
@@ -28,8 +28,10 @@ import {
   FormMessage,
 } from "../ui/form";
 import { DatePicker } from "../ui/datepicker";
-import { TypeTelInput } from "./form-field-input-function";
-import { Type } from "lucide-react";
+import {
+  generatePhoneFieldPlaceholder,
+  TypeTelInput,
+} from "./form-field-input-function";
 
 export interface OptionsInterface {
   label: string;
@@ -127,11 +129,7 @@ export default function FormFieldInput({
             </Select>
             <Input
               {...(field as ControllerRenderProps<FieldValues, string>)}
-              // TODO:: Enhance the placeholder based on country
-              placeholder={formatPhoneNumber({
-                value: country === "PH" ? "917 123 4567" : "202 555 0125",
-                country: country,
-              })}
+              placeholder={generatePhoneFieldPlaceholder(country)}
               type="tel"
               autoComplete={autoComplete}
               aria-invalid={fieldState.invalid}
@@ -167,7 +165,7 @@ export default function FormFieldInput({
         );
       case "select":
         const handleOnclear = () => {
-          onChange(""); // Clear the selections
+          onChange("");
         };
         return (
           <Select
