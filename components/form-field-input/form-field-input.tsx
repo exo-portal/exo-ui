@@ -98,10 +98,11 @@ export default function FormFieldInput({
         useEffect(() => {
           if (!countrySelected) return;
           if (!isFormDirty) return;
-          
+
           setCountry(countrySelected);
           onChange("");
-        }, [countrySelected]);
+        }, [countrySelected, isFormDirty]);
+        
         return (
           <div
             className={cn(
