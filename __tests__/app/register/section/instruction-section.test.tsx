@@ -72,5 +72,6 @@ describe("InstructionSection", () => {
     expect(screen.getByTestId("instruction-badge-1")).toBeInTheDocument();
     expect(screen.getByTestId("instruction-badge-2")).toBeInTheDocument();
     expect(screen.getByTestId("instruction-badge-3")).toBeInTheDocument();
+    expect(screen.getByTestId("instruction-badge-4")).toBeInTheDocument();
   });
 });
