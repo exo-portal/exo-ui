@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GENDER_TYPE, useAppStateStore, useRegistrationStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import FormFieldInput from "@/components/form-field-input";
+import FormFieldInput from "@/components/form-field-input/form-field-input";
 
 export function PersonalDetailsForm() {
   const t = useTranslations();
@@ -41,7 +41,7 @@ export function PersonalDetailsForm() {
       }),
     gender: z.enum(
       [...GENDER_OPTIONS.map((option) => option.value)] as [
-        string, 
+        string,
         ...string[]
       ],
       {

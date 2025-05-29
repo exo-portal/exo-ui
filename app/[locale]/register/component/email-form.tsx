@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
-import FormFieldInput from "@/components/form-field-input";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { z } from "zod";
@@ -15,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppStateStore, useRegistrationStore } from "@/store";
 import { PATH } from "@/config";
 import { useRouter } from "next/navigation";
+import FormFieldInput from "@/components/form-field-input/form-field-input";
 
 export default function EmailForm() {
   const t = useTranslations();
