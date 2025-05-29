@@ -1,23 +1,23 @@
 import { render, screen } from "@testing-library/react";
-import ClientOnly from "../client-only";
+import ClientOnlyProvider from "../client-only-provider";
 
 jest.useFakeTimers();
 
-describe("ClientOnly", () => {
+describe("ClientOnlyProvider", () => {
   it("renders children immediately in test environment", () => {
     render(
-      <ClientOnly fallback={<div>Loading...</div>}>
+      <ClientOnlyProvider fallback={<div>Loading...</div>}>
         <div>Client Content</div>
-      </ClientOnly>
+      </ClientOnlyProvider>
     );
     expect(screen.getByText("Client Content")).toBeInTheDocument();
   });
 
   it("renders children after mounting", () => {
     render(
-      <ClientOnly fallback={<div>Loading...</div>}>
+      <ClientOnlyProvider fallback={<div>Loading...</div>}>
         <div>Client Content</div>
-      </ClientOnly>
+      </ClientOnlyProvider>
     );
     // Fast-forward useEffect
     jest.runAllTimers();
@@ -31,9 +31,9 @@ describe("ClientOnly", () => {
 
   it("renders children if no fallback is provided", async () => {
     render(
-      <ClientOnly>
+      <ClientOnlyProvider>
         <span>Only Client</span>
-      </ClientOnly>
+      </ClientOnlyProvider>
     );
     jest.runAllTimers();
     const el = await screen.findByText("Only Client");

@@ -1,15 +1,15 @@
 import React from "react";
 import { AuthForm, DividerForm, EmailForm } from "./component";
-import ClientOnly from "@/components/client-only";
+import ClientOnlyProvider from "@/providers/client-only-provider";
 
 export default function Page() {
   return (
     <section className="flex flex-col">
       <AuthForm />
       <DividerForm />
-      <ClientOnly fallback={<div>Loading...</div>}>
+      <ClientOnlyProvider fallback={<div>Loading...</div>}>
         <EmailForm />
-      </ClientOnly>
+      </ClientOnlyProvider>
     </section>
   );
 }

@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/store";
 import { useEffect } from "react";
 
-export default function GlobalAuth() {
+export default function GlobalAuthProvider() {
   const validateToken = useAuthStore((state) => state.validateToken);
 
   useEffect(() => {
