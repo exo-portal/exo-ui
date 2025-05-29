@@ -10,7 +10,7 @@ import { formatPhoneNumber, liveFormat } from "@/lib";
  */
 const onBlurTel = (
   e: React.FocusEvent<HTMLInputElement>,
-  onChange: any,
+  onChange: (value: string) => void,
   country: string
 ) => {
   const inputValue = e.currentTarget.value;
@@ -49,7 +49,7 @@ const onChangeTel = (
   e: React.ChangeEvent<HTMLInputElement>,
   country: string,
   countryCode: string,
-  onChange: any
+  onChange: (value: string) => void
 ) => {
   const inputValue = e.currentTarget.value;
   const stringValue = liveFormat({
@@ -77,7 +77,7 @@ const onChangeTel = (
  */
 const onFocusTel = (
   e: React.FocusEvent<HTMLInputElement>,
-  onChange: any,
+  onChange: (value: string) => void,
   country: string,
   countryCode: string
 ) => {

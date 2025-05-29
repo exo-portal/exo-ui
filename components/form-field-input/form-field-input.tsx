@@ -75,12 +75,13 @@ export default function FormFieldInput({
 }: FormFieldInputProps) {
   const t = useTranslations();
 
+  const [country, setCountry] = useState<string>("PH");
+
   const componentRender = (
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
   ) => {
     const { value, onChange } = field;
-    const [country, setCountry] = useState<string>("PH");
     const COUNTRY_CODE =
       options.find((opt) => opt.value === country)?.countryCode || "+64";
 
