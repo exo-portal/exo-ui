@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import GlobalAuthProvider from "../global-auth-provider";
+import { GlobalAuthProvider } from "../global-auth-provider";
 const useAuthStore = require("@/store").useAuthStore;
 
 // Mock the useAuthStore hook

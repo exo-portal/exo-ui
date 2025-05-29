@@ -3,9 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import GlobalAuthProvider from "@/providers/global-auth-provider";
-import LoadingMaskProvider from "@/providers/loading-mask-provider";
-import ReactScanProvider from "@/providers/react-scan-provider";
+import {
+  GlobalAuthProvider,
+  LoadingMaskProvider,
+  ReactScanProvider,
+} from "@/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

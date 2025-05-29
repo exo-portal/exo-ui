@@ -1,4 +1,4 @@
-import ClientOnlyProvider from "@/providers/client-only-provider";
+import { ClientOnlyProvider } from "@/providers";
 import { ContactDetailsForm } from "./components";
 
 export default function ContactDetailsPage() {
