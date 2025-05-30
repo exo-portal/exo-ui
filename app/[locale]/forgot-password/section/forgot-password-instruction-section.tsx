@@ -16,7 +16,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 2,
       keyPrefix: "forgotPassword.instruction.enterEmail.topBadge.badgeTitle",
-    }
+    },
   },
   [PATH.FORGOT_PASSWORD_OTP.path]: {
     title: "forgotPassword.instruction.otp.title",
@@ -25,7 +25,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 3,
       keyPrefix: "forgotPassword.instruction.otp.topBadge.badgeTitle",
-    }
+    },
   },
   [PATH.FORGOT_PASSWORD_RESET.path]: {
     title: "forgotPassword.instruction.reset.title",
@@ -34,7 +34,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 3,
       keyPrefix: "forgotPassword.instruction.reset.topBadge.badgeTitle",
-    }
+    },
   },
 };
 
@@ -51,7 +51,7 @@ const useInstructionConfig = (
   );
 };
 
-export function InstructionSection() {
+export function ForgotPasswordInstructionSection() {
   const t = useTranslations();
   const pathname = usePathname();
   const config = useInstructionConfig(pathname);

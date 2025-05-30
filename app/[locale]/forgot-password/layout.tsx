@@ -1,5 +1,5 @@
 import React from "react";
-import { InstructionSection } from "./section";
+import { ForgotPasswordInstructionSection } from "./section";
 
 export default function ForgotPasswordLayout({
   children,
@@ -11,7 +11,7 @@ export default function ForgotPasswordLayout({
       className="flex min-h-screen bg-neutral-50"
       data-testid="forgot-password-layout-main"
     >
-      <InstructionSection />
+      <ForgotPasswordInstructionSection data-testid="forgot-password-instruction-section" />
       <section
         className="basis-8/12 flex justify-center items-center"
         data-testid="forgot-password-layout-section"
