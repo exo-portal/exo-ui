@@ -16,7 +16,7 @@ describe("PersonalDetailsFormSkeleton", () => {
     expect(container).toHaveClass("flex", "flex-col", "gap-4", "w-[500px]");
   });
 
-  it("renders 7 Skeleton components with correct classes", () => {
+  it("renders 9 Skeleton components with correct classes", () => {
     render(<PersonalDetailsFormSkeleton />);
     const skeletons = screen.getAllByTestId("skeleton");
     expect(skeletons).toHaveLength(9);
