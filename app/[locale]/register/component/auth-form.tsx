@@ -38,7 +38,7 @@ export default function AuthForm() {
           variant={"outline"}
           onClick={registerUsingGoogleHandler}
         >
-          <Image src={GoogleIcon} alt="google-icon" />
+          <Image src={GoogleIcon} alt="Google icon" />
           {translate(t, "register.form.signUp.button.google")}
         </Button>
 
