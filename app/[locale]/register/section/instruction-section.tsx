@@ -11,15 +11,15 @@ type InstructionConfig = {
   title: TxKeyPath;
   subTitle: TxKeyPath;
   topBadgeTitleKey: TxKeyPath;
-  bottomBadgeTitleKey?: TxKeyPath | null;
+  bottomBadgeTitleKey?: TxKeyPath;
   topBadgeData?: {
     count: number;
     keyPrefix: string;
-  } | null;
+  };
   bottomBadgeData?: {
     count: number;
     keyPrefix: string;
-  } | null;
+  };
 };
 
 const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
@@ -45,8 +45,9 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
       count: 2,
       keyPrefix: "register.instruction.personalDetails.topBadge.badgeTitle",
     },
-    bottomBadgeData: null,
-    bottomBadgeTitleKey: null,
+    // Use undefined instead of null
+    bottomBadgeData: undefined,
+    bottomBadgeTitleKey: undefined,
   },
   [PATH.REGISTER_CONTACT_DETAILS.path]: {
     title: "register.instruction.register.title.2",
@@ -56,8 +57,8 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
       count: 2,
       keyPrefix: "register.instruction.contactDetails.topBadge.badgeTitle",
     },
-    bottomBadgeData: null,
-    bottomBadgeTitleKey: null,
+    bottomBadgeData: undefined,
+    bottomBadgeTitleKey: undefined,
   },
 };
 
