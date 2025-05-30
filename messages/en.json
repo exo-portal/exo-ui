@@ -8,14 +8,49 @@
   },
   "register": {
     "instruction": {
-      "getStartedwithUs": "Get Started with us",
-      "chooseSignupType": "Choose two (2) types of sign up",
-      "signUpWithOAuth": "Sign up using (Gmail, Github)",
-      "signUpWithExistingAccounts": "Sign up using your existing accounts.",
-      "signUpWithEmailOrPhone": "Sign up using email or phone number:",
-      "signUpWithEmailOrPhoneDescription": "Sign up using your email or phone number.",
-      "signUpWithUsernameAndPassword": "Fill out username and password.",
-      "continueButton": "Click continue"
+      "register": {
+        "title": {
+          "1": "Get Started with us",
+          "2": "Create your account"
+        },
+        "subtitle": {
+          "1": "Choose two (2) types of sign up",
+          "2": "Provide required details."
+        },
+
+        "topBadge": {
+          "title": "Sign up using (Gmail, Github)",
+          "badgeTitle": {
+            "1": "Sign up using your existing accounts."
+          }
+        },
+        "bottomBadge": {
+          "title": "Sign up using email or phone number:",
+          "badgeTitle": {
+            "1": "Sign up using your email or phone number.",
+            "2": "Fill out username and password.",
+            "3": "Click continue"
+          }
+        }
+      },
+      "personalDetails": {
+        "topBadge": {
+          "title": "Continue creating your account:",
+          "badgeTitle": {
+            "1": "Fill out carefully your personal details.",
+            "2": "Click next button to continue."
+          }
+        }
+      },
+      "contactDetails": {
+        "topBadge": {
+          "title": "Continue creating your account:",
+          "badgeTitle": {
+            "1": "Fill out carefully your contact details.",
+            "2": "Click submit button to continue."
+          }
+        }
+      }
     },
     "form": {
       "signUp": {
