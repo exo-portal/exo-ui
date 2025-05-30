@@ -1,26 +1,11 @@
 "use client";
 import InstructionBadge from "@/components/auth-instruction/instruction-badge";
 import { InstructionContainer } from "@/components/auth-instruction/instruction-container";
-import { PATH } from "@/config";
+import { InstructionConfig, PATH } from "@/config";
 import { TxKeyPath } from "@/i18n";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-
-type InstructionConfig = {
-  title: TxKeyPath;
-  subTitle: TxKeyPath;
-  topBadgeTitleKey: TxKeyPath;
-  bottomBadgeTitleKey?: TxKeyPath;
-  topBadgeData?: {
-    count: number;
-    keyPrefix: string;
-  };
-  bottomBadgeData?: {
-    count: number;
-    keyPrefix: string;
-  };
-};
 
 const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
   [PATH.REGISTER.path]: {

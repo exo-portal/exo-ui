@@ -167,5 +167,44 @@
         "or": "Or"
       }
     }
+  },
+  "forgotPassword": {
+    "instruction": {
+      "enterEmail": {
+        "title": "Forgot your password?",
+        "subtitle": "Enter your registered email or phone number to reset your password.",
+        "topBadge": {
+          "title": "Steps to reset your password:",
+          "badgeTitle": {
+            "1": "Enter your registered email address or phone number.",
+            "2": "Click the submit button to receive a verification code."
+          }
+        }
+      },
+      "otp": {
+        "title": "OTP Verification",
+        "subtitle": "Enter the code sent to your email or phone number to continue.",
+        "topBadge": {
+          "title": "OTP Verification Steps:",
+          "badgeTitle": {
+            "1": "Check your email or phone for the 4-digit code.",
+            "2": "Enter the code in the field below.",
+            "3": "Click verify to continue."
+          }
+        }
+      },
+      "reset": {
+        "title": "Reset your password",
+        "subtitle": "Create a new password to regain access",
+        "topBadge": {
+          "title": "Reset Password Steps:",
+          "badgeTitle": {
+            "1": "Enter your new password.",
+            "2": "Re-enter your new password to confirm.",
+            "3": "Click Save Password to complete the reset."
+          }
+        }
+      }
+    }
   }
 }
