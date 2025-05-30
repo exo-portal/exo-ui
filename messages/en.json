@@ -17,7 +17,6 @@
           "1": "Choose two (2) types of sign up",
           "2": "Provide required details."
         },
-
         "topBadge": {
           "title": "Sign up using (Gmail, Github)",
           "badgeTitle": {
@@ -55,7 +54,7 @@
     "form": {
       "signUp": {
         "title": "Sign Up Account",
-        "subtitle": "Register with your existing account or create a new one",
+        "subtitle": "Register with your existing account",
         "button": {
           "google": "Google",
           "github": "Github",
@@ -129,6 +128,36 @@
         "button": {
           "submit": "Submit",
           "cancel": "Cancel"
+        }
+      }
+    }
+  },
+  "login": {
+    "instruction": {
+      "title": "Welcome back!",
+      "subtitle": "PleasEnter Username or phone number and password to continue.",
+      "topBadge": {
+        "title": "Login using (Gmail, Github)",
+        "badgeTitle": {
+          "1": "Sign in using youre registered Gmail and Github account."
+        }
+      },
+      "bottomBadge": {
+        "title": "Login using your email",
+        "badgeTitle": {
+          "1": "Enter your email and password.",
+          "2": "Click sign in."
+        }
+      }
+    },
+    "form": {
+      "signIn": {
+        "title": "Sign In Account",
+        "subtitle": "Sign in with your existing accounts",
+        "button": {
+          "google": "Google",
+          "github": "Github",
+          "signIn": "Sign In"
         }
       }
     }
