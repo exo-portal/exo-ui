@@ -94,7 +94,7 @@ export function InstructionSection() {
       default:
         break;
     }
-  }, [pathname]);
+  }, [pathname, t, translate]);
 
   // Derive badge components in render
   const topBadge = topBadgeData ? (
