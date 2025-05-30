@@ -205,6 +205,24 @@
           }
         }
       }
+    },
+    "form": {
+      "alreadyHaveAccount": {
+        "text": "Already remembered your password?",
+        "signIn": "Sign in"
+      },
+      "enterEmail": {
+        "identifier": {
+          "label": "Email or phone number",
+          "placeholder": "Enter your registered email or phone number"
+        }
+      }
+    },
+    "button": {
+      "submit": "Submit",
+      "verify": "Verify",
+      "savePassword": "Save Password",
+      "backToLogin": "Back to Login"
     }
   }
 }
