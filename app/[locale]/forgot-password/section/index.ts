@@ -1,1 +1,1 @@
-export * from "./instruction-section";
+export * from "./forgot-password-instruction-section";
