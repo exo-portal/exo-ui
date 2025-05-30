@@ -89,7 +89,7 @@ export default function EmailForm() {
           control={form.control}
           labelKey={"register.form.signUp.input.label.email"}
           placeholderKey={"register.form.signUp.input.placeholder.email"}
-          inputSuffixIcon={<Image src={UserIcon} alt="user icon" />}
+          inputSuffixIcon={<Image src={UserIcon} alt="User Icon" />}
         />
         <FormFieldInput
           id={"password"}
