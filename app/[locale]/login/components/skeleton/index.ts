@@ -1,1 +1,1 @@
-export * from "./email-form-sleleton";
+export * from "./email-form-skeleton";
