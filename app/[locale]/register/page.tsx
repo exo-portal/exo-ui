@@ -1,4 +1,3 @@
-import React from "react";
 import { AuthForm, DividerForm, EmailForm } from "./component";
 import { ClientOnlyProvider } from "@/providers";
 
