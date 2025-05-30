@@ -3,7 +3,12 @@ import React from "react";
 
 export function EmailFormSkeleton() {
   return (
-    <div className="flex flex-col gap-4" role="status" aria-busy="true">
+    <div
+      className="flex flex-col gap-4"
+      role="status"
+      aria-busy="true"
+      data-testid="email-form-skeleton"
+    >
       {/* Email Field */}
       <div className="flex flex-col gap-2">
         <Skeleton className="h-4 w-12" />
@@ -15,7 +20,7 @@ export function EmailFormSkeleton() {
         <div className="flex flex-col gap-2 items-end">
           <Skeleton className="h-10 w-full rounded-xl" />
           {/* Forgot Password */}
-          <Skeleton className="h-4 w-32 justify-self-end" />
+          <Skeleton className="h-4 w-32" />
         </div>
       </div>
       {/* Button */}
