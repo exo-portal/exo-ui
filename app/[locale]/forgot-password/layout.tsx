@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Forgot Password",
     "Password Reset",
     "Account Recovery",
-    "Exodia Portal",
+    "Exo Portal",
   ],
   robots: "noindex, nofollow",
   openGraph: {
