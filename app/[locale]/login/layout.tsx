@@ -3,8 +3,25 @@ import React from "react";
 import { InstructionSection } from "./section";
 
 export const metadata: Metadata = {
-  title: "Login",
-  description: "Login to our application",
+  title: "Login | ExoPortal",
+  description:
+    "Access your ExoPortal account to manage your profile, view dashboards, and explore features. Secure login for ExoPortal users.",
+  keywords: [
+    "ExoPortal",
+    "login",
+    "sign in",
+    "user access",
+    "dashboard",
+    "account management",
+  ],
+  openGraph: {
+    title: "ExoPortal Login",
+    description:
+      "Sign in to your ExoPortal account to access personalized features and dashboards.",
+    url: "https://your-exoportal-domain.com/login",
+    siteName: "ExoPortal",
+    type: "website",
+  },
 };
 
 export default function LoginLayout({

@@ -3,8 +3,23 @@ import React from "react";
 import { InstructionSection } from "./section";
 
 export const metadata: Metadata = {
-  title: "Register",
-  description: "Register to our application",
+  title: "Create Your Account | Exo Portal",
+  description:
+    "Sign up for a new account to access all features of the Exodia Portal. Join our community and get started today.",
+  keywords: [
+    "register",
+    "sign up",
+    "create account",
+    "Exo Portal",
+    "user registration",
+  ],
+  openGraph: {
+    title: "Create Your Account | Exo Portal",
+    description:
+      "Sign up for a new account to access all features of the Exo Portal.",
+    url: "https://your-domain.com/register",
+    type: "website",
+  },
 };
 
 export default function RegisterLayout({
