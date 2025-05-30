@@ -28,6 +28,6 @@ describe("DividerForm", () => {
     render(<DividerForm />);
     const dividerText = screen.getByTestId("divider-text");
     expect(dividerText).toBeInTheDocument();
-    expect(dividerText).toHaveTextContent("register.form.signUp.or");
+    expect(dividerText).toHaveTextContent("login.form.signIn.or");
   });
 });
