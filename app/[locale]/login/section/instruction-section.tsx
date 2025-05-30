@@ -11,10 +11,12 @@ export function InstructionSection() {
     <InstructionContainer
       title={"login.instruction.title"}
       subTitle={"login.instruction.subtitle"}
+      data-testid="instruction-container"
       topBadge={
         <InstructionBadge
           number={1}
           title={translate(t, "login.instruction.topBadge.badgeTitle.1")}
+          data-testid="top-instruction-badge"
         />
       }
       topBadgeTitleKey={"login.instruction.topBadge.title"}
@@ -31,6 +33,7 @@ export function InstructionSection() {
                   index + 1
                 }` as TxKeyPath
               )}
+              data-testid={`bottom-instruction-badge-${index + 1}`}
             />
           ))}
         </>
