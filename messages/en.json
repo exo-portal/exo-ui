@@ -135,11 +135,11 @@
   "login": {
     "instruction": {
       "title": "Welcome back!",
-      "subtitle": "Pleas enter Username or phone number and password to continue.",
+      "subtitle": "Please enter Username or phone number and password to continue.",
       "topBadge": {
         "title": "Login using (Gmail, Github)",
         "badgeTitle": {
-          "1": "Sign in using you're registered Gmail and Github account."
+          "1": "Sign in using your registered Gmail and Github account."
         }
       },
       "bottomBadge": {
