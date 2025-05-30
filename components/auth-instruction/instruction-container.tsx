@@ -24,7 +24,7 @@ export function InstructionContainer({
   const t = useTranslations();
 
   return (
-    <aside className="basis-4/12 bg-main-700 flex flex-col px-11 py-12">
+    <aside className="basis-4/12 bg-main-700 flex flex-col px-11 py-12 select-none">
       <div data-testid="instruction-header" className="flex flex-col">
         <div className="space-y-8">
           <div

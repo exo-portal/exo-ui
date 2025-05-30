@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import LoginLayout from "../layout";
 
 // Mock the InstructionSection component
-jest.mock("./section", () => ({
+jest.mock("../section", () => ({
   InstructionSection: () => <div data-testid="instruction-section" />,
 }));
 
@@ -26,7 +26,7 @@ describe("LoginLayout", () => {
     expect(screen.getByTestId("instruction-section")).toBeInTheDocument();
   });
 
-  it("renders the children inside the section", () => {
+  it("renders the section with correct test id and children", () => {
     render(
       <LoginLayout>
         <div data-testid="child">Test Child</div>
