@@ -92,7 +92,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useCallback } from "react";
 
-export default function AuthForm() {
+export function AuthForm() {
   const t = useTranslations();
 
   // Handlers for OAuth registration github provider
