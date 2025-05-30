@@ -6,121 +6,103 @@ import { TxKeyPath } from "@/i18n";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+
+type InstructionConfig = {
+  title: TxKeyPath;
+  subTitle: TxKeyPath;
+  topBadgeTitleKey: TxKeyPath;
+  bottomBadgeTitleKey?: TxKeyPath | null;
+  topBadgeData?: {
+    count: number;
+    keyPrefix: string;
+  } | null;
+  bottomBadgeData?: {
+    count: number;
+    keyPrefix: string;
+  } | null;
+};
+
+const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
+  [PATH.REGISTER.path]: {
+    title: "register.instruction.register.title.1",
+    subTitle: "register.instruction.register.subtitle.1",
+    topBadgeTitleKey: "register.instruction.register.topBadge.title",
+    bottomBadgeTitleKey: "register.instruction.register.bottomBadge.title",
+    topBadgeData: {
+      count: 1,
+      keyPrefix: "register.instruction.register.topBadge.badgeTitle",
+    },
+    bottomBadgeData: {
+      count: 3,
+      keyPrefix: "register.instruction.register.bottomBadge.badgeTitle",
+    },
+  },
+  [PATH.REGISTER_PERSONAL_DETAILS.path]: {
+    title: "register.instruction.register.title.2",
+    subTitle: "register.instruction.register.subtitle.2",
+    topBadgeTitleKey: "register.instruction.personalDetails.topBadge.title",
+    topBadgeData: {
+      count: 2,
+      keyPrefix: "register.instruction.personalDetails.topBadge.badgeTitle",
+    },
+    bottomBadgeData: null,
+    bottomBadgeTitleKey: null,
+  },
+  [PATH.REGISTER_CONTACT_DETAILS.path]: {
+    title: "register.instruction.register.title.2",
+    subTitle: "register.instruction.register.subtitle.2",
+    topBadgeTitleKey: "register.instruction.contactDetails.topBadge.title",
+    topBadgeData: {
+      count: 2,
+      keyPrefix: "register.instruction.contactDetails.topBadge.badgeTitle",
+    },
+    bottomBadgeData: null,
+    bottomBadgeTitleKey: null,
+  },
+};
+
+const useInstructionConfig = (
+  pathname: string
+): (typeof INSTRUCTION_CONFIG)[keyof typeof INSTRUCTION_CONFIG] => {
+  const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+  const currentPathname = localeMatch
+    ? pathname.replace(/^\/[a-z]{2}/, "")
+    : pathname;
+  return (
+    INSTRUCTION_CONFIG[currentPathname] ||
+    INSTRUCTION_CONFIG[PATH.REGISTER.path]
+  );
+};
 
 export function InstructionSection() {
   const t = useTranslations();
-
-  const [title, setTitle] = useState<TxKeyPath>(
-    "register.instruction.register.title.1"
-  );
-  const [subTitle, setSubTitle] = useState<TxKeyPath>(
-    "register.instruction.register.subtitle.1"
-  );
-  const [topBadgeTitleKey, setTopBadgeTitleKey] = useState<TxKeyPath>(
-    "register.instruction.register.topBadge.title"
-  );
-  const [bottomBadgeTitleKey, setBottomBadgeTitleKey] =
-    useState<TxKeyPath | null>(
-      "register.instruction.register.bottomBadge.title"
-    );
-  // Store badge config as data, not React nodes
-  const [topBadgeData, setTopBadgeData] = useState<{
-    count: number;
-    keyPrefix: string;
-  } | null>({
-    count: 1,
-    keyPrefix: "register.instruction.register.topBadge.badgeTitle",
-  });
-  const [bottomBadgeData, setBottomBadgeData] = useState<{
-    count: number;
-    keyPrefix: string;
-  } | null>({
-    count: 3,
-    keyPrefix: "register.instruction.register.bottomBadge.badgeTitle",
-  });
-
   const pathname = usePathname();
+  const config = useInstructionConfig(pathname);
 
-  useEffect(() => {
-    const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
-    const currentPathname = localeMatch
-      ? pathname.replace(/^\/[a-z]{2}/, "")
-      : pathname;
-
-    switch (currentPathname) {
-      case PATH.REGISTER.path:
-        setTitle("register.instruction.register.title.1");
-        setSubTitle("register.instruction.register.subtitle.1");
-        setTopBadgeTitleKey("register.instruction.register.topBadge.title");
-        setBottomBadgeTitleKey(
-          "register.instruction.register.bottomBadge.title"
-        );
-        setTopBadgeData({
-          count: 1,
-          keyPrefix: "register.instruction.register.topBadge.badgeTitle",
-        });
-        setBottomBadgeData({
-          count: 3,
-          keyPrefix: "register.instruction.register.bottomBadge.badgeTitle",
-        });
-        break;
-      case PATH.REGISTER_PERSONAL_DETAILS.path:
-        setTitle("register.instruction.register.title.2");
-        setSubTitle("register.instruction.register.subtitle.2");
-        setTopBadgeTitleKey(
-          "register.instruction.personalDetails.topBadge.title"
-        );
-        setTopBadgeData({
-          count: 2,
-          keyPrefix: "register.instruction.personalDetails.topBadge.badgeTitle",
-        });
-        setBottomBadgeData(null);
-        setBottomBadgeTitleKey(null);
-        break;
-      case PATH.REGISTER_CONTACT_DETAILS.path:
-        setTitle("register.instruction.register.title.2");
-        setSubTitle("register.instruction.register.subtitle.2");
-        setTopBadgeTitleKey(
-          "register.instruction.contactDetails.topBadge.title"
-        );
-        setTopBadgeData({
-          count: 2,
-          keyPrefix: "register.instruction.contactDetails.topBadge.badgeTitle",
-        });
-        setBottomBadgeData(null);
-        setBottomBadgeTitleKey(null);
-        break;
-      default:
-        break;
-    }
-  }, [pathname, t]);
-
-  // Derive badge components in render
-  const topBadge = topBadgeData ? (
+  const topBadge = config.topBadgeData ? (
     <>
-      {Array.from({ length: topBadgeData.count }).map((_, idx) => (
+      {Array.from({ length: config.topBadgeData.count }).map((_, idx) => (
         <InstructionBadge
           key={idx}
           number={idx + 1}
           title={translate(
             t,
-            `${topBadgeData.keyPrefix}.${idx + 1}` as TxKeyPath
+            `${config.topBadgeData?.keyPrefix}.${idx + 1}` as TxKeyPath
           )}
         />
       ))}
     </>
   ) : null;
 
-  const bottomBadge = bottomBadgeData ? (
+  const bottomBadge = config.bottomBadgeData ? (
     <>
-      {Array.from({ length: bottomBadgeData.count }).map((_, idx) => (
+      {Array.from({ length: config.bottomBadgeData.count }).map((_, idx) => (
         <InstructionBadge
           key={idx}
-          number={idx + 1 + (topBadgeData?.count || 0)}
+          number={idx + 1 + (config.topBadgeData?.count || 0)}
           title={translate(
             t,
-            `${bottomBadgeData.keyPrefix}.${idx + 1}` as TxKeyPath
+            `${config.bottomBadgeData?.keyPrefix}.${idx + 1}` as TxKeyPath
           )}
         />
       ))}
@@ -131,12 +113,13 @@ export function InstructionSection() {
     <InstructionContainer
       topBadge={topBadge}
       bottomBadge={bottomBadge}
-      topBadgeTitleKey={topBadgeTitleKey}
+      topBadgeTitleKey={config.topBadgeTitleKey}
       bottomBadgeTitleKey={
-        bottomBadgeTitleKey || "register.instruction.register.bottomBadge.title"
+        config.bottomBadgeTitleKey ||
+        "register.instruction.register.bottomBadge.title"
       }
-      title={title}
-      subTitle={subTitle}
+      title={config.title}
+      subTitle={config.subTitle}
     />
   );
 }
