@@ -87,7 +87,6 @@ export function EmailForm() {
             onClick={() => setIsLoading(true)}
             data-testid="forgot-password-link"
             aria-label="Forgot Password"
-            type="button"
             className="justify-self-end text-label text-main-700 cursor-pointer hover:underline"
           >
             {translate(t, "login.form.signIn.button.forgotPassword")}
