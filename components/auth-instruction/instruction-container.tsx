@@ -42,9 +42,9 @@ export function InstructionContainer({
           </div>
 
           <div className="space-y-2">
-            <label className="text-neutral-50 text-label" htmlFor="">
+            <p className="text-neutral-50 text-label">
               {translate(t, topBadgeTitleKey)}
-            </label>
+            </p>
             {topBadge}
           </div>
 
