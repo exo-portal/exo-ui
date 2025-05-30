@@ -1,10 +1,10 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { InstructionContainer } from "../instruction-cotainer";
 import { TxKeyPath } from "@/i18n";
 import InstructionBadge from "../instruction-badge";
 import { translate } from "@/lib";
 import { useTranslations } from "next-intl";
+import { InstructionContainer } from "../instruction-container";
 
 // Mock dependencies
 jest.mock("next-intl", () => ({
