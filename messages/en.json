@@ -163,7 +163,8 @@
         "alreadyHaveAccount": {
           "text": "Don't have an account yet?",
           "signUp": "Sign up"
-        }
+        },
+        "or": "Or"
       }
     }
   }
