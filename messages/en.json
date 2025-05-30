@@ -157,7 +157,12 @@
         "button": {
           "google": "Google",
           "github": "Github",
-          "signIn": "Sign In"
+          "signIn": "Sign In",
+          "forgotPassword": "Forgot Password?"
+        },
+        "alreadyHaveAccount": {
+          "text": "Don't have an account yet?",
+          "signUp": "Sign up"
         }
       }
     }

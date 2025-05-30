@@ -65,7 +65,7 @@ export default function EmailForm() {
     reValidateMode: "onChange",
   });
 
-  const onSubmit = async (values: z.infer<typeof FormSchema>) => {
+  const onSubmit = (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
     const { email, password, confirmPassword } = values;
     setData({
@@ -122,6 +122,7 @@ export default function EmailForm() {
       <div className="text-center mt-2 text-neutral-500 text-label">
         {translate(t, "register.form.signUp.alreadyHaveAccount.text")}
         <Link
+          onClick={() => setIsLoading(true)}
           className="text-main-700 underline px-1"
           href={PATH.LOGIN.getPath(getCurrentLocale())}
         >
