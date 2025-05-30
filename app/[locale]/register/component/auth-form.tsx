@@ -22,7 +22,7 @@ export default function AuthForm() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-11 w-[500px]">
+    <section className="flex flex-col gap-11 min-w-lg flex-1">
       <div className="space-y-2 text-center">
         <h1 className="text-sub-heading-4 font-bold text-neutral-950">
           {translate(t, "register.form.signUp.title")}
