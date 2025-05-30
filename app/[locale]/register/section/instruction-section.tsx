@@ -1,72 +1,175 @@
-import { Separator } from "@/components/ui/separator";
-import React from "react";
-import { InstructionBadge } from "../component";
-import { translate } from "@/lib";
+"use client";
+
 import { useTranslations } from "next-intl";
+import { translate } from "@/lib";
+import { InstructionContainer } from "@/components/auth-instruction/instruction-cotainer";
+import InstructionBadge from "@/components/auth-instruction/instruction-badge";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { PATH } from "@/config";
+import { useState } from "react";
+import { TxKeyPath } from "@/i18n";
 
 export function InstructionSection() {
   const t = useTranslations();
 
-  return (
-    <aside className="basis-4/12 bg-main-700 flex flex-col px-11 py-12">
-      <div data-testid="instruction-header" className="flex flex-col">
-        <div className="space-y-8">
-          <div
-            data-testid="company-logo"
-            className="h-[50px] w-[120px] bg-neutral-50 rounded-lg"
+  const [title, settitle] = useState<TxKeyPath>(
+    "register.instruction.register.title.1"
+  );
+  const [subTitle, setSubTitle] = useState<TxKeyPath>(
+    "register.instruction.register.subtitle.1"
+  );
+
+  const [topBadgeComponent, setTopBadgeComponent] = useState<React.ReactNode>(
+    <InstructionBadge
+      number={1}
+      title={translate(
+        t,
+        "register.instruction.register.topBadge.badgeTitle.1"
+      )}
+    />
+  );
+  const [bottomBadgeComponent, setBottomBadgeComponent] =
+    useState<React.ReactNode>(
+      <>
+        {Array.from({ length: 3 }).map((_, idx) => {
+          return (
+            <InstructionBadge
+              key={idx}
+              number={idx + 2}
+              title={translate(
+                t,
+                `register.instruction.register.bottomBadge.badgeTitle.${
+                  idx + 1
+                }` as TxKeyPath
+              )}
+            />
+          );
+        })}
+      </>
+    );
+  const [topBadgeTitleKey, setTopBadgeTitleKey] = useState<TxKeyPath>(
+    "register.instruction.register.topBadge.title"
+  );
+  const [bottomBadgeTitleKey, setBottomBadgeTitleKey] =
+    useState<TxKeyPath | null>(
+      "register.instruction.register.bottomBadge.title"
+    );
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+    const currentPathname = localeMatch
+      ? pathname.replace(/^\/[a-z]{2}/, "")
+      : pathname;
+
+    switch (currentPathname) {
+      case PATH.REGISTER.path:
+        settitle("register.instruction.register.title.1");
+        setSubTitle("register.instruction.register.subtitle.1");
+        setTopBadgeTitleKey("register.instruction.register.topBadge.title");
+        setBottomBadgeTitleKey(
+          "register.instruction.register.bottomBadge.title"
+        );
+        setTopBadgeComponent(
+          <InstructionBadge
+            number={1}
+            title={translate(
+              t,
+              "register.instruction.register.topBadge.badgeTitle.1"
+            )}
           />
+        );
+        setBottomBadgeComponent(
+          <>
+            {Array.from({ length: 3 }).map((_, idx) => {
+              return (
+                <InstructionBadge
+                  key={idx}
+                  number={idx + 2}
+                  title={translate(
+                    t,
+                    `register.instruction.register.bottomBadge.badgeTitle.${
+                      idx + 1
+                    }` as TxKeyPath
+                  )}
+                />
+              );
+            })}
+          </>
+        );
+        break;
+      case PATH.REGISTER_PERSONAL_DETAILS.path:
+        settitle("register.instruction.register.title.2");
+        setSubTitle("register.instruction.register.subtitle.2");
+        setTopBadgeTitleKey(
+          "register.instruction.personalDetails.topBadge.title"
+        );
+        setTopBadgeComponent(
+          <>
+            {Array.from({ length: 2 }).map((_, idx) => {
+              return (
+                <InstructionBadge
+                  key={idx}
+                  number={idx + 1}
+                  title={translate(
+                    t,
+                    `register.instruction.personalDetails.topBadge.badgeTitle.${
+                      idx + 1
+                    }` as TxKeyPath
+                  )}
+                />
+              );
+            })}
+          </>
+        );
+        setBottomBadgeComponent(null);
+        setBottomBadgeTitleKey(null);
+        break;
+      case PATH.REGISTER_CONTACT_DETAILS.path:
+        settitle("register.instruction.register.title.2");
+        setSubTitle("register.instruction.register.subtitle.2");
+        setTopBadgeTitleKey(
+          "register.instruction.contactDetails.topBadge.title"
+        );
+        setTopBadgeComponent(
+          <>
+            {Array.from({ length: 2 }).map((_, idx) => {
+              return (
+                <InstructionBadge
+                  key={idx}
+                  number={idx + 1}
+                  title={translate(
+                    t,
+                    `register.instruction.contactDetails.topBadge.badgeTitle.${
+                      idx + 1
+                    }` as TxKeyPath
+                  )}
+                />
+              );
+            })}
+          </>
+        );
+        setBottomBadgeComponent(null);
+        setBottomBadgeTitleKey(null);
+        break;
 
-          <div className="flex flex-col gap-2">
-            <h1 className="text-body-large text-neutral-50 font-bold">
-              {translate(t, "register.instruction.getStartedwithUs")}
-            </h1>
-            <h2 className="text-body-normal text-neutral-50">
-              {translate(t, "register.instruction.chooseSignupType")}
-            </h2>
-          </div>
+      default:
+        break;
+    }
+  }, [pathname]);
 
-          <div className="space-y-2">
-            <label className="text-neutral-50 text-label" htmlFor="">
-              {translate(t, "register.instruction.signUpWithOAuth")}
-            </label>
-            <InstructionBadge
-              number={1}
-              title={translate(
-                t,
-                "register.instruction.signUpWithExistingAccounts"
-              )}
-            />
-          </div>
-
-          <div className="px-8">
-            <Separator />
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-neutral-50 text-label" htmlFor="">
-              {translate(t, "register.instruction.signUpWithEmailOrPhone")}
-            </label>
-            <InstructionBadge
-              number={2}
-              title={translate(
-                t,
-                "register.instruction.signUpWithEmailOrPhoneDescription"
-              )}
-            />
-            <InstructionBadge
-              number={3}
-              title={translate(
-                t,
-                "register.instruction.signUpWithUsernameAndPassword"
-              )}
-            />
-            <InstructionBadge
-              number={4}
-              title={translate(t, "register.instruction.continueButton")}
-            />
-          </div>
-        </div>
-      </div>
-    </aside>
+  return (
+    <InstructionContainer
+      topBadge={topBadgeComponent}
+      bottomBadge={bottomBadgeComponent}
+      topBadgeTitleKey={topBadgeTitleKey}
+      bottomBadgeTitleKey={
+        bottomBadgeTitleKey || "register.instruction.register.bottomBadge.title"
+      }
+      title={title}
+      subTitle={subTitle}
+    />
   );
 }

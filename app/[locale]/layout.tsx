@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -9,13 +9,8 @@ import {
   ReactScanProvider,
 } from "@/providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
@@ -34,9 +29,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <ReactScanProvider />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-50`}
-      >
+      <body className={`${inter.variable} antialiased bg-neutral-50`}>
         <NextIntlClientProvider messages={messages}>
           <GlobalAuthProvider />
           <LoadingMaskProvider />
