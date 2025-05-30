@@ -2,11 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { InstructionConfig, PATH } from "@/config";
-import { TxKeyPath } from "@/i18n/i18n";
 import { usePathname } from "next/navigation";
 import InstructionBadge from "@/components/auth-instruction/instruction-badge";
 import { translate } from "@/lib";
 import { InstructionContainer } from "@/components/auth-instruction/instruction-container";
+import { TxKeyPath } from "@/i18n";
 
 const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
   [PATH.FORGOT_PASSWORD.path]: {
@@ -16,9 +16,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 2,
       keyPrefix: "forgotPassword.instruction.enterEmail.topBadge.badgeTitle",
-    },
-    bottomBadgeData: undefined,
-    bottomBadgeTitleKey: undefined,
+    }
   },
   [PATH.FORGOT_PASSWORD_OTP.path]: {
     title: "forgotPassword.instruction.otp.title",
@@ -27,9 +25,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 3,
       keyPrefix: "forgotPassword.instruction.otp.topBadge.badgeTitle",
-    },
-    bottomBadgeData: undefined,
-    bottomBadgeTitleKey: undefined,
+    }
   },
   [PATH.FORGOT_PASSWORD_RESET.path]: {
     title: "forgotPassword.instruction.reset.title",
@@ -38,9 +34,7 @@ const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
     topBadgeData: {
       count: 3,
       keyPrefix: "forgotPassword.instruction.reset.topBadge.badgeTitle",
-    },
-    bottomBadgeData: undefined,
-    bottomBadgeTitleKey: undefined,
+    }
   },
 };
 
