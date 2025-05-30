@@ -82,9 +82,16 @@ export function EmailForm() {
             labelKey={"register.form.signUp.input.label.password"}
             placeholderKey={"register.form.signUp.input.placeholder.password"}
           />
-          <button className="justify-self-end text-label text-main-700 cursor-pointer hover:underline">
+          <Link
+            href={PATH.FORGOT_PASSWORD.getPath(getCurrentLocale())}
+            onClick={() => setIsLoading(true)}
+            data-testid="forgot-password-link"
+            aria-label="Forgot Password"
+            type="button"
+            className="justify-self-end text-label text-main-700 cursor-pointer hover:underline"
+          >
             {translate(t, "login.form.signIn.button.forgotPassword")}
-          </button>
+          </Link>
         </div>
         <Button type="submit">
           {translate(t, "login.form.signIn.button.signIn")}
