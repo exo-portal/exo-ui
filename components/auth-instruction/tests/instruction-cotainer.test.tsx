@@ -87,12 +87,18 @@ describe("InstructionContainer", () => {
         bottomBadgeTitleKey="register.instruction.register.bottomBadge.title"
       />
     );
-    const badges = screen.getAllByTestId("intruction-badge-1");
-    expect(badges).toHaveLength(2);
+    const badges = screen.getAllByTestId("instruction-badge-1");
+    expect(badges).toHaveLength(4);
     expect(badges[0]).toHaveTextContent(
       "translated:register.instruction.register.topBadge.badgeTitle.1"
     );
     expect(badges[1]).toHaveTextContent(
+      "translated:register.instruction.register.topBadge.badgeTitle.1"
+    );
+    expect(badges[2]).toHaveTextContent(
+      "translated:register.instruction.register.bottomBadge.badgeTitle.1"
+    );
+    expect(badges[3]).toHaveTextContent(
       "translated:register.instruction.register.bottomBadge.badgeTitle.1"
     );
     expect(
