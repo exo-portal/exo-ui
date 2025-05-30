@@ -6,6 +6,8 @@ export function PersonalDetailsFormSkeleton() {
     <div
       data-testid="personal-details-form-skeleton"
       className="flex flex-col gap-4 w-[500px]"
+      role="status"
+      aria-busy="true"
     >
       {/* first name and last name skeleton */}
       <div className="flex gap-4 items-start">
