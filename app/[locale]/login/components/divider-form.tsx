@@ -12,7 +12,7 @@ export function DividerForm() {
         className="text-body-normal text-neutral-400"
         data-testid="divider-text"
       >
-        {translate(t, "register.form.signUp.or")}
+        {translate(t, "login.form.signIn.or")}
       </span>
       <div
         className="bg-border h-0.5 w-full"
