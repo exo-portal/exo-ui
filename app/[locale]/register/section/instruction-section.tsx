@@ -1,6 +1,6 @@
 "use client";
 import InstructionBadge from "@/components/auth-instruction/instruction-badge";
-import { InstructionContainer } from "@/components/auth-instruction/instruction-cotainer";
+import { InstructionContainer } from "@/components/auth-instruction/instruction-container";
 import { PATH } from "@/config";
 import { TxKeyPath } from "@/i18n";
 import { translate } from "@/lib";
@@ -140,4 +140,3 @@ export function InstructionSection() {
     />
   );
 }
-// ...existing code...
