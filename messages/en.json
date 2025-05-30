@@ -37,7 +37,7 @@
         "topBadge": {
           "title": "Continue creating your account:",
           "badgeTitle": {
-            "1": "Fill out carefully your personal details.",
+            "1": "Fill out your personal details carefully.",
             "2": "Click next button to continue."
           }
         }
@@ -46,7 +46,7 @@
         "topBadge": {
           "title": "Continue creating your account:",
           "badgeTitle": {
-            "1": "Fill out carefully your contact details.",
+            "1": "Fill out your contact details carefully.",
             "2": "Click submit button to continue."
           }
         }
