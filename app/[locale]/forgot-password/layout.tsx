@@ -1,5 +1,28 @@
 import React from "react";
 import { ForgotPasswordInstructionSection } from "./section";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Forgot Password | ExoPortal",
+  description:
+    "Reset your ExoPortal account password. Enter your email address to receive password reset instructions and regain access to your account.",
+  keywords: [
+    "ExoPortal",
+    "Forgot Password",
+    "Password Reset",
+    "Account Recovery",
+    "Exodia Portal",
+  ],
+  robots: "noindex, nofollow",
+  openGraph: {
+    title: "Forgot Password | ExoPortal",
+    description:
+      "Securely reset your ExoPortal account password and restore access to your account.",
+    url: "https://your-exoportal-domain.com/forgot-password",
+    siteName: "ExoPortal",
+    type: "website",
+  },
+};
 
 export default function ForgotPasswordLayout({
   children,
