@@ -5,7 +5,7 @@ import { InstructionSection } from "./section";
 export const metadata: Metadata = {
   title: "Create Your Account | Exo Portal",
   description:
-    "Sign up for a new account to access all features of the Exodia Portal. Join our community and get started today.",
+    "Sign up for a new account to access all features of the Exo Portal. Join our community and get started today.",
   keywords: [
     "register",
     "sign up",
