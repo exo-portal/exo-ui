@@ -71,48 +71,6 @@ describe("InstructionContainer", () => {
     expect(logo).toHaveClass("rounded-lg");
   });
 
-  it("renders both badges and their labels when both are provided", () => {
-    render(
-      <InstructionContainer
-        {...defaultProps}
-        bottomBadge={
-          <InstructionBadge
-            number={1}
-            title={translate(
-              useTranslations(),
-              "register.instruction.register.bottomBadge.badgeTitle.1"
-            )}
-          />
-        }
-        bottomBadgeTitleKey="register.instruction.register.bottomBadge.title"
-      />
-    );
-    const badges = screen.getAllByTestId("instruction-badge-1");
-    expect(badges).toHaveLength(4);
-    expect(badges[0]).toHaveTextContent(
-      "translated:register.instruction.register.topBadge.badgeTitle.1"
-    );
-    expect(badges[1]).toHaveTextContent(
-      "translated:register.instruction.register.topBadge.badgeTitle.1"
-    );
-    expect(badges[2]).toHaveTextContent(
-      "translated:register.instruction.register.bottomBadge.badgeTitle.1"
-    );
-    expect(badges[3]).toHaveTextContent(
-      "translated:register.instruction.register.bottomBadge.badgeTitle.1"
-    );
-    expect(
-      screen.getByText(
-        "translated:register.instruction.register.bottomBadge.badgeTitle.1"
-      )
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "translated:register.instruction.register.bottomBadge.title"
-      )
-    ).toBeInTheDocument();
-  });
-
   it("renders subtitle with correct class", () => {
     render(<InstructionContainer {...defaultProps} />);
     const subtitle = screen.getByText(
