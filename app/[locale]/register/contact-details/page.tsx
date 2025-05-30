@@ -1,9 +1,9 @@
 import { ClientOnlyProvider } from "@/providers";
-import { ContactDetailsForm } from "./components";
+import { ContactDetailsForm, ContactDetailsFormSkeleton } from "./components";
 
 export default function ContactDetailsPage() {
   return (
-    <ClientOnlyProvider fallback={<div>Loading...</div>}>
+    <ClientOnlyProvider fallback={<ContactDetailsFormSkeleton />}>
       <ContactDetailsForm />
     </ClientOnlyProvider>
   );
