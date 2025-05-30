@@ -195,7 +195,7 @@
       },
       "reset": {
         "title": "Reset your password",
-        "subtitle": "Create a new password to regain access",
+        "subtitle": "Create a new password to regain access.",
         "topBadge": {
           "title": "Reset Password Steps:",
           "badgeTitle": {
