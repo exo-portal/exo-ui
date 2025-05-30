@@ -14,7 +14,7 @@ export default function ForgotPasswordLayout({
       <InstructionSection />
       <section
         className="basis-8/12 flex justify-center items-center"
-        data-testi="forgot-password-layout-section"
+        data-testid="forgot-password-layout-section"
       >
         {children}
       </section>
