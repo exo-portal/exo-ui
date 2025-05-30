@@ -48,7 +48,7 @@ export default function AuthForm() {
           variant={"outline"}
           onClick={registerUsingGithubHandler}
         >
-          <Image src={GithubIcon} alt="github-icon" />
+          <Image src={GithubIcon} alt="GitHub icon" />
           {translate(t, "register.form.signUp.button.github")}
         </Button>
       </div>
