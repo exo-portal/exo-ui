@@ -47,7 +47,7 @@ const useInstructionConfig = (
     : pathname;
   return (
     INSTRUCTION_CONFIG[currentPathname] ||
-    INSTRUCTION_CONFIG[PATH.REGISTER.path]
+    INSTRUCTION_CONFIG[PATH.FORGOT_PASSWORD.path]
   );
 };
 
