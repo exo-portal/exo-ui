@@ -9,6 +9,7 @@ import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -16,28 +17,28 @@ import { z } from "zod";
 export function ForgotPasswordForm() {
   const { setIsLoading } = useAppStateStore();
   const t = useTranslations();
+  const router = useRouter();
 
   useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
 
-  const FormSchema = z.object({
+  const ForgotPasswordFormSchema = z.object({
     identifier: z
       .string()
-      .min(1, "Email or password is required")
+      .min(1, "Email or phone number is required")
       .refine(
         (val) =>
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) ||
-          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(val),
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || // email validation
+          /^(\+?\d{1,4})?[-.\s]?(\d{10,15})$/.test(val), // phone number validation (country code optional, simplified spacing)
         {
-          message:
-            "Must be a valid email or a password (min 8 chars, at least one letter and one number)",
+          message: "Enter a valid email or phone number.",
         }
       ),
   });
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof ForgotPasswordFormSchema>>({
+    resolver: zodResolver(ForgotPasswordFormSchema),
     defaultValues: {
       identifier: "",
     },
@@ -45,12 +46,13 @@ export function ForgotPasswordForm() {
     reValidateMode: "onChange",
   });
 
-  const onSubmit = (values: z.infer<typeof FormSchema>) => {
+  const onSubmit = (values: z.infer<typeof ForgotPasswordFormSchema>) => {
     const { identifier } = values;
     setIsLoading(true);
 
     // TODO:: Implement the forgot password logic here
     console.log("Forgot Password Identifier:", identifier);
+    router.push(PATH.FORGOT_PASSWORD_OTP.getPath(getCurrentLocale()));
   };
 
   return (
@@ -58,16 +60,16 @@ export function ForgotPasswordForm() {
       <form
         className="flex flex-col gap-4"
         onSubmit={form.handleSubmit(onSubmit)}
+        autoComplete="on"
       >
         <FormFieldInput
           id="identifier"
-          name={"identifier"}
+          name="identifier"
           control={form.control}
-          schema={FormSchema}
-          labelKey={"forgotPassword.form.enterEmail.identifier.label"}
-          placeholderKey={
-            "forgotPassword.form.enterEmail.identifier.placeholder"
-          }
+          schema={ForgotPasswordFormSchema}
+          autoComplete="username"
+          labelKey="forgotPassword.form.enterEmail.identifier.label"
+          placeholderKey="forgotPassword.form.enterEmail.identifier.placeholder"
         />
         <Button type="submit">
           {translate(t, "forgotPassword.button.submit")}
