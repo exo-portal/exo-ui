@@ -6,13 +6,12 @@ import { Form } from "@/components/ui/form";
 import { PATH } from "@/config";
 import { getCurrentLocale, translate } from "@/lib";
 import { useAppStateStore } from "@/store";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { ForgotPasswordFormSchema, forgotPasswordForm } from "../validation";
 
 export function ForgotPasswordForm() {
   const { setIsLoading } = useAppStateStore();
@@ -22,29 +21,6 @@ export function ForgotPasswordForm() {
   useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
-
-  const ForgotPasswordFormSchema = z.object({
-    identifier: z
-      .string()
-      .min(1, "Email or phone number is required")
-      .refine(
-        (val) =>
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || // email validation
-          /^(\+?\d{1,4})?[-.\s]?(\d{10,15})$/.test(val), // phone number validation (country code optional, simplified spacing)
-        {
-          message: "Enter a valid email or phone number.",
-        }
-      ),
-  });
-
-  const form = useForm<z.infer<typeof ForgotPasswordFormSchema>>({
-    resolver: zodResolver(ForgotPasswordFormSchema),
-    defaultValues: {
-      identifier: "",
-    },
-    mode: "onTouched",
-    reValidateMode: "onChange",
-  });
 
   const onSubmit = (values: z.infer<typeof ForgotPasswordFormSchema>) => {
     const { identifier } = values;
@@ -56,16 +32,16 @@ export function ForgotPasswordForm() {
   };
 
   return (
-    <Form {...form}>
+    <Form {...forgotPasswordForm}>
       <form
         className="flex flex-col gap-4"
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={forgotPasswordForm.handleSubmit(onSubmit)}
         autoComplete="on"
       >
         <FormFieldInput
           id="identifier"
           name="identifier"
-          control={form.control}
+          control={forgotPasswordForm.control}
           schema={ForgotPasswordFormSchema}
           autoComplete="username"
           labelKey="forgotPassword.form.enterEmail.identifier.label"

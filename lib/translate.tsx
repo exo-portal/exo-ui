@@ -35,12 +35,11 @@ export const translateWithHtml = (
   key: TxKeyPath,
   options?: Record<string, string | number>
 ) => {
+  const translated = translate(t, key, options);
   return (
     <span
       dangerouslySetInnerHTML={{
-        __html: translate(t, key, options)
-          ? DOMPurify.sanitize(translate(t, key, options))
-          : "",
+        __html: translated ? translated : "",
       }}
     />
   );
