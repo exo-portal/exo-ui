@@ -1,4 +1,5 @@
 "use client";
+
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { cn, translate } from "@/lib";
@@ -10,7 +11,11 @@ import {
   ControllerRenderProps,
   FieldValues,
 } from "react-hook-form";
-
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import Image, { StaticImageData } from "next/image";
 import {
   Select,
@@ -48,8 +53,8 @@ type FormFieldInputProps = {
   type?: React.HTMLInputTypeAttribute;
   control: Control<z.infer<FormFieldInputProps["schema"]>>;
   schema: z.ZodTypeAny;
-  labelKey: TxKeyPath;
-  placeholderKey: TxKeyPath;
+  labelKey?: TxKeyPath;
+  placeholderKey?: TxKeyPath;
   inputSuffixIcon?: React.ReactNode;
   componentType?:
     | "input"
@@ -58,12 +63,14 @@ type FormFieldInputProps = {
     | "checkbox"
     | "radio"
     | "datePicker"
-    | "tel";
+    | "tel"
+    | "otp-input";
   options?: OptionsInterface[];
   autoComplete?: React.HTMLInputAutoCompleteAttribute | undefined;
   countrySelected?: string;
   enableClear?: boolean;
   isFormDirty?: boolean;
+  maxLength?: number;
 };
 
 export default function FormFieldInput({
@@ -80,6 +87,7 @@ export default function FormFieldInput({
   countrySelected = "PH",
   enableClear = true,
   isFormDirty = false,
+  maxLength,
 }: FormFieldInputProps) {
   const t = useTranslations();
 
@@ -89,6 +97,22 @@ export default function FormFieldInput({
   ) => {
     const { value, onChange } = field;
     switch (componentType) {
+      case "otp-input":
+        return (
+          <InputOTP maxLength={maxLength ? maxLength : 6} {...field}>
+            <InputOTPGroup>
+              {Array.from({ length: maxLength ? maxLength : 6}).map(
+                (_, index) => (
+                  <InputOTPSlot
+                    key={index}
+                    aria-invalid={fieldState.invalid}
+                    index={index}
+                  />
+                )
+              )}
+            </InputOTPGroup>
+          </InputOTP>
+        );
       case "tel":
         const [country, setCountry] = useState<string>("PH");
 
@@ -180,7 +204,7 @@ export default function FormFieldInput({
             aria-invalid={fieldState.invalid}
             inputSuffixIcon={inputSuffixIcon}
             {...field}
-            placeholder={translate(t, placeholderKey)}
+            placeholder={placeholderKey ? translate(t, placeholderKey) : ""}
           />
         );
       case "select":
@@ -199,7 +223,9 @@ export default function FormFieldInput({
               aria-invalid={fieldState.invalid}
               enableClear={enableClear}
             >
-              <SelectValue placeholder={translate(t, placeholderKey)} />
+              <SelectValue
+                placeholder={placeholderKey ? translate(t, placeholderKey) : ""}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -219,7 +245,7 @@ export default function FormFieldInput({
       case "datePicker":
         return (
           <DatePicker
-            placeholder={translate(t, placeholderKey)}
+            placeholder={placeholderKey ? translate(t, placeholderKey) : ""}
             aria-label={String(fieldState.invalid)}
             onChange={(date) => {
               field.onChange(date);
@@ -236,7 +262,7 @@ export default function FormFieldInput({
             aria-invalid={fieldState.invalid}
             inputSuffixIcon={inputSuffixIcon}
             {...field}
-            placeholder={translate(t, placeholderKey)}
+            placeholder={placeholderKey ? translate(t, placeholderKey) : ""}
           />
         );
     }
@@ -247,9 +273,14 @@ export default function FormFieldInput({
       control={control}
       name={name as string}
       render={({ field, fieldState }) => (
-        <FormItem className="w-full">
+        <FormItem
+          className={cn(
+            "w-full justify-center",
+            componentType === "otp-input" && "justify-center"
+          )}
+        >
           <FormLabel className="text-neutral-600 font-medium" htmlFor={id}>
-            {translate(t, labelKey)}
+            {labelKey ? translate(t, labelKey) : ""}
           </FormLabel>
           <FormControl>{componentRender(field, fieldState)}</FormControl>
           <FormMessage />
