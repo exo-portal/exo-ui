@@ -226,6 +226,25 @@
           "title": "OTP Verification",
           "subtitle": "Enter the 4-digit code sent to your email or phone number."
         }
+      },
+      "reset": {
+        "header": {
+          "title": "Set a New Password",
+          "subtitle": "Create a new password to regain access."
+        },
+        "input": {
+          "label": {
+            "newPassword": "Create new password",
+            "reEnterNewPassword": "Re-enter new password"
+          },
+          "placeholder": {
+            "newPassword": "Enter your new password",
+            "reEnterNewPassword": "Re-enter your new password"
+          }
+        },
+        "button": {
+          "savePassword": "Save Password"
+        }
       }
     },
     "button": {
