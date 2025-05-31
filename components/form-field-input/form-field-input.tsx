@@ -73,7 +73,7 @@ export default function FormFieldInput({
   control,
   options = [],
   labelKey,
-  autoComplete = undefined,
+  autoComplete = "off",
   componentType = "input",
   placeholderKey,
   inputSuffixIcon,
