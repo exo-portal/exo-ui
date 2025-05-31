@@ -36,10 +36,11 @@ export const translateWithHtml = (
   options?: Record<string, string | number>
 ) => {
   const translated = translate(t, key, options);
+  const sanitized = DOMPurify.sanitize(translated ? translated : "");
   return (
     <span
       dangerouslySetInnerHTML={{
-        __html: translated ? translated : "",
+        __html: sanitized,
       }}
     />
   );
