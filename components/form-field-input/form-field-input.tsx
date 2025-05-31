@@ -39,6 +39,7 @@ import {
   TypeTelInput,
 } from "./form-field-input-function";
 import { PHFlag } from "../national-flag";
+import { DEFAULT_OTP_LENGTH } from "@/config";
 
 export interface OptionsInterface {
   label: string;
@@ -99,9 +100,9 @@ export default function FormFieldInput({
     switch (componentType) {
       case "otp-input":
         return (
-          <InputOTP maxLength={maxLength ? maxLength : 6} {...field}>
+          <InputOTP maxLength={maxLength ? maxLength : DEFAULT_OTP_LENGTH} {...field}>
             <InputOTPGroup>
-              {Array.from({ length: maxLength ? maxLength : 6}).map(
+              {Array.from({ length: maxLength ? maxLength : DEFAULT_OTP_LENGTH}).map(
                 (_, index) => (
                   <InputOTPSlot
                     key={index}
