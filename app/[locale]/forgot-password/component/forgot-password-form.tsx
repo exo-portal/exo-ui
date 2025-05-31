@@ -11,7 +11,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { z } from "zod";
-import { ForgotPasswordFormSchema, forgotPasswordForm } from "../validation";
+import { ForgotPasswordFormSchema } from "../validation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export function ForgotPasswordForm() {
   const { setIsLoading } = useAppStateStore();
@@ -30,6 +32,15 @@ export function ForgotPasswordForm() {
     console.log("Forgot Password Identifier:", identifier);
     router.push(PATH.FORGOT_PASSWORD_OTP.getPath(getCurrentLocale()));
   };
+
+  const forgotPasswordForm = useForm<z.infer<typeof ForgotPasswordFormSchema>>({
+    resolver: zodResolver(ForgotPasswordFormSchema),
+    defaultValues: {
+      identifier: "",
+    },
+    mode: "onTouched",
+    reValidateMode: "onChange",
+  });
 
   return (
     <Form {...forgotPasswordForm}>
