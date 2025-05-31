@@ -53,6 +53,7 @@ export function ResetForm() {
             "forgotPassword.form.reset.input.placeholder.newPassword"
           }
           autoFocus
+          autoComplete="new-password"
         />
 
         {/* RE ENTER NEW PASSWORD FIELD */}

@@ -15,7 +15,7 @@ export const ResetFormSchema = z
       ),
     confirmPassword: z
       .string()
-      .min(1, "Password is required")
+      .min(1, "Confirm Password is required")
       .min(8, "Password must be at least 8 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
