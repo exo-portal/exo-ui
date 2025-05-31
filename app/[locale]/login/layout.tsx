@@ -1,9 +1,10 @@
 import { Metadata } from "next";
 import React from "react";
 import { InstructionSection } from "./section";
+import { metaDataTitle } from "@/lib";
 
 export const metadata: Metadata = {
-  title: "Login | ExoPortal",
+  title: metaDataTitle("Login"),
   description:
     "Access your ExoPortal account to manage your profile, view dashboards, and explore features. Secure login for ExoPortal users.",
   keywords: [
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     "account management",
   ],
   openGraph: {
-    title: "ExoPortal Login",
+    title: metaDataTitle("Login"),
     description:
       "Sign in to your ExoPortal account to access personalized features and dashboards.",
     url: "https://your-exoportal-domain.com/login",

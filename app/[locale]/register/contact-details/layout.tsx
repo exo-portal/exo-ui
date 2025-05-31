@@ -1,7 +1,31 @@
-import { translate } from "@/lib";
+import { BackButton } from "@/components/common";
+import { metaDataTitle, translate } from "@/lib";
+import { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import React from "react";
-import BackButton from "../component/back-button";
+
+export const metadata: Metadata = {
+  title: metaDataTitle("Create Your Account - Contact Details"),
+  description:
+    "Enter your contact details to continue creating your Exo Portal account. We use this information to keep your account secure and to contact you if needed.",
+  keywords: [
+    "register",
+    "contact details",
+    "sign up",
+    "create account",
+    "Exo Portal",
+    "user registration",
+    "email",
+    "phone number",
+  ],
+  openGraph: {
+    title: metaDataTitle("Create Your Account - Contact Details"),
+    description:
+      "Provide your contact details to complete your Exo Portal registration.",
+    url: "https://your-domain.com/register/contact-details",
+    type: "website",
+  },
+};
 
 export default function ContactDetailsLayout({
   children,

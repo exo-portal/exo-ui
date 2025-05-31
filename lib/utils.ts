@@ -56,3 +56,7 @@ export const liveFormat = ({
 
   return input; // Return the original input if country is not supported
 };
+
+export const metaDataTitle = (title: string): string => {
+  return `${title} | ExoPortal`;
+};
