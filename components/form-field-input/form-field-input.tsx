@@ -277,8 +277,8 @@ export default function FormFieldInput({
       render={({ field, fieldState }) => (
         <FormItem
           className={cn(
-            "w-full justify-center",
-            componentType === "otp-input" && "justify-center"
+            "w-full",
+            componentType === "otp-input" ? "justify-center" : ""
           )}
         >
           <FormLabel className="text-neutral-600 font-medium" htmlFor={id}>

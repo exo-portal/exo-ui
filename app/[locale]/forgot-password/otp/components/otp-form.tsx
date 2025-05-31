@@ -29,10 +29,12 @@ export function OtpForm() {
   });
 
   const onSubmit = (data: z.infer<typeof OtpFormSchema>) => {
-    console.log(data);
     setIsLoading(true);
     router.push(PATH.FORGOT_PASSWORD_RESET.getPath(getCurrentLocale()));
   };
+
+  // Watch the pin value to determine button disabled state
+  const pinValue = form.watch("pin");
 
   return (
     <Form {...form}>
@@ -48,7 +50,9 @@ export function OtpForm() {
           componentType="otp-input"
           maxLength={4}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" disabled={pinValue.length !== 4}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
