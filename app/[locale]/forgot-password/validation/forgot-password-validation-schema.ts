@@ -1,5 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const ForgotPasswordFormSchema = z.object({
@@ -14,15 +12,4 @@ export const ForgotPasswordFormSchema = z.object({
         message: "Enter a valid email or phone number.",
       }
     ),
-});
-
-export const forgotPasswordForm = useForm<
-  z.infer<typeof ForgotPasswordFormSchema>
->({
-  resolver: zodResolver(ForgotPasswordFormSchema),
-  defaultValues: {
-    identifier: "",
-  },
-  mode: "onTouched",
-  reValidateMode: "onChange",
 });
