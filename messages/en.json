@@ -215,6 +215,10 @@
         "identifier": {
           "label": "Email or phone number",
           "placeholder": "Enter your registered email or phone number"
+        },
+        "header": {
+          "title": "Forgot Password",
+          "subtitle": "Please enter your email address or phone <br/>number to receive an OTP."
         }
       }
     },

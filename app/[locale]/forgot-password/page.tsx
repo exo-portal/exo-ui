@@ -6,7 +6,7 @@ import BackButton from "../register/component/back-button";
 
 export default function ForgotPasswordPage() {
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col justify-start">
       <BackButton />
       <ForgotPasswordHeader />
       <ClientOnlyProvider fallback={<div>Loading...</div>}>

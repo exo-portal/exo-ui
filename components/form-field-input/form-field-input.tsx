@@ -60,7 +60,7 @@ type FormFieldInputProps = {
     | "datePicker"
     | "tel";
   options?: OptionsInterface[];
-  autoComplete?: "off" | "on";
+  autoComplete?: React.HTMLInputAutoCompleteAttribute | undefined;
   countrySelected?: string;
   enableClear?: boolean;
   isFormDirty?: boolean;
@@ -73,7 +73,7 @@ export default function FormFieldInput({
   control,
   options = [],
   labelKey,
-  autoComplete = "off",
+  autoComplete = undefined,
   componentType = "input",
   placeholderKey,
   inputSuffixIcon,
@@ -102,7 +102,7 @@ export default function FormFieldInput({
           setCountry(countrySelected);
           onChange("");
         }, [countrySelected, isFormDirty]);
-        
+
         return (
           <div
             className={cn(
