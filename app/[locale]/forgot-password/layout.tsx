@@ -1,9 +1,10 @@
 import React from "react";
 import { ForgotPasswordInstructionSection } from "./section";
 import { Metadata } from "next";
+import { metaDataTitle } from "@/lib";
 
 export const metadata: Metadata = {
-  title: "Forgot Password | ExoPortal",
+  title: metaDataTitle("Forgot Password"),
   description:
     "Reset your ExoPortal account password. Enter your email address to receive password reset instructions and regain access to your account.",
   keywords: [
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
   ],
   robots: "noindex, nofollow",
   openGraph: {
-    title: "Forgot Password | ExoPortal",
+    title: metaDataTitle("Forgot Password"),
     description:
       "Securely reset your ExoPortal account password and restore access to your account.",
     url: "https://your-exoportal-domain.com/forgot-password",
