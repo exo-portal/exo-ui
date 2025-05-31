@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { DEFAULT_OTP_LENGTH } from "@/config";
 import React from "react";
 
 export function OtpFormSkeleton() {
@@ -12,7 +13,7 @@ export function OtpFormSkeleton() {
       <span className="sr-only">Loading OTP form</span>
       <div className="flex w-full justify-center">
         <div className="flex gap-4 w-9/12">
-          {Array.from({ length: 4 }).map((_, index) => (
+          {Array.from({ length: DEFAULT_OTP_LENGTH }).map((_, index) => (
             <Skeleton key={index} className="h-22 w-full rounded-xl" />
           ))}
         </div>
