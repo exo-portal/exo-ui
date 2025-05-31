@@ -71,6 +71,8 @@ export function EmailForm() {
           labelKey={"register.form.signUp.input.label.email"}
           placeholderKey={"register.form.signUp.input.placeholder.email"}
           inputSuffixIcon={<Image src={UserIcon} alt="User Icon" />}
+          autoFocus
+          autoComplete="email"
         />
         <div className="flex flex-col items-end gap-2">
           <FormFieldInput
@@ -81,6 +83,7 @@ export function EmailForm() {
             control={form.control}
             labelKey={"register.form.signUp.input.label.password"}
             placeholderKey={"register.form.signUp.input.placeholder.password"}
+            autoComplete="current-password"
           />
           <Link
             href={PATH.FORGOT_PASSWORD.getPath(getCurrentLocale())}
