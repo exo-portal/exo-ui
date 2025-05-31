@@ -1,8 +1,7 @@
 import React from "react";
-import { ForgotPasswordForm } from "./component";
+import { ForgotPasswordForm, ForgotPasswordHeader } from "./component";
 import { ClientOnlyProvider } from "@/providers";
-import ForgotPasswordHeader from "./component/forgot-password-header";
-import BackButton from "../register/component/back-button";
+import { BackButton } from "@/components/common";
 
 export default function ForgotPasswordPage() {
   return (
