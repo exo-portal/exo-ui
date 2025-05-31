@@ -225,6 +225,13 @@
         "header": {
           "title": "OTP Verification",
           "subtitle": "Enter the 4-digit code sent to your email or phone number."
+        },
+        "button": {
+          "verify": "Verify",
+          "didNotReceiveCode": {
+            "text": "Did not receive the code?",
+            "resend": "Resend Code"
+          }
         }
       },
       "reset": {

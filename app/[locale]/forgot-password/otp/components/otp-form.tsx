@@ -11,11 +11,14 @@ import FormFieldInput from "@/components/form-field-input/form-field-input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { PATH } from "@/config";
-import { getCurrentLocale } from "@/lib";
+import { getCurrentLocale, translate } from "@/lib";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 export function OtpForm() {
   const { setIsLoading } = useAppStateStore();
   const router = useRouter();
+  const t = useTranslations();
 
   useEffect(() => {
     setIsLoading(false);
@@ -49,10 +52,34 @@ export function OtpForm() {
           schema={OtpFormSchema}
           componentType="otp-input"
           maxLength={4}
+          autoFocus // Add this prop to focus on load
         />
-        <Button type="submit" disabled={pinValue.length !== 4}>
-          Submit
-        </Button>
+        <div className="space-y-4 w-full">
+          <Button
+            className="w-full"
+            type="submit"
+            disabled={pinValue.length !== 4}
+          >
+            {translate(t, "forgotPassword.form.otp.button.verify")}
+          </Button>
+          {/* Sign In Link */}
+          <div className="text-center text-neutral-500 text-label">
+            {translate(
+              t,
+              "forgotPassword.form.otp.button.didNotReceiveCode.text"
+            )}
+            <Button
+              onClick={() => setIsLoading(true)}
+              className="text-main-700 underline px-1"
+              variant={"link"}
+            >
+              {translate(
+                t,
+                "forgotPassword.form.otp.button.didNotReceiveCode.resend"
+              )}
+            </Button>
+          </div>
+        </div>
       </form>
     </Form>
   );
