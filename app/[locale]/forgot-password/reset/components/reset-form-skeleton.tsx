@@ -10,7 +10,7 @@ export function ResetFormSkeleton() {
         <Skeleton className="h-4 w-38" />
         <Skeleton className="h-10 w-full rounded-xl" />
       </div>
-      {/* Password Field */}
+      {/* Confirm Password Field */}
       <div className="flex flex-col gap-2">
         <Skeleton className="h-4 w-44" />
         <Skeleton className="h-10 w-full rounded-xl" />
