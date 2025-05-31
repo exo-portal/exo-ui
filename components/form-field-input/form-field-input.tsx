@@ -99,18 +99,19 @@ export default function FormFieldInput({
     const { value, onChange } = field;
     switch (componentType) {
       case "otp-input":
+        const otpLength = maxLength ? maxLength : DEFAULT_OTP_LENGTH;
         return (
-          <InputOTP maxLength={maxLength ? maxLength : DEFAULT_OTP_LENGTH} {...field}>
+          <InputOTP maxLength={otpLength} {...field}>
             <InputOTPGroup>
-              {Array.from({ length: maxLength ? maxLength : DEFAULT_OTP_LENGTH}).map(
-                (_, index) => (
-                  <InputOTPSlot
-                    key={index}
-                    aria-invalid={fieldState.invalid}
-                    index={index}
-                  />
-                )
-              )}
+              {Array.from({
+                length: otpLength,
+              }).map((_, index) => (
+                <InputOTPSlot
+                  key={index}
+                  aria-invalid={fieldState.invalid}
+                  index={index}
+                />
+              ))}
             </InputOTPGroup>
           </InputOTP>
         );
