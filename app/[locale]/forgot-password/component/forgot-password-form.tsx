@@ -57,6 +57,7 @@ export function ForgotPasswordForm() {
           autoComplete="username"
           labelKey="forgotPassword.form.enterEmail.identifier.label"
           placeholderKey="forgotPassword.form.enterEmail.identifier.placeholder"
+          autoFocus
         />
         <Button type="submit">
           {translate(t, "forgotPassword.button.submit")}
