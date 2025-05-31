@@ -220,6 +220,12 @@
           "title": "Forgot Password",
           "subtitle": "Please enter your email address or phone <br/>number to receive an OTP."
         }
+      },
+      "otp": {
+        "header": {
+          "title": "OTP Verification",
+          "subtitle": "Enter the 4-digit code sent to your email or phone number."
+        }
       }
     },
     "button": {

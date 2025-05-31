@@ -19,5 +19,5 @@ export default function OtpLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="flex min-h-screen bg-neutral-50">{children}</main>;
+  return <main className="bg-neutral-50">{children}</main>;
 }

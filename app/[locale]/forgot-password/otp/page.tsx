@@ -1,13 +1,13 @@
 import React from "react";
 import { ClientOnlyProvider } from "@/providers";
-import { OtpForm } from "../component";
 import { BackButton } from "@/components/common";
+import { OtpForm, OtpHeader } from "./components";
 
 export default function OtpPage() {
   return (
-    <section className="flex flex-col justify-start">
+    <section className="flex flex-col flex-1">
       <BackButton />
-      {/* OTP Header */}
+      <OtpHeader />
       <ClientOnlyProvider fallback={<div>loading...</div>}>
         <OtpForm />
       </ClientOnlyProvider>
