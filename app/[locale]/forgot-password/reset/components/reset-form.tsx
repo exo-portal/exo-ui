@@ -31,6 +31,7 @@ export function ResetForm() {
 
   const onSubmit = (values: z.infer<typeof ResetFormSchema>) => {
     // TODO:: Handle form submission logic here
+    setIsLoading(true);
     console.log("Form submitted with values:", values);
   };
 
@@ -51,6 +52,7 @@ export function ResetForm() {
           placeholderKey={
             "forgotPassword.form.reset.input.placeholder.newPassword"
           }
+          autoFocus
         />
 
         {/* RE ENTER NEW PASSWORD FIELD */}

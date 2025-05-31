@@ -209,6 +209,7 @@ export default function FormFieldInput({
             inputSuffixIcon={inputSuffixIcon}
             {...field}
             placeholder={placeholderKey ? translate(t, placeholderKey) : ""}
+            autoFocus={autoFocus}
           />
         );
       case "select":

@@ -90,6 +90,8 @@ export default function EmailForm() {
           labelKey={"register.form.signUp.input.label.email"}
           placeholderKey={"register.form.signUp.input.placeholder.email"}
           inputSuffixIcon={<Image src={UserIcon} alt="User Icon" />}
+          autoFocus
+          autoComplete="email"
         />
         <FormFieldInput
           id={"password"}
@@ -99,6 +101,7 @@ export default function EmailForm() {
           control={form.control}
           labelKey={"register.form.signUp.input.label.password"}
           placeholderKey={"register.form.signUp.input.placeholder.password"}
+          autoComplete="current-password"
         />
 
         {/* RE ENTER PASSWORD FIELD */}
