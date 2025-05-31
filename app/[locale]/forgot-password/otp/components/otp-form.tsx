@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 import { PATH } from "@/config";
 import { getCurrentLocale, translate } from "@/lib";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 
 export function OtpForm() {
   const { setIsLoading } = useAppStateStore();
@@ -62,7 +61,7 @@ export function OtpForm() {
           >
             {translate(t, "forgotPassword.form.otp.button.verify")}
           </Button>
-          {/* Sign In Link */}
+          {/* Resent Button */}
           <div className="text-center text-neutral-500 text-label">
             {translate(
               t,
