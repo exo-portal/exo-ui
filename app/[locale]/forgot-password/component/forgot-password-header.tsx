@@ -2,7 +2,7 @@ import { translate, translateWithHtml } from "@/lib";
 import { useTranslations } from "next-intl";
 import React from "react";
 
-export default function ForgotPasswordHeader() {
+export function ForgotPasswordHeader() {
   const t = useTranslations();
 
   return (
