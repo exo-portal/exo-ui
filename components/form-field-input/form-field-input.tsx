@@ -72,6 +72,7 @@ type FormFieldInputProps = {
   enableClear?: boolean;
   isFormDirty?: boolean;
   maxLength?: number;
+  autoFocus?: boolean;
 };
 
 export default function FormFieldInput({
@@ -89,6 +90,7 @@ export default function FormFieldInput({
   enableClear = true,
   isFormDirty = false,
   maxLength,
+  autoFocus = false,
 }: FormFieldInputProps) {
   const t = useTranslations();
 
@@ -101,7 +103,7 @@ export default function FormFieldInput({
       case "otp-input":
         const otpLength = maxLength ? maxLength : DEFAULT_OTP_LENGTH;
         return (
-          <InputOTP maxLength={otpLength} {...field}>
+          <InputOTP maxLength={otpLength} {...field} autoFocus={autoFocus}>
             <InputOTPGroup>
               {Array.from({
                 length: otpLength,
