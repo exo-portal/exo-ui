@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { Locale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import { parsePhoneNumberFromString, AsYouType } from "libphonenumber-js";
+import { UseFormReturn } from "react-hook-form";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -60,3 +61,28 @@ export const liveFormat = ({
 export const metaDataTitle = (title: string): string => {
   return `${title} | ExoPortal`;
 };
+
+export function handleErrorMessage<T extends string>(
+  data: any,
+  form: UseFormReturn<any>,
+  allowedFields: T[]
+) {
+  if (
+    typeof data?.errorType === "string" &&
+    data.errorType.toLowerCase() === "field"
+  ) {
+    if (Array.isArray(data.errorMessageList)) {
+      data.errorMessageList.forEach(
+        (err: { fieldName: string; errorMessage: string }) => {
+          if (allowedFields.includes(err.fieldName as T)) {
+            form.setError(err.fieldName as T, {
+              type: "manual",
+              message: err.errorMessage,
+            });
+            form.setFocus(err.fieldName as T);
+          }
+        }
+      );
+    }
+  }
+}

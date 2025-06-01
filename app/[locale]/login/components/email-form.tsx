@@ -3,8 +3,8 @@ import FormFieldInput from "@/components/form-field-input/form-field-input";
 import { UserIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { PATH } from "@/config";
-import { getCurrentLocale, translate } from "@/lib";
+import { ExoPortalErrorMessage, PATH } from "@/config";
+import { getCurrentLocale, handleErrorMessage, translate } from "@/lib";
 import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -13,6 +13,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { LoginOperations } from "../functions/login-function";
+import { useRouter } from "next/navigation";
 
 export function EmailForm() {
   const t = useTranslations();
@@ -51,10 +53,27 @@ export function EmailForm() {
     reValidateMode: "onChange",
   });
 
+  const router = useRouter();
+
   const onSubmit = (values: z.infer<typeof FormSchema>) => {
     const { email, password } = values;
-    console.log(email, password);
     setIsLoading(true);
+    LoginOperations.loginWithApi({
+      email,
+      password,
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          router.push(PATH.HOME.getPath(getCurrentLocale()));
+        }
+      })
+      .catch((e) => {
+        const data: ExoPortalErrorMessage = e.response?.data;
+        handleErrorMessage(data, form, ["email", "password"]);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
