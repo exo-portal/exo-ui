@@ -3,6 +3,7 @@ import { Locale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import { parsePhoneNumberFromString, AsYouType } from "libphonenumber-js";
 import { UseFormReturn } from "react-hook-form";
+import { ExoPortalErrorMessage } from "@/config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -63,7 +64,7 @@ export const metaDataTitle = (title: string): string => {
 };
 
 export function handleErrorMessage<T extends string>(
-  data: any,
+  data: ExoPortalErrorMessage,
   form: UseFormReturn<any>,
   allowedFields: T[]
 ) {
