@@ -69,7 +69,12 @@ export function EmailForm() {
       })
       .catch((e) => {
         const data: ExoPortalErrorMessage = e.response?.data;
-        handleErrorMessage(data, form, ["email", "password"]);
+        handleErrorMessage({
+          data: data,
+          form: form,
+          allowedFields: ["email", "password"],
+          useTranslate: t,
+        });
       })
       .finally(() => {
         setIsLoading(false);

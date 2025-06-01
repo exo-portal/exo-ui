@@ -1,20 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { z } from "zod";
-import { getCurrentLocale, translate } from "@/lib";
-import { useTranslations } from "next-intl";
-import { UserIcon } from "@/components/icons";
 import Link from "next/link";
+import Image from "next/image";
+import { ExoPortalErrorMessage, PATH } from "@/config";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import { Form } from "@/components/ui/form";
+import { useRouter } from "next/navigation";
+import { UserIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { getCurrentLocale, handleErrorMessage, translate } from "@/lib";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppStateStore, useRegistrationStore } from "@/store";
-import { PATH } from "@/config";
-import { useRouter } from "next/navigation";
 import FormFieldInput from "@/components/form-field-input/form-field-input";
+import { RegisterOperations } from "../functions/register-functions";
 
 export default function EmailForm() {
   const t = useTranslations();
@@ -68,12 +69,33 @@ export default function EmailForm() {
   const onSubmit = (values: z.infer<typeof FormSchema>) => {
     setIsLoading(true);
     const { email, password, confirmPassword } = values;
-    setData({
-      email: email.trim(),
-      password: password.trim(),
-      confirmPassword: confirmPassword.trim(),
-    });
-    router.push(PATH.REGISTER_PERSONAL_DETAILS.getPath(getCurrentLocale()));
+    // Call the API to validate email existence before proceeding
+    RegisterOperations.validateEmail(email)
+      .then((response: { status: number }) => {
+        if (response.status === 200) {
+          setData({
+            email: email.trim(),
+            password: password.trim(),
+            confirmPassword: confirmPassword.trim(),
+          });
+          router.push(
+            PATH.REGISTER_PERSONAL_DETAILS.getPath(getCurrentLocale())
+          );
+        }
+      })
+      .catch((e) => {
+        const data: ExoPortalErrorMessage = e.response?.data;
+        handleErrorMessage({
+          data: data,
+          form: form,
+          allowedFields: ["email"],
+          useTranslate: t,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+    return;
   };
 
   return (

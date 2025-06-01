@@ -6,6 +6,10 @@
   "common": {
     "back": "Back"
   },
+  "errorMessage": {
+    "emailAlreadyExists": "Email already exists.",
+    "invalidEmailAndPassword": "Invalid email or password."
+  },
   "register": {
     "instruction": {
       "register": {

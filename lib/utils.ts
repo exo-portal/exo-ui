@@ -1,9 +1,11 @@
 import { clsx, type ClassValue } from "clsx";
-import { Locale } from "next-intl";
+import { Locale, useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import { parsePhoneNumberFromString, AsYouType } from "libphonenumber-js";
 import { UseFormReturn } from "react-hook-form";
 import { ExoPortalErrorMessage } from "@/config";
+import { translate } from "./translate";
+import { TxKeyPath } from "@/i18n";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -63,11 +65,17 @@ export const metaDataTitle = (title: string): string => {
   return `${title} | ExoPortal`;
 };
 
-export function handleErrorMessage<T extends string>(
-  data: ExoPortalErrorMessage,
-  form: UseFormReturn<any>,
-  allowedFields: T[]
-) {
+export function handleErrorMessage<T extends string>({
+  data,
+  form,
+  allowedFields,
+  useTranslate,
+}: {
+  data: ExoPortalErrorMessage;
+  form: UseFormReturn<any>;
+  allowedFields: T[];
+  useTranslate: ReturnType<typeof useTranslations>;
+}) {
   if (
     typeof data?.errorType === "string" &&
     data.errorType.toLowerCase() === "field"
@@ -78,7 +86,7 @@ export function handleErrorMessage<T extends string>(
           if (allowedFields.includes(err.fieldName as T)) {
             form.setError(err.fieldName as T, {
               type: "manual",
-              message: err.errorMessage,
+              message: translate(useTranslate, err.errorMessage as TxKeyPath),
             });
             form.setFocus(err.fieldName as T);
           }
