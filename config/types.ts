@@ -14,3 +14,12 @@ export type InstructionConfig = {
     keyPrefix: string;
   };
 };
+
+export type ExoPortalErrorMessage = {
+  errorMessageList: {
+    errorMessage: string;
+    fieldName: string;
+  }[];
+  errorType: string;
+  status: number;
+};
