@@ -1,9 +1,10 @@
 "use client";
+
 import FormFieldInput from "@/components/form-field-input/form-field-input";
 import { UserIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { ExoPortalErrorMessage, PATH } from "@/config";
+import { PATH, routeRoleGroups } from "@/config";
 import { getCurrentLocale, handleErrorMessage, translate } from "@/lib";
 import { useAppStateStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +16,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { LoginOperations } from "../functions/login-function";
 import { useRouter } from "next/navigation";
+import { ApiResponse, ApiResultModel, ExoPortalErrorMessage } from "@/types";
+import { LoginResponseDto } from "@/types/user-dto";
 
 export function EmailForm() {
   const t = useTranslations();
@@ -62,9 +65,20 @@ export function EmailForm() {
       email,
       password,
     })
-      .then((response) => {
-        if (response.status === 200) {
-          router.push(PATH.HOME.getPath(getCurrentLocale()));
+      .then((response: ApiResponse<LoginResponseDto>) => {
+        const apiResult: ApiResultModel = response.data;
+
+        if (apiResult.isSuccess) {
+          const accessLevelRole = apiResult.resultData.accessLevelRole;
+          if (accessLevelRole) {
+            for (const group of routeRoleGroups) {
+              if (group.allowedRoles.includes(accessLevelRole)) {
+                router.push(
+                  `/${getCurrentLocale()}/${group.redirectDashboard}`
+                );
+              }
+            }
+          }
         }
       })
       .catch((e) => {
