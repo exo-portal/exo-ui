@@ -2,6 +2,110 @@ import { NextRequest, NextResponse } from "next/server";
 import { PATH, protectedPathValues, routeRoleGroups } from "./config";
 import jwt from "jsonwebtoken";
 
+// Function to resolve group redirects based on the current role and pathname
+// This function checks if the user is logged in, their role, and the current pathname
+const resolveGroupRedirect = ({
+  isLoggedInValue,
+  currentRole,
+  currentPathname,
+  currentLocale,
+  PATH,
+  routeRoleGroups,
+  routeRoleGroupNames,
+  request,
+}: {
+  isLoggedInValue: boolean;
+  currentRole: string;
+  currentPathname: string;
+  currentLocale: string;
+  PATH: any;
+  routeRoleGroups: any[];
+  routeRoleGroupNames: string[];
+  request: NextRequest;
+}) => {
+  for (const group of routeRoleGroups) {
+    if (
+      isLoggedInValue &&
+      group.allowedRoles.includes(currentRole) &&
+      currentPathname.startsWith(group.pathPrefix)
+    ) {
+      return NextResponse.next();
+    }
+
+    if (
+      isLoggedInValue &&
+      group.allowedRoles.includes(currentRole) &&
+      !currentPathname.startsWith(group.pathPrefix)
+    ) {
+      const targetGroup = routeRoleGroups.find((g) =>
+        g.allowedRoles.includes(currentRole)
+      );
+
+      if (targetGroup && !currentPathname.startsWith(targetGroup.pathPrefix)) {
+        if (currentPathname === `/${PATH.LOGIN.value}`) {
+          return NextResponse.next();
+        }
+
+        const otherGroupNames = routeRoleGroupNames.filter(
+          (name) => name !== targetGroup.name
+        );
+
+        const containsOtherGroup = otherGroupNames.some((name) =>
+          currentPathname.split("/").includes(name)
+        );
+
+        let newPathname;
+        if (containsOtherGroup) {
+          let updatedPathname = currentPathname;
+          for (const name of otherGroupNames) {
+            const regex = new RegExp(`/${name}(/|$)`);
+            if (regex.test(updatedPathname)) {
+              updatedPathname = updatedPathname.replace(
+                regex,
+                `/${targetGroup.name}$1`
+              );
+              break;
+            }
+          }
+          newPathname = updatedPathname;
+        }
+
+        if (newPathname === undefined) {
+          return NextResponse.redirect(
+            new URL(
+              `/${currentLocale}/${targetGroup.redirectDashboard}`,
+              request.url
+            )
+          );
+        }
+
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${newPathname}`, request.url)
+        );
+      } else {
+        return NextResponse.next();
+      }
+    } else if (
+      !isLoggedInValue &&
+      currentPathname.startsWith(group.pathPrefix)
+    ) {
+      if (!group.allowedRoles.includes(currentRole)) {
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+        );
+      }
+
+      if (!isLoggedInValue) {
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+        );
+      }
+      return NextResponse.next();
+    }
+  }
+  return undefined;
+};
+
 // Middleware to handle locale and authentication
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -112,100 +216,20 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Usage in your middleware:
-  for (const group of routeRoleGroups) {
-    // User with this role trying to access a non-group route, redirect to the equivalent route with the correct prefix
-    // Example: /en/internal/admin/profile -> /en/internal/project-team/profile for project-team role
-    if (
-      isLoggedInValue &&
-      group.allowedRoles.includes(currentRole) &&
-      currentPathname.startsWith(group.pathPrefix)
-    ) {
-      // Already at the correct group's prefix, proceed
-      return NextResponse.next();
-    }
+  // Handle group redirects based on the current role and pathname
+  const groupRedirect = resolveGroupRedirect({
+    isLoggedInValue,
+    currentRole,
+    currentPathname,
+    currentLocale,
+    PATH,
+    routeRoleGroups,
+    routeRoleGroupNames,
+    request,
+  });
 
-    if (
-      isLoggedInValue &&
-      group.allowedRoles.includes(currentRole) &&
-      !currentPathname.startsWith(group.pathPrefix)
-    ) {
-      const targetGroup = routeRoleGroups.find((g) =>
-        g.allowedRoles.includes(currentRole)
-      );
-
-      if (targetGroup && !currentPathname.startsWith(targetGroup.pathPrefix)) {
-        if (currentPathname === `/${PATH.LOGIN.value}`) {
-          // If the current path is /login, skip and proceed
-          return NextResponse.next();
-        }
-
-        // Get all routeRoleGroup names except for the targetGroup name
-        const otherGroupNames = routeRoleGroupNames.filter(
-          (name) => name !== targetGroup.name
-        );
-
-        // Check if currentPathname contains any of the otherGroupNames as a path segment
-        const containsOtherGroup = otherGroupNames.some((name) =>
-          currentPathname.split("/").includes(name)
-        );
-
-        let newPathname;
-        if (containsOtherGroup) {
-          // Replace the other group name in the path with the targetGroup name
-          let updatedPathname = currentPathname;
-          for (const name of otherGroupNames) {
-            const regex = new RegExp(`/${name}(/|$)`);
-            if (regex.test(updatedPathname)) {
-              updatedPathname = updatedPathname.replace(
-                regex,
-                `/${targetGroup.name}$1`
-              );
-              break;
-            }
-          }
-          // Update newPathname to use the updatedPathname
-          newPathname = updatedPathname;
-        }
-
-        if (newPathname === undefined) {
-          // If no other group name was found, redirect to the target group's default dashboard
-          return NextResponse.redirect(
-            new URL(
-              `/${currentLocale}/${targetGroup.redirectDashboard}`,
-              request.url
-            )
-          );
-        }
-
-        return NextResponse.redirect(
-          new URL(`/${currentLocale}/${newPathname}`, request.url)
-        );
-      } else {
-        // Already at the correct group's prefix, proceed
-        return NextResponse.next();
-      }
-    } else if (
-      !isLoggedInValue &&
-      currentPathname.startsWith(group.pathPrefix)
-    ) {
-      if (!group.allowedRoles.includes(currentRole)) {
-        // Not allowed, redirect to login
-        return NextResponse.redirect(
-          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
-        );
-      }
-
-      if (!isLoggedInValue) {
-        // Not logged in, redirect to login
-        return NextResponse.redirect(
-          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
-        );
-      }
-      // Allowed and logged in
-      return NextResponse.next();
-    }
-  }
+  // If a group redirect is determined, return it
+  if (groupRedirect) return groupRedirect;
 }
 
 export const config = {
