@@ -5,7 +5,6 @@ export interface PathInterface {
     getPath: (locale: string) => string;
     value: string;
     isProtected: boolean;
-    userRoles?: string[];
   };
 }
 
