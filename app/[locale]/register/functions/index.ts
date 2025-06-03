@@ -1,1 +1,1 @@
-export * from "./login-functions";
+export * from "./register-functions"
