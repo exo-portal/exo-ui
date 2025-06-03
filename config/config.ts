@@ -30,7 +30,7 @@ export const AccessLevelGroup = {
       "ROLE_INTERN",
     ],
   },
-  EXTRENAL: {
+  EXTERNAL: {
     APPLICANT: ["ROLE_APPLICANT"],
     CLIENT: ["ROLE_CLIENT"],
   },
@@ -58,13 +58,13 @@ export const routeRoleGroups = [
   {
     name: "applicant",
     pathPrefix: APPLICANT_PATH.APPLICANT_HOME.path,
-    allowedRoles: AccessLevelGroup.EXTRENAL.APPLICANT,
+    allowedRoles: AccessLevelGroup.EXTERNAL.APPLICANT,
     redirectDashboard: APPLICANT_PATH.APPLICANT_HOME.path,
   },
   {
     name: "client",
     pathPrefix: CLIENT_PATH.CLIENT_HOME.path,
-    allowedRoles: AccessLevelGroup.EXTRENAL.CLIENT,
+    allowedRoles: AccessLevelGroup.EXTERNAL.CLIENT,
     redirectDashboard: CLIENT_PATH.CLIENT_HOME.path,
   },
 ];
