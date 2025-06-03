@@ -16,8 +16,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { LoginOperations } from "../functions/login-function";
 import { useRouter } from "next/navigation";
-import { ApiResponse, ApiResultModel, ExoPortalErrorMessage } from "@/types";
-import { LoginResponseDto } from "@/types/user-dto";
+import { ApiResponse, ApiResultModel, ExoPortalErrorMessage, LoginResponseDto } from "@/types";
 
 export function EmailForm() {
   const t = useTranslations();
