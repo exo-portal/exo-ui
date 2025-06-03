@@ -91,9 +91,6 @@ export default function EmailForm() {
           allowedFields: ["email"],
           useTranslate: t,
         });
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
     return;
   };

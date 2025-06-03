@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { protectedPathValues, PATH } from "./config";
+import {
+  PATH,
+  AccessLevelGroup,
+  ADMIN_PATH,
+  HR_PATH,
+  PROJECT_TEAM_PATH,
+  protectedPathValues,
+  APPLICANT_PATH,
+  CLIENT_PATH,
+} from "./config";
+import jwt from "jsonwebtoken";
 
 // Middleware to handle locale and authentication
 export async function middleware(request: NextRequest) {
@@ -39,43 +49,117 @@ export async function middleware(request: NextRequest) {
 
   // Check the isLoggedIn cookie
   const isLoggedIn = request.cookies.get("isLoggedIn")?.value;
+  const exoTkn = request.cookies.get("exoTkn")?.value;
 
-  // If the cookie is not set, redirect to the login page
-  const protectedRoutes: string[] = protectedPathValues;
+  let currentRole: string | undefined = undefined;
+  if (exoTkn) {
+    try {
+      const decoded = jwt.decode(exoTkn) as { currentRole?: string } | null;
+      currentRole = decoded?.currentRole;
+    } catch {
+      currentRole = undefined;
+    }
+  }
+
+  if (!currentRole) {
+    currentRole = "ROLE_APPLICANT"; // Default role if not found in JWT
+  }
+
+  // Define your protected route groups and their allowed roles
+  const routeRoleGroups = [
+    {
+      pathPrefix: ADMIN_PATH.ADMIN_HOME.path,
+      allowedRoles: AccessLevelGroup.INTERNAL.ADMIN,
+      redirectDashboard: ADMIN_PATH.ADMIN_HOME.path,
+    },
+    {
+      pathPrefix: HR_PATH.HR_HOME.path,
+      allowedRoles: AccessLevelGroup.INTERNAL.HR,
+      redirectDashboard: HR_PATH.HR_HOME.path,
+    },
+    {
+      pathPrefix: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
+      allowedRoles: AccessLevelGroup.INTERNAL.PROJECT_TEAM,
+      redirectDashboard: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
+    },
+    {
+      pathPrefix: APPLICANT_PATH.APPLICANT_HOME.path,
+      allowedRoles: AccessLevelGroup.EXTRENAL.APPLICANT,
+      redirectDashboard: APPLICANT_PATH.APPLICANT_HOME.path,
+    },
+    {
+      pathPrefix: CLIENT_PATH.CLIENT_HOME.path,
+      allowedRoles: AccessLevelGroup.EXTRENAL.CLIENT,
+      redirectDashboard: CLIENT_PATH.CLIENT_HOME.path,
+    },
+  ];
 
   // Check if the current path is protected
   const isLoggedInValue =
     isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
 
-  // If the pathname is the root path, redirect to the appropriate page
+  // If the pathname is the root path, redirect to the appropriate dashboard or login
   if (currentPathname === "/") {
     if (isLoggedInValue) {
-      return NextResponse.redirect(
-        new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
+      // Find the dashboard for the user's role
+      const group = routeRoleGroups.find((g) =>
+        g.allowedRoles.includes(currentRole)
       );
+      if (group) {
+        // Redirect to the dashboard for the currentRole
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}${group.redirectDashboard}`, request.url)
+        );
+      } else {
+        // Fallback: redirect to home if no dashboard found for role
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
+        );
+      }
     } else {
+      // Not logged in, redirect to login
       return NextResponse.redirect(
         new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
       );
     }
   }
 
-  // If the cookie is not set, redirect to the login page
-  if (protectedRoutes.includes(currentPathname)) {
-    if (isLoggedInValue) {
+  const isProtectedPath = protectedPathValues.some((path) =>
+    currentPathname.startsWith(path)
+  );
+
+  if (isProtectedPath && !isLoggedInValue) {
+    return NextResponse.redirect(
+      new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+    );
+  }
+
+  // Usage in your middleware:
+  for (const group of routeRoleGroups) {
+    if (currentPathname.startsWith(group.pathPrefix)) {
+      if (!group.allowedRoles.includes(currentRole)) {
+        // Not allowed, redirect to login
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+        );
+      }
+      if (!isLoggedInValue) {
+        // Not logged in, redirect to login
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+        );
+      }
+      // Allowed and logged in
       return NextResponse.next();
-    } else {
+    } else if (
+      group.allowedRoles.includes(currentRole) &&
+      isLoggedInValue &&
+      !currentPathname.startsWith(group.pathPrefix)
+    ) {
+      // User with this role trying to access a non-group route, redirect to their dashboard
       return NextResponse.redirect(
-        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+        new URL(`/${currentLocale}${group.redirectDashboard}`, request.url)
       );
-    }
-  } else {
-    if (isLoggedInValue) {
-      return NextResponse.redirect(
-        new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
-      );
-    } else {
-      return NextResponse.next();
     }
   }
 }

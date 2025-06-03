@@ -62,9 +62,6 @@ export const useAuthStore = create<AuthState>((set) => ({
           "/api/auth/authentication/get-security-token"
         );
         token = res.data;
-        if (res.status === 200) {
-          useAuthStore.getState().redirectRoute(PATH.HOME.value);
-        }
       } catch (error) {
         token = null;
       }

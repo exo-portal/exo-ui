@@ -6,18 +6,21 @@ import FormFieldInput, {
 import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { translate } from "@/lib";
+import { getCurrentLocale, translate } from "@/lib";
 import { useAppStateStore, useRegistrationStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { RegisterOperations } from "../../functions/register-functions";
+import { PATH } from "@/config";
+import { useRouter } from "next/navigation";
 
 export function ContactDetailsForm() {
   const { setIsLoading } = useAppStateStore();
-
   const { data, setData } = useRegistrationStore();
+  const router = useRouter();
   const t = useTranslations();
 
   const FormSchema = z.object({
@@ -55,6 +58,7 @@ export function ContactDetailsForm() {
     city,
     barangay,
     postalCode,
+    
   }: z.infer<typeof FormSchema>) => {
     const trimData = {
       country: country.trim(),
@@ -63,7 +67,7 @@ export function ContactDetailsForm() {
       state: state.trim(),
       city: city.trim(),
       barangay: barangay.trim(),
-      postalCode: postalCode.trim(),
+      postalCode: postalCode.trim()
     };
     setData({
       ...data,
@@ -71,15 +75,26 @@ export function ContactDetailsForm() {
     });
     // Fetch from backend using the updated store data
     const updatedData = { ...data, ...trimData };
-    console.log("Updated Registration Data:", updatedData);
+    setIsLoading(true);
+    RegisterOperations.register(updatedData)
+      .then((e) => {
+        console.log(e);
+        // router.push(PATH.HOME.getPath(getCurrentLocale()));
+      })
+      .catch((error) => {
+        console.log("Error during registration:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   const COUNTRY_OPTIONS = [
-    { label: "Philippines", value: "PH" },
-    { label: "United States", value: "US" },
+    { label: "Philippines", value: "Philippines" },
+    { label: "United States", value: "United States" },
   ];
-  const CITY_OPTIONS = [{ label: "Cebu City", value: "cc" }];
-  const STATE_OPTIONS = [{ label: "Cebu", value: "cb" }];
-  const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "qp" }];
+  const CITY_OPTIONS = [{ label: "Cebu City", value: "Cebu City" }];
+  const STATE_OPTIONS = [{ label: "Cebu", value: "Cebu" }];
+  const BRGY_OPTIONS = [{ label: "Quiot Pardo", value: "Quiot Pardo" }];
   const PHONE_OPTIONS: OptionsInterface[] = [
     { label: "PH", value: "PH", icon: PHFlag, countryCode: "+63" },
     { label: "US", value: "US", icon: USFlag, countryCode: "+1" },
