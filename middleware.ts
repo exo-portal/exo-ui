@@ -43,8 +43,7 @@ export async function middleware(request: NextRequest) {
   const exoTkn = request.cookies.get("exoTkn")?.value;
 
   // Check if the current path is protected
-  const isLoggedInValue =
-    isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
+  const isLoggedInValue = isLoggedIn === "true";
 
   let currentRole: string | undefined = undefined;
   if (exoTkn) {
@@ -155,9 +154,6 @@ export async function middleware(request: NextRequest) {
         if (containsOtherGroup) {
           // Replace the other group name in the path with the targetGroup name
           let updatedPathname = currentPathname;
-          const otherGroupNames = routeRoleGroupNames.filter(
-            (name) => name !== targetGroup.name
-          );
           for (const name of otherGroupNames) {
             const regex = new RegExp(`/${name}(/|$)`);
             if (regex.test(updatedPathname)) {
@@ -182,7 +178,6 @@ export async function middleware(request: NextRequest) {
           );
         }
 
-        // Remove console logs in production
         return NextResponse.redirect(
           new URL(`/${currentLocale}/${newPathname}`, request.url)
         );
