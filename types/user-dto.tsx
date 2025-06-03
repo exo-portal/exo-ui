@@ -2,7 +2,7 @@ export interface LoginResponseDto {
   user: UserResponseDto;
   featureKeys: string[];
   roleNames: string[];
-  accessLevelRole: String;
+  accessLevelRole: string;
 }
 
 export interface UserResponseDto {

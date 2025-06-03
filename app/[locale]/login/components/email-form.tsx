@@ -76,6 +76,7 @@ export function EmailForm() {
                 router.push(
                   `/${getCurrentLocale()}/${group.redirectDashboard}`
                 );
+                break;
               }
             }
           }
