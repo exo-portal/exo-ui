@@ -1,5 +1,17 @@
 import { TxKeyPath } from "@/i18n";
 
+export interface ApiResponse<T = any> {
+  data: ApiResultModel<T>;
+  status: number;
+  statusText: string;
+}
+
+export interface ApiResultModel<T = any> {
+  isSuccess: boolean;
+  resultData?: T;
+  errorMessage?: string;
+}
+
 export type InstructionConfig = {
   title: TxKeyPath;
   subTitle: TxKeyPath;
