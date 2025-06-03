@@ -173,8 +173,13 @@ export async function middleware(request: NextRequest) {
         }
 
         if (newPathname === undefined) {
-          // If no other group name was found, just prepend the targetGroup name
-          return NextResponse.next();
+          // If no other group name was found, redirect to the target group's default dashboard
+          return NextResponse.redirect(
+            new URL(
+              `/${currentLocale}/${targetGroup.redirectDashboard}`,
+              request.url
+            )
+          );
         }
 
         // Remove console logs in production
