@@ -1,14 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  PATH,
-  AccessLevelGroup,
-  ADMIN_PATH,
-  HR_PATH,
-  PROJECT_TEAM_PATH,
-  protectedPathValues,
-  APPLICANT_PATH,
-  CLIENT_PATH,
-} from "./config";
+import { PATH, protectedPathValues, routeRoleGroups } from "./config";
 import jwt from "jsonwebtoken";
 
 // Middleware to handle locale and authentication
@@ -51,52 +42,50 @@ export async function middleware(request: NextRequest) {
   const isLoggedIn = request.cookies.get("isLoggedIn")?.value;
   const exoTkn = request.cookies.get("exoTkn")?.value;
 
+  // Check if the current path is protected
+  const isLoggedInValue =
+    isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
+
   let currentRole: string | undefined = undefined;
   if (exoTkn) {
     try {
       const decoded = jwt.decode(exoTkn) as { currentRole?: string } | null;
       currentRole = decoded?.currentRole;
     } catch {
-      currentRole = undefined;
+      // Not logged in, clear cookies and redirect to login
+      const response = NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+      );
+      response.cookies.set("isLoggedIn", "", { maxAge: 0, path: "/" });
+      response.cookies.set("exoTkn", "", { maxAge: 0, path: "/" });
+      return response;
     }
+  } else {
+    const isProtectedPath = protectedPathValues.some((path) =>
+      currentPathname.startsWith(path)
+    );
+
+    if (isProtectedPath && !isLoggedInValue) {
+      return NextResponse.redirect(
+        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+      );
+    }
+
+    return NextResponse.next();
   }
 
-  if (!currentRole) {
-    currentRole = "ROLE_APPLICANT"; // Default role if not found in JWT
+  if (currentRole === undefined) {
+    const response = NextResponse.redirect(
+      new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+    );
+    response.cookies.set("isLoggedIn", "", { maxAge: 0, path: "/" });
+    response.cookies.set("exoTkn", "", { maxAge: 0, path: "/" });
+    return response;
   }
 
   // Define your protected route groups and their allowed roles
-  const routeRoleGroups = [
-    {
-      pathPrefix: ADMIN_PATH.ADMIN_HOME.path,
-      allowedRoles: AccessLevelGroup.INTERNAL.ADMIN,
-      redirectDashboard: ADMIN_PATH.ADMIN_HOME.path,
-    },
-    {
-      pathPrefix: HR_PATH.HR_HOME.path,
-      allowedRoles: AccessLevelGroup.INTERNAL.HR,
-      redirectDashboard: HR_PATH.HR_HOME.path,
-    },
-    {
-      pathPrefix: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
-      allowedRoles: AccessLevelGroup.INTERNAL.PROJECT_TEAM,
-      redirectDashboard: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
-    },
-    {
-      pathPrefix: APPLICANT_PATH.APPLICANT_HOME.path,
-      allowedRoles: AccessLevelGroup.EXTRENAL.APPLICANT,
-      redirectDashboard: APPLICANT_PATH.APPLICANT_HOME.path,
-    },
-    {
-      pathPrefix: CLIENT_PATH.CLIENT_HOME.path,
-      allowedRoles: AccessLevelGroup.EXTRENAL.CLIENT,
-      redirectDashboard: CLIENT_PATH.CLIENT_HOME.path,
-    },
-  ];
 
-  // Check if the current path is protected
-  const isLoggedInValue =
-    isLoggedIn === "true" ? true : isLoggedIn === "false" ? false : undefined;
+  const routeRoleGroupNames = routeRoleGroups.map((group) => group.name);
 
   // If the pathname is the root path, redirect to the appropriate dashboard or login
   if (currentPathname === "/") {
@@ -124,25 +113,89 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  const isProtectedPath = protectedPathValues.some((path) =>
-    currentPathname.startsWith(path)
-  );
-
-  if (isProtectedPath && !isLoggedInValue) {
-    return NextResponse.redirect(
-      new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
-    );
-  }
-
   // Usage in your middleware:
   for (const group of routeRoleGroups) {
-    if (currentPathname.startsWith(group.pathPrefix)) {
+    // User with this role trying to access a non-group route, redirect to the equivalent route with the correct prefix
+    // Example: /en/internal/admin/profile -> /en/internal/project-team/profile for project-team role
+    if (
+      isLoggedInValue &&
+      group.allowedRoles.includes(currentRole) &&
+      currentPathname.startsWith(group.pathPrefix)
+    ) {
+      // Already at the correct group's prefix, proceed
+      return NextResponse.next();
+    }
+
+    if (
+      isLoggedInValue &&
+      group.allowedRoles.includes(currentRole) &&
+      !currentPathname.startsWith(group.pathPrefix)
+    ) {
+      const targetGroup = routeRoleGroups.find((g) =>
+        g.allowedRoles.includes(currentRole)
+      );
+
+      if (targetGroup && !currentPathname.startsWith(targetGroup.pathPrefix)) {
+        if (currentPathname === `/${PATH.LOGIN.value}`) {
+          // If the current path is /login, skip and proceed
+          return NextResponse.next();
+        }
+
+        // Get all routeRoleGroup names except for the targetGroup name
+        const otherGroupNames = routeRoleGroupNames.filter(
+          (name) => name !== targetGroup.name
+        );
+
+        // Check if currentPathname contains any of the otherGroupNames as a path segment
+        const containsOtherGroup = otherGroupNames.some((name) =>
+          currentPathname.split("/").includes(name)
+        );
+
+        let newPathname;
+        if (containsOtherGroup) {
+          // Replace the other group name in the path with the targetGroup name
+          let updatedPathname = currentPathname;
+          const otherGroupNames = routeRoleGroupNames.filter(
+            (name) => name !== targetGroup.name
+          );
+          for (const name of otherGroupNames) {
+            const regex = new RegExp(`/${name}(/|$)`);
+            if (regex.test(updatedPathname)) {
+              updatedPathname = updatedPathname.replace(
+                regex,
+                `/${targetGroup.name}$1`
+              );
+              break;
+            }
+          }
+          // Update newPathname to use the updatedPathname
+          newPathname = updatedPathname;
+        }
+
+        if (newPathname === undefined) {
+          // If no other group name was found, just prepend the targetGroup name
+          return NextResponse.next();
+        }
+
+        // Remove console logs in production
+        return NextResponse.redirect(
+          new URL(`/${currentLocale}/${newPathname}`, request.url)
+        );
+      } else {
+        // Already at the correct group's prefix, proceed
+        return NextResponse.next();
+      }
+    } else if (
+      !isLoggedInValue &&
+      currentPathname.startsWith(group.pathPrefix)
+    ) {
       if (!group.allowedRoles.includes(currentRole)) {
         // Not allowed, redirect to login
         return NextResponse.redirect(
           new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
         );
       }
+
       if (!isLoggedInValue) {
         // Not logged in, redirect to login
         return NextResponse.redirect(
@@ -151,15 +204,6 @@ export async function middleware(request: NextRequest) {
       }
       // Allowed and logged in
       return NextResponse.next();
-    } else if (
-      group.allowedRoles.includes(currentRole) &&
-      isLoggedInValue &&
-      !currentPathname.startsWith(group.pathPrefix)
-    ) {
-      // User with this role trying to access a non-group route, redirect to their dashboard
-      return NextResponse.redirect(
-        new URL(`/${currentLocale}${group.redirectDashboard}`, request.url)
-      );
     }
   }
 }
