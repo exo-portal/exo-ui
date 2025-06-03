@@ -1,3 +1,11 @@
+import {
+  ADMIN_PATH,
+  APPLICANT_PATH,
+  CLIENT_PATH,
+  HR_PATH,
+  PROJECT_TEAM_PATH,
+} from "./path";
+
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "";
 const GITHUB_OAUTH_URL = process.env.NEXT_PUBLIC_GITHUB_OAUTH_URL || "";
 const GOOGLE_OAUTH_URL = process.env.NEXT_PUBLIC_GOOGLE_OAUTH_URL || "";
@@ -27,3 +35,36 @@ export const AccessLevelGroup = {
     CLIENT: ["ROLE_CLIENT"],
   },
 };
+
+export const routeRoleGroups = [
+  {
+    name: "admin",
+    pathPrefix: ADMIN_PATH.ADMIN_HOME.path,
+    allowedRoles: AccessLevelGroup.INTERNAL.ADMIN,
+    redirectDashboard: ADMIN_PATH.ADMIN_HOME.path,
+  },
+  {
+    name: "hr",
+    pathPrefix: HR_PATH.HR_HOME.path,
+    allowedRoles: AccessLevelGroup.INTERNAL.HR,
+    redirectDashboard: HR_PATH.HR_HOME.path,
+  },
+  {
+    name: "project-team",
+    pathPrefix: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
+    allowedRoles: AccessLevelGroup.INTERNAL.PROJECT_TEAM,
+    redirectDashboard: PROJECT_TEAM_PATH.PROJECT_TEAM_HOME.path,
+  },
+  {
+    name: "applicant",
+    pathPrefix: APPLICANT_PATH.APPLICANT_HOME.path,
+    allowedRoles: AccessLevelGroup.EXTRENAL.APPLICANT,
+    redirectDashboard: APPLICANT_PATH.APPLICANT_HOME.path,
+  },
+  {
+    name: "client",
+    pathPrefix: CLIENT_PATH.CLIENT_HOME.path,
+    allowedRoles: AccessLevelGroup.EXTRENAL.CLIENT,
+    redirectDashboard: CLIENT_PATH.CLIENT_HOME.path,
+  },
+];
