@@ -65,15 +65,18 @@ export const metaDataTitle = (title: string): string => {
   return `${title} | ExoPortal`;
 };
 
-export function handleErrorMessage<T extends string>({
+export function handleErrorMessage<
+  TFieldValues extends Record<string, unknown>,
+  TFieldName extends keyof TFieldValues
+>({
   data,
   form,
   allowedFields,
   useTranslate,
 }: {
   data: ExoPortalErrorMessage;
-  form: UseFormReturn<any>;
-  allowedFields: T[];
+  form: UseFormReturn<TFieldValues>;
+  allowedFields: TFieldName[];
   useTranslate: ReturnType<typeof useTranslations>;
 }) {
   if (
@@ -83,12 +86,17 @@ export function handleErrorMessage<T extends string>({
     if (Array.isArray(data.errorMessageList)) {
       data.errorMessageList.forEach(
         (err: { fieldName: string; errorMessage: string }) => {
-          if (allowedFields.includes(err.fieldName as T)) {
-            form.setError(err.fieldName as T, {
-              type: "manual",
-              message: translate(useTranslate, err.errorMessage as TxKeyPath),
-            });
-            form.setFocus(err.fieldName as T);
+          if (allowedFields.includes(err.fieldName as TFieldName)) {
+            form.setError(
+              err.fieldName as unknown as import("react-hook-form").Path<TFieldValues>,
+              {
+                type: "manual",
+                message: translate(useTranslate, err.errorMessage as TxKeyPath),
+              }
+            );
+            form.setFocus(
+              err.fieldName as unknown as import("react-hook-form").Path<TFieldValues>
+            );
           }
         }
       );
