@@ -147,6 +147,7 @@ export default function EmailForm() {
         <Link
           onClick={() => setIsLoading(true)}
           className="text-main-700 underline px-1"
+          prefetch={true}
           href={PATH.LOGIN.getPath(getCurrentLocale())}
         >
           {translate(t, "register.form.signUp.alreadyHaveAccount.signIn")}
