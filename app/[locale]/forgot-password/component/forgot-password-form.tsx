@@ -21,6 +21,10 @@ export function ForgotPasswordForm() {
   const router = useRouter();
 
   useEffect(() => {
+    router.prefetch(PATH.FORGOT_PASSWORD_OTP.getPath(getCurrentLocale()));
+  }, [router]);
+
+  useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
 

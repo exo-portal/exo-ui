@@ -126,6 +126,7 @@ export function EmailForm() {
           <Link
             href={PATH.FORGOT_PASSWORD.getPath(getCurrentLocale())}
             onClick={() => setIsLoading(true)}
+            prefetch={true}
             data-testid="forgot-password-link"
             aria-label="Forgot Password"
             className="justify-self-end text-label text-main-700 cursor-pointer hover:underline"
