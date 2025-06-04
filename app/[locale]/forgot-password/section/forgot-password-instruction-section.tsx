@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { InstructionConfig, PATH } from "@/config";
+import { PATH } from "@/config";
 import { usePathname } from "next/navigation";
 import InstructionBadge from "@/components/auth-instruction/instruction-badge";
 import { translate } from "@/lib";
 import { InstructionContainer } from "@/components/auth-instruction/instruction-container";
 import { TxKeyPath } from "@/i18n";
+import { InstructionConfig } from "@/types";
 
 const INSTRUCTION_CONFIG: Record<string, InstructionConfig> = {
   [PATH.FORGOT_PASSWORD.path]: {

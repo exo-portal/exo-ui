@@ -3,7 +3,7 @@
 import { z } from "zod";
 import Link from "next/link";
 import Image from "next/image";
-import { ExoPortalErrorMessage, PATH } from "@/config";
+import { PATH } from "@/config";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppStateStore, useRegistrationStore } from "@/store";
 import FormFieldInput from "@/components/form-field-input/form-field-input";
 import { RegisterOperations } from "../functions/register-functions";
+import { ExoPortalErrorMessage } from "@/types";
 
 export default function EmailForm() {
   const t = useTranslations();
