@@ -6,7 +6,7 @@ import FormFieldInput, {
 import { PHFlag, USFlag } from "@/components/national-flag";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { getCurrentLocale, translate } from "@/lib";
+import { translate } from "@/lib";
 import { useAppStateStore, useRegistrationStore } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -14,13 +14,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { RegisterOperations } from "../../functions/register-functions";
-import { PATH } from "@/config";
-import { useRouter } from "next/navigation";
 
 export function ContactDetailsForm() {
   const { setIsLoading } = useAppStateStore();
   const { data, setData } = useRegistrationStore();
-  const router = useRouter();
   const t = useTranslations();
 
   const FormSchema = z.object({
@@ -58,7 +55,6 @@ export function ContactDetailsForm() {
     city,
     barangay,
     postalCode,
-    
   }: z.infer<typeof FormSchema>) => {
     const trimData = {
       country: country.trim(),
@@ -67,7 +63,7 @@ export function ContactDetailsForm() {
       state: state.trim(),
       city: city.trim(),
       barangay: barangay.trim(),
-      postalCode: postalCode.trim()
+      postalCode: postalCode.trim(),
     };
     setData({
       ...data,
