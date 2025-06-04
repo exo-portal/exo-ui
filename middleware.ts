@@ -135,6 +135,13 @@ export async function middleware(request: NextRequest) {
     ? pathname.replace(/^\/[a-z]{2}/, "")
     : pathname;
 
+  // If the pathname is the root path, redirect to the login
+  if (currentPathname === "/") {
+    return NextResponse.redirect(
+      new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
+    );
+  }
+
   // Redirect if locale is not supported
   if (localeMatch && !supportedLocales.includes(currentLocale)) {
     return NextResponse.redirect(
@@ -189,32 +196,6 @@ export async function middleware(request: NextRequest) {
   // Define your protected route groups and their allowed roles
 
   const routeRoleGroupNames = routeRoleGroups.map((group) => group.name);
-
-  // If the pathname is the root path, redirect to the appropriate dashboard or login
-  if (currentPathname === "/") {
-    if (isLoggedInValue) {
-      // Find the dashboard for the user's role
-      const group = routeRoleGroups.find((g) =>
-        g.allowedRoles.includes(currentRole)
-      );
-      if (group) {
-        // Redirect to the dashboard for the currentRole
-        return NextResponse.redirect(
-          new URL(`/${currentLocale}${group.redirectDashboard}`, request.url)
-        );
-      } else {
-        // Fallback: redirect to home if no dashboard found for role
-        return NextResponse.redirect(
-          new URL(`/${currentLocale}/${PATH.HOME.value}`, request.url)
-        );
-      }
-    } else {
-      // Not logged in, redirect to login
-      return NextResponse.redirect(
-        new URL(`/${currentLocale}/${PATH.LOGIN.value}`, request.url)
-      );
-    }
-  }
 
   // Handle group redirects based on the current role and pathname
   const groupRedirect = resolveGroupRedirect({
