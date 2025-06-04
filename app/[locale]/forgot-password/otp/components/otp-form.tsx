@@ -32,6 +32,7 @@ export function OtpForm() {
 
   const onSubmit = (data: z.infer<typeof OtpFormSchema>) => {
     setIsLoading(true);
+    console.log("OTP submitted:", data.pin);
     router.push(PATH.FORGOT_PASSWORD_RESET.getPath(getCurrentLocale()));
   };
 

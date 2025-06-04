@@ -94,6 +94,15 @@ export default function FormFieldInput({
 }: FormFieldInputProps) {
   const t = useTranslations();
 
+  const [country, setCountry] = useState<string>(countrySelected || "PH");
+
+  useEffect(() => {
+    if (!countrySelected) return;
+    if (!isFormDirty) return;
+
+    setCountry(countrySelected);
+  }, [countrySelected, isFormDirty]);
+
   const componentRender = (
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
@@ -118,18 +127,8 @@ export default function FormFieldInput({
           </InputOTP>
         );
       case "tel":
-        const [country, setCountry] = useState<string>("PH");
-
         const COUNTRY_CODE =
           options.find((opt) => opt.value === country)?.countryCode || "+64";
-
-        useEffect(() => {
-          if (!countrySelected) return;
-          if (!isFormDirty) return;
-
-          setCountry(countrySelected);
-          onChange("");
-        }, [countrySelected, isFormDirty]);
 
         return (
           <div

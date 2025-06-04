@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
-export default function HrHomePage({}: Props) {
+export default function HrHomePage() {
   return <div>HrHomePage</div>;
 }
