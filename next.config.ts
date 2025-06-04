@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import webpackPlugin from "unplugin-tailwindcss-mangle";
 
 const nextIntlPlugin = createNextIntlPlugin();
 
@@ -11,8 +12,11 @@ const nextConfig: NextConfig = {
     config.module.rules.push({
       test: /\.svg$/,
       issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack'],
+      use: ["@svgr/webpack"],
     });
+    if (options.dev === false) {
+      config.plugins?.push(webpackPlugin.webpack());
+    }
     return config;
   },
 };
