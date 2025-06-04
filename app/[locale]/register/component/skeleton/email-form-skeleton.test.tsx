@@ -3,9 +3,13 @@ import { render, screen } from "@testing-library/react";
 import EmailFormSkeleton from "./email-form-skeleton";
 
 jest.mock("@/components/ui/skeleton", () => ({
-  Skeleton: ({ "data-testid": testId, className }: any) => (
-    <div data-testid={testId} className={className} />
-  ),
+  Skeleton: ({
+    "data-testid": testId,
+    className,
+  }: {
+    "data-testid"?: string;
+    className?: string;
+  }) => <div data-testid={testId} className={className} />,
 }));
 
 describe("EmailFormSkeleton", () => {
