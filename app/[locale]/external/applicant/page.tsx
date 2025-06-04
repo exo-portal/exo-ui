@@ -1,7 +1,5 @@
 import React from "react";
 
-type Props = {};
-
-export default function ApplicantHomePage({}: Props) {
+export default function ApplicantHomePage() {
   return <div>ApplicantHome</div>;
 }
