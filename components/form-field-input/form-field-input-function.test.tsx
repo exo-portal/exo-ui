@@ -8,7 +8,7 @@ import { formatPhoneNumber, liveFormat } from "@/lib";
 jest.mock("@/lib", () => ({
   formatPhoneNumber: jest.fn(({ value, country }) => `[${country}] ${value}`),
   liveFormat: jest.fn(
-    ({ input, country, countryCode }) => `live-${countryCode}-${input}`
+    ({ input, countryCode }) => `live-${countryCode}-${input}`
   ),
 }));
 

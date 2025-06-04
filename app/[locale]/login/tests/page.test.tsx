@@ -4,14 +4,22 @@ import Page from "../page";
 
 // Mock the components used in the page
 jest.mock("../components", () => ({
-  AuthForm: (props: any) => <div {...props}>AuthForm</div>,
-  DividerForm: (props: any) => <div {...props}>DividerForm</div>,
-  EmailForm: (props: any) => <div {...props}>EmailForm</div>,
-  EmailFormSkeleton: (props: any) => <div {...props}>EmailFormSkeleton</div>,
+  AuthForm: (props: React.ComponentProps<"div">) => (
+    <div {...props}>AuthForm</div>
+  ),
+  DividerForm: (props: React.ComponentProps<"div">) => (
+    <div {...props}>DividerForm</div>
+  ),
+  EmailForm: (props: React.ComponentProps<"div">) => (
+    <div {...props}>EmailForm</div>
+  ),
+  EmailFormSkeleton: (props: React.ComponentProps<"div">) => (
+    <div {...props}>EmailFormSkeleton</div>
+  ),
 }));
 
 jest.mock("@/providers", () => ({
-  ClientOnlyProvider: ({ children, fallback }: any) => (
+  ClientOnlyProvider: ({ children }: { children: React.ReactNode }) => (
     <div data-testid="client-only-provider">{children}</div>
   ),
 }));

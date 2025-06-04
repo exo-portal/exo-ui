@@ -9,7 +9,7 @@ jest.mock("next-intl", () => ({
 
 // Mock translate function
 jest.mock("@/lib", () => ({
-  translate: (_t: any, key: string) => key,
+  translate: (_t: unknown, key: string) => key,
 }));
 
 describe("DividerForm", () => {

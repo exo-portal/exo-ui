@@ -11,7 +11,7 @@ jest.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 jest.mock("@/lib", () => ({
-  translate: (_t: any, key: string) => `translated:${key}`,
+  translate: (_t: unknown, key: string) => `translated:${key}`,
 }));
 jest.mock("@/components/ui/separator", () => ({
   Separator: () => <div data-testid="separator" />,

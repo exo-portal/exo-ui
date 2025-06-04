@@ -6,23 +6,48 @@ import { InstructionSection } from "../../section";
 jest.mock("next-intl", () => ({
   useTranslations: () => (key: string) => `translated:${key}`,
 }));
+
 jest.mock("@/lib", () => ({
-  translate: (t: any, key: string) => t(key),
+  translate: (t: (key: string) => string, key: string) => t(key),
 }));
-jest.mock(
-  "@/components/auth-instruction/instruction-badge",
-  () => (props: any) =>
-    <div data-testid={props["data-testid"]}>{props.title}</div>
-);
+
+jest.mock("@/components/auth-instruction/instruction-badge", () => {
+  const MockInstructionBadge = ({
+    "data-testid": dataTestId,
+    title,
+  }: {
+    "data-testid": string;
+    title: string;
+  }) => <div data-testid={dataTestId}>{title}</div>;
+  MockInstructionBadge.displayName = "MockInstructionBadge";
+  return MockInstructionBadge;
+});
+
 jest.mock("@/components/auth-instruction/instruction-container", () => ({
-  InstructionContainer: (props: any) => (
-    <div data-testid={props["data-testid"]}>
-      <div data-testid="title">{props.title}</div>
-      <div data-testid="subTitle">{props.subTitle}</div>
-      <div data-testid="topBadge">{props.topBadge}</div>
-      <div data-testid="topBadgeTitleKey">{props.topBadgeTitleKey}</div>
-      <div data-testid="bottomBadgeTitleKey">{props.bottomBadgeTitleKey}</div>
-      <div data-testid="bottomBadge">{props.bottomBadge}</div>
+  InstructionContainer: ({
+    "data-testid": dataTestId,
+    title,
+    subTitle,
+    topBadge,
+    topBadgeTitleKey,
+    bottomBadgeTitleKey,
+    bottomBadge,
+  }: {
+    "data-testid": string;
+    title: React.ReactNode;
+    subTitle: React.ReactNode;
+    topBadge: React.ReactNode;
+    topBadgeTitleKey: React.ReactNode;
+    bottomBadgeTitleKey: React.ReactNode;
+    bottomBadge: React.ReactNode;
+  }) => (
+    <div data-testid={dataTestId}>
+      <div data-testid="title">{title}</div>
+      <div data-testid="subTitle">{subTitle}</div>
+      <div data-testid="topBadge">{topBadge}</div>
+      <div data-testid="topBadgeTitleKey">{topBadgeTitleKey}</div>
+      <div data-testid="bottomBadgeTitleKey">{bottomBadgeTitleKey}</div>
+      <div data-testid="bottomBadge">{bottomBadge}</div>
     </div>
   ),
 }));
