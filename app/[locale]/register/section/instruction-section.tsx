@@ -1,9 +1,10 @@
 "use client";
 import InstructionBadge from "@/components/auth-instruction/instruction-badge";
 import { InstructionContainer } from "@/components/auth-instruction/instruction-container";
-import { InstructionConfig, PATH } from "@/config";
+import { PATH } from "@/config";
 import { TxKeyPath } from "@/i18n";
 import { translate } from "@/lib";
+import { InstructionConfig } from "@/types";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 

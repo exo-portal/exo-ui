@@ -3,9 +3,9 @@ import { Locale, useTranslations } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import { parsePhoneNumberFromString, AsYouType } from "libphonenumber-js";
 import { UseFormReturn } from "react-hook-form";
-import { ExoPortalErrorMessage } from "@/config";
 import { translate } from "./translate";
 import { TxKeyPath } from "@/i18n";
+import { ExoPortalErrorMessage } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
