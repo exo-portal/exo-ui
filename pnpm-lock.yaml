@@ -83,6 +83,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.56.3
     version: 7.56.3(react@19.1.0)
+  react-idle-timer:
+    specifier: ^5.7.2
+    version: 5.7.2(react-dom@19.1.0)(react@19.1.0)
   react-scan:
     specifier: ^0.3.4
     version: 0.3.4(@types/react@19.1.3)(next@15.3.2)(react-dom@19.1.0)(react@19.1.0)
@@ -8224,6 +8227,16 @@ packages:
       react: ^16.8.0 || ^17 || ^18 || ^19
     dependencies:
       react: 19.1.0
+    dev: false
+
+  /react-idle-timer@5.7.2(react-dom@19.1.0)(react@19.1.0):
+    resolution: {integrity: sha512-+BaPfc7XEUU5JFkwZCx6fO1bLVK+RBlFH+iY4X34urvIzZiZINP6v2orePx3E6pAztJGE7t4DzvL7if2SL/0GQ==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     dev: false
 
   /react-is@16.13.1:
