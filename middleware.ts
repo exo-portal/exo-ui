@@ -142,6 +142,7 @@ export async function middleware(request: NextRequest) {
     );
   }
 
+  // If the pathname is the logout path, allow it to pass through
   if (currentPathname === "/logout") {
     return NextResponse.next();
   }
