@@ -142,6 +142,10 @@ export async function middleware(request: NextRequest) {
     );
   }
 
+  if (currentPathname === "/logout") {
+    return NextResponse.next();
+  }
+
   // Redirect if locale is not supported
   if (localeMatch && !supportedLocales.includes(currentLocale)) {
     return NextResponse.redirect(
