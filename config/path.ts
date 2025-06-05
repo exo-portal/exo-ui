@@ -8,12 +8,19 @@ export interface PathInterface {
   };
 }
 
-export const PUBLIC_PATH: PathInterface = { 
+export const PUBLIC_PATH: PathInterface = {
   LOGIN: {
     name: "login",
     path: "/login",
     value: "login",
     getPath: (locale: string) => `/${locale}/login`,
+    isProtected: false,
+  },
+  LOGOUT: {
+    name: "logout",
+    path: "/logout",
+    value: "logout",
+    getPath: (locale: string) => `/${locale}/logout`,
     isProtected: false,
   },
   FORGOT_PASSWORD: {
