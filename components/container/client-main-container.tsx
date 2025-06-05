@@ -1,6 +1,9 @@
 "use client";
 
 import { cn } from "@/lib";
+import NavigationTab from "../common/navigation-tab";
+import HeaderTab from "../common/header-tab";
+import ProfileTab from "../common/profile-tab";
 
 export default function ClientMainContainer({
   children,
@@ -11,11 +14,13 @@ export default function ClientMainContainer({
 }) {
   return (
     <main
-      className={cn(
-        "min-h-screen flex flex-col items-center justify-center bg-amber-300",
-        className
-      )}
+      className={cn("relative min-h-screen h-screen bg-neutral-100", className)}
     >
+      <header className="flex items-center justify-between pt-8 px-24">
+        <HeaderTab />
+        <NavigationTab />
+        <ProfileTab />
+      </header>
       {children}
     </main>
   );
