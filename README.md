@@ -58,6 +58,10 @@ Explore the core technologies powering Exo UI Portal:
     <a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank">
         <img src="https://testing-library.com/img/octopus-128x128.png" alt="React Testing Library" height="40"/>
     </a>
+    &nbsp;
+    <a href="https://idletimer.dev/" target="_blank">
+        <img src="https://raw.githubusercontent.com/SupremeTechnopriest/react-idle-timer/master/logo.svg" alt="React Idle Timer" height="40"/>
+    </a>
 </p>
 
 ## Features
